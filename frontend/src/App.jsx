@@ -8,13 +8,11 @@ const MapSection = React.lazy(() => import("./components/MapSection"));
 const AnalysisSection = React.lazy(() => import("./components/AnalysisSection"));
 
 export default function App() {
-  const [tab, setTab] = React.useState("dashboard");
-
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Header tab={tab} onTabChange={setTab} />
+      <Header />
       <main className="container mx-auto space-y-6 py-6">
-        <Tabs value={tab} onValueChange={setTab} className="space-y-6">
+        <Tabs defaultValue="dashboard" className="space-y-6">
           <TabsList className="mb-4">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
             <TabsTrigger value="map">Map</TabsTrigger>
