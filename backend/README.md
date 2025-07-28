@@ -40,7 +40,7 @@ the built-in dummy responses.
 
 The API exposes several dummy routes returning JSON data:
 
-- `GET /activities` – list recent activities
+- `GET /activities` – list recent activities (optional `type` query param filters by activity type)
 - `GET /activities/by-date` – activities grouped by date with start coordinates
 - `GET /activities/{activity_id}` – detail for a specific activity
 - `GET /steps` – daily step counts

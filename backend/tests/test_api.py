@@ -16,6 +16,14 @@ def test_activities_list():
     assert 'activityId' in data[0]
 
 
+def test_activities_filter_type():
+    resp = client.get('/activities?type=run')
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data
+    assert all(a['activityType']['typeKey'].lower() == 'run' for a in data)
+
+
 def test_activities_by_date():
     resp = client.get('/activities/by-date')
     assert resp.status_code == 200

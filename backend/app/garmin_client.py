@@ -45,10 +45,11 @@ class GarminClient:
         for i in range(1, 6):
             lat = base_lat + random.uniform(-0.02, 0.02)
             lon = base_lon + random.uniform(-0.02, 0.02)
+            act_type = "RUN" if i % 2 else "BIKE"
             activities.append(
                 {
                     "activityId": f"act_{i}",
-                    "activityType": {"typeKey": "RUN"},
+                    "activityType": {"typeKey": act_type},
                     "startTimeLocal": (
                         datetime.datetime.now() - datetime.timedelta(days=i)
                     ).isoformat(),
@@ -64,8 +65,12 @@ class GarminClient:
             self._dummy_activities = self.__init_dummy_activities()
         return self._dummy_activities
 
-    def get_activities(self, start: int = 0, limit: int = 50):
-        return self.dummy_activities[start : start + limit]
+    def get_activities(self, start: int = 0, limit: int = 50, activity_type: str | None = None):
+        acts = self.dummy_activities
+        if activity_type:
+            activity_type = activity_type.lower()
+            acts = [a for a in acts if a["activityType"]["typeKey"].lower() == activity_type]
+        return acts[start : start + limit]
 
     def get_activities_by_date(self):
         """Return activities grouped by date with start coords."""

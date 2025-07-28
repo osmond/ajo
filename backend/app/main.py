@@ -23,10 +23,11 @@ dummy_activities = []
 # Dummy coordinates centered in Madison, WI
 base_lat, base_lon = 43.0731, -89.4012
 for i in range(1, 6):
+    act_type = "RUN" if i % 2 else "BIKE"
     dummy_activities.append(
         {
             "activityId": f"act_{i}",
-            "activityType": {"typeKey": "RUN"},
+            "activityType": {"typeKey": act_type},
             "startTimeLocal": (
                 datetime.datetime.now() - datetime.timedelta(days=i)
             ).isoformat(),
@@ -36,11 +37,17 @@ for i in range(1, 6):
     )
 
 @app.get("/activities")
-async def activities(start: int = 0, limit: int = 50):
-    """Return activities from Garmin or dummy data."""
+async def activities(start: int = 0, limit: int = 50, type: str | None = None):
+    """Return activities from Garmin or dummy data.
+
+    The optional ``type`` query parameter can filter by activity type.
+    """
     if garmin_client.has_credentials:
-        return garmin_client.get_activities(start, limit)
-    return dummy_activities[start:start + limit]
+        return garmin_client.get_activities(start, limit, type)
+    acts = dummy_activities
+    if type:
+        acts = [a for a in acts if a["activityType"]["typeKey"].lower() == type.lower()]
+    return acts[start:start + limit]
 
 
 @app.get("/activities/by-date")
