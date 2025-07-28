@@ -1,3 +1,5 @@
+const { createPreset, defineTheme } = require("tailwindcss-shadcn-ui");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: 'class',
@@ -16,7 +18,18 @@ module.exports = {
 
   // 2a) Use the shadcn preset (recommended) --------------------
   presets: [
-    require("tailwindcss-shadcn-ui").createPreset(),
+    createPreset({
+      theme: defineTheme({
+        light: {
+          background: "#ffffff",
+          foreground: "#0f172a",
+        },
+        dark: {
+          background: "#0f172a",
+          foreground: "#f8fafc",
+        },
+      }),
+    }),
   ],
 
   // OR 2b) Use it as a plugin -------------------------------
