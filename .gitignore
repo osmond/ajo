@@ -1,24 +1,27 @@
-# Ignore Python cache and env files
+# === Python ===
 __pycache__/
-*.pyc
+*.py[cod]
 *.pyo
 .venv/
 .env
 
-# Node dependencies and build output
+# === Node & Vite ===
 node_modules/
 frontend/node_modules/
 frontend/dist/
+.vite/
 
-# IDE files
-.idea/
-.vscode/
-
-# ignore Vite & NPM artifacts
-/node_modules
-/.vite
+# === Logs ===
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
 *.log
 
-# VSCode metadata
+# === IDE / Editor ===
+.idea/
 .vscode/
 **/.metadata.json
+
+# === OS / Misc ===
+.DS_Store
+Thumbs.db
