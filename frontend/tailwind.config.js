@@ -13,6 +13,10 @@ module.exports = {
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
       },
+      colors: {
+        primary: "var(--color-primary)",
+        accent: "var(--color-bg)",
+      },
     },
   },
 
@@ -21,12 +25,12 @@ module.exports = {
     createPreset({
       theme: defineTheme({
         light: {
-          background: "#ffffff",
-          foreground: "#0f172a",
+          background: "#F0EDCC",
+          foreground: "#02343F",
         },
         dark: {
-          background: "#0f172a",
-          foreground: "#f8fafc",
+          background: "#02343F",
+          foreground: "#F0EDCC",
         },
       }),
     }),
