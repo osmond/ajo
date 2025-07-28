@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   // 1. Tell Tailwind where to look for class names:
   content: [
     "./index.html",
