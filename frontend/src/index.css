@@ -21,3 +21,8 @@
     --color-bg: #02343F;
   }
 }
+
+.dark {
+  --color-primary: #F0EDCC;
+  --color-bg: #02343F;
+}
