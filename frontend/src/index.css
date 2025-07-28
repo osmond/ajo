@@ -5,5 +5,19 @@
 @layer base {
   body {
     @apply font-sans;
+    background-color: var(--color-bg);
+    color: var(--color-primary);
+  }
+}
+
+:root {
+  --color-primary: #02343F;
+  --color-bg: #F0EDCC;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #F0EDCC;
+    --color-bg: #02343F;
   }
 }
