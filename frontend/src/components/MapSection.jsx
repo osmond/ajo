@@ -4,6 +4,7 @@ import ActivityCalendar from "./ActivityCalendar";
 import CalendarHeatmap from "./CalendarHeatmap";
 import { Card, CardContent } from "./ui/Card";
 import { fetchActivityTrack, fetchRoutes } from "../api";
+import ElevationChart from "./ElevationChart";
 const LazyMap = React.lazy(() => import("./LeafletMap"));
 const LazyHeatmap = React.lazy(() => import("./RouteHeatmap"));
 
@@ -18,12 +19,17 @@ export default function MapSection() {
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
   const [metric, setMetric] = React.useState("heartRate");
+  const [showWeather, setShowWeather] = React.useState(false);
+  const [hoverIdx, setHoverIdx] = React.useState(null);
 
   const loadTrack = React.useCallback((act) => {
     setError(null);
     setLoading(true);
     fetchActivityTrack(act.activityId)
-      .then(setPoints)
+      .then((pts) => {
+        setPoints(pts);
+        setHoverIdx(null);
+      })
       .catch(() => setError("Failed to load map"))
       .finally(() => setLoading(false));
   }, []);
@@ -43,15 +49,23 @@ export default function MapSection() {
         <div className="flex flex-col gap-4 sm:flex-row">
           <div className="sm:w-1/4 flex flex-col gap-2">
             <ActivityCalendar onSelect={loadTrack} />
-            <select
-              className="rounded-md p-1 text-sm"
-              value={metric}
-              onChange={(e) => setMetric(e.target.value)}
-            >
-              <option value="heartRate">Heart Rate</option>
-              <option value="speed">Speed</option>
-            </select>
-          </div>
+          <select
+            className="rounded-md p-1 text-sm"
+            value={metric}
+            onChange={(e) => setMetric(e.target.value)}
+          >
+            <option value="heartRate">Heart Rate</option>
+            <option value="speed">Speed</option>
+          </select>
+          <label className="flex items-center gap-1 text-sm">
+            <input
+              type="checkbox"
+              checked={showWeather}
+              onChange={(e) => setShowWeather(e.target.checked)}
+            />
+            Weather
+          </label>
+        </div>
           <Card className="flex-1">
             <CardContent className="h-64 p-0">
               {loading && (
@@ -72,13 +86,21 @@ export default function MapSection() {
                     </div>
                   }
                 >
-                  <LazyMap points={points} metricKey={metric} />
+                  <LazyMap
+                    points={points}
+                    metricKey={metric}
+                    showWeather={showWeather}
+                    onHoverPoint={setHoverIdx}
+                  />
                 </React.Suspense>
               )}
             </CardContent>
           </Card>
         </div>
       </ChartCard>
+      {points.length > 0 && (
+        <ElevationChart points={points} activeIndex={hoverIdx} />
+      )}
       <ChartCard title="On This Day">
         <CalendarHeatmap />
       </ChartCard>

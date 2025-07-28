@@ -5,7 +5,10 @@ import { vi } from 'vitest';
 vi.mock('react-leaflet', () => ({
   MapContainer: ({ children }) => <div>{children}</div>,
   TileLayer: () => null,
-  Polyline: ({ color }) => <div data-testid="polyline" data-color={color} />,
+  Polyline: ({ pathOptions }) => (
+    <div data-testid="polyline" data-color={pathOptions.color} />
+  ),
+  CircleMarker: () => null,
 }));
 
 delete window.L; // ensure no Leaflet global
