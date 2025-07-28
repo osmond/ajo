@@ -6,16 +6,14 @@ import MapSection from './components/MapSection'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@shadcn/ui'
 
 export default function App() {
-  const [tab, setTab] = React.useState('dashboard')
-
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Header tab={tab} onTabChange={setTab} />
+      <Header />
 
       <main className="container mx-auto space-y-8 px-4 py-6">
         <KPIGrid />
 
-        <Tabs value={tab} onValueChange={setTab} className="space-y-4">
+        <Tabs defaultValue="dashboard" className="space-y-4">
           <TabsList>
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
             <TabsTrigger value="map">Map</TabsTrigger>
