@@ -16,7 +16,7 @@ export default function ProgressRing({ value = 0, max = 100, size = 40, stroke =
         r={radius}
       />
       <circle
-        className="text-primary"
+        className="text-primary transition-[stroke-dashoffset] duration-500 ease-out"
         stroke="currentColor"
         fill="transparent"
         strokeWidth={stroke}

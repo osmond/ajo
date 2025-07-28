@@ -9,6 +9,7 @@ export default function KPIGrid() {
   const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
+    let interval;
     async function load() {
       try {
         const [steps, hr, sleep] = await Promise.all([
@@ -35,6 +36,8 @@ export default function KPIGrid() {
       }
     }
     load();
+    interval = setInterval(load, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
