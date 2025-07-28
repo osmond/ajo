@@ -160,6 +160,8 @@ async def activity_track(activity_id: str):
                         "timestamp": ts,
                         "lat": lat + i * 0.001,
                         "lon": lon + i * 0.001,
+                        "heartRate": random.randint(60, 170),
+                        "speed": round(random.uniform(2.5, 6.0), 2),
                     })
                 break
         else:
