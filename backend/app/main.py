@@ -173,6 +173,9 @@ async def activity_track(activity_id: str):
         weather = get_weather(points[0]["lat"], points[0]["lon"], points[0]["timestamp"])
         for p in points:
             p["temperature"] = weather.get("temperature")
+            p["precipitation"] = weather.get("precipitation")
+            p["windspeed"] = weather.get("windspeed")
+            p["humidity"] = weather.get("humidity")
     return points
 
 
