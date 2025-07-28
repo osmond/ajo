@@ -1,8 +1,16 @@
 import React from "react";
-import { MapContainer, TileLayer, Polyline } from "react-leaflet";
+import { MapContainer, TileLayer, Polyline, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-export default function TrackMap({ points }) {
+function MapUpdater({ center }) {
+  const map = useMap();
+  React.useEffect(() => {
+    if (center) map.flyTo(center, 13);
+  }, [center, map]);
+  return null;
+}
+
+export default function TrackMap({ points, center }) {
   const [count, setCount] = React.useState(0);
   React.useEffect(() => {
     setCount(0);
@@ -20,7 +28,7 @@ export default function TrackMap({ points }) {
   }, [points]);
 
   if (!points.length) return null;
-  const center = [points[0].lat, points[0].lon];
+  const defaultCenter = [points[0].lat, points[0].lon];
   const segments = [];
   for (let i = 1; i < Math.min(count, points.length); i++) {
     const prev = points[i - 1];
@@ -44,12 +52,15 @@ export default function TrackMap({ points }) {
     );
   }
 
+  const mapCenter = center || defaultCenter;
+
   return (
-    <MapContainer center={center} zoom={13} style={{ height: "100%", width: "100%" }}>
+    <MapContainer center={mapCenter} zoom={13} style={{ height: "100%", width: "100%" }}>
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; OpenStreetMap contributors"
       />
+      <MapUpdater center={mapCenter} />
       {segments}
     </MapContainer>
   );
