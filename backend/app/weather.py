@@ -1,9 +1,13 @@
 import datetime
-from typing import Optional
+from typing import Dict, Tuple
 
 import requests
 
 API_URL = "https://api.open-meteo.com/v1/forecast"
+
+# Simple in-memory cache of fetched weather data
+# keyed by (lat, lon, date_iso)
+_CACHE: Dict[Tuple[float, float, str], dict] = {}
 
 
 def get_weather(lat: float, lon: float, timestamp: str) -> dict:
@@ -17,14 +21,20 @@ def get_weather(lat: float, lon: float, timestamp: str) -> dict:
     else:
         dt = datetime.datetime.fromisoformat(timestamp)
 
+    date_key = dt.date().isoformat()
+    cache_key = (float(lat), float(lon), date_key)
+    if cache_key in _CACHE:
+        return _CACHE[cache_key]
+
     params = {
         "latitude": lat,
         "longitude": lon,
         "hourly": "temperature_2m",
-        "start_date": dt.date().isoformat(),
-        "end_date": dt.date().isoformat(),
+        "start_date": date_key,
+        "end_date": date_key,
         "timezone": "UTC",
     }
+    result = {"temperature": None}
     try:
         resp = requests.get(API_URL, params=params, timeout=5)
         resp.raise_for_status()
@@ -33,7 +43,10 @@ def get_weather(lat: float, lon: float, timestamp: str) -> dict:
         temps = data.get("temperature_2m", [])
         for t, tmp in zip(times, temps):
             if t.startswith(dt.strftime("%Y-%m-%dT%H")):
-                return {"temperature": tmp}
+                result = {"temperature": tmp}
+                break
     except Exception:
         pass
-    return {"temperature": None}
+
+    _CACHE[cache_key] = result
+    return result
