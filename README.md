@@ -60,6 +60,19 @@ serve the generated static files from `frontend/dist`.
 
 The backend can be hosted separately on any platform that supports FastAPI.
 
+## Frontend Features
+
+The map section lets you replay a selected route with an animated polyline.
+Use the metric dropdown above the map to color the track by heart rate or
+speed.
+
+`ActivityCalendar` renders a simple month view where dates with activities are
+clickable. Hook into the `onSelect` prop to load a track:
+
+```jsx
+<ActivityCalendar onSelect={(act) => console.log(act)} />
+```
+
 ## Dark Mode
 
 The UI's colors are now defined with `defineTheme` from the

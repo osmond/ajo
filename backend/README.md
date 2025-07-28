@@ -49,3 +49,4 @@ The API exposes several dummy routes returning JSON data:
 - `GET /sleep` – nightly sleep duration in hours
 - `GET /map` – miscellaneous map metric points
 - `GET /routes` – aggregated coordinates from all activities
+  (use `activityType`, `startDate` and `endDate` query parameters to filter)
