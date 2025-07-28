@@ -4,7 +4,12 @@ This backend serves dummy data until real Garmin credentials are available.
 
 ## Setup
 
-1. (Optional) Copy `.env.example` to `.env` when you have credentials.
+1. Copy `.env.example` to `.env` when you have Garmin API credentials.
+   Fill in the following variables:
+   - `GC_CONSUMER_KEY`
+   - `GC_CONSUMER_SECRET`
+   - `GC_OAUTH_TOKEN`
+   - `GC_OAUTH_TOKEN_SECRET`
 2. Install dependencies:
    ```
    pip install -r requirements.txt
@@ -13,6 +18,10 @@ This backend serves dummy data until real Garmin credentials are available.
    ```
    uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
    ```
+
+When the credentials are provided, the server will use them to query Garmin
+for activity data. If no credentials are set, all endpoints continue to return
+the built-in dummy responses.
 
 ## Endpoints
 
