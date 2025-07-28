@@ -8,8 +8,11 @@ async function apiGet(path) {
   return res.json();
 }
 
-export const fetchSteps = () => apiGet('/api/steps');
-export const fetchHeartrate = () => apiGet('/api/heartrate');
-export const fetchSleep = () => apiGet('/api/sleep');
-export const fetchVo2max = () => apiGet('/api/vo2max');
-export const fetchMap = () => apiGet('/api/map');
+// Backend routes do not use an "/api" prefix, so requests should be made
+// directly to the root paths. Using a prefix caused 404 errors when running the
+// app locally.
+export const fetchSteps = () => apiGet('/steps');
+export const fetchHeartrate = () => apiGet('/heartrate');
+export const fetchSleep = () => apiGet('/sleep');
+export const fetchVo2max = () => apiGet('/vo2max');
+export const fetchMap = () => apiGet('/map');
