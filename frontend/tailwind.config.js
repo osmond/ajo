@@ -1,4 +1,4 @@
-const { createPreset, defineTheme } = require("tailwindcss-shadcn-ui");
+const { createPreset } = require("tailwindcss-shadcn-ui");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -14,26 +14,17 @@ module.exports = {
         sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
       },
       colors: {
-        primary: "var(--color-primary)",
-        accent: "var(--color-bg)",
+        accent: {
+          DEFAULT: "#02343F",
+          foreground: "#F0EDCC",
+        },
       },
     },
   },
 
   // 2a) Use the shadcn preset (recommended) --------------------
   presets: [
-    createPreset({
-      theme: defineTheme({
-        light: {
-          background: "#F0EDCC",
-          foreground: "#02343F",
-        },
-        dark: {
-          background: "#02343F",
-          foreground: "#F0EDCC",
-        },
-      }),
-    }),
+    createPreset(),
   ],
 
   // OR 2b) Use it as a plugin -------------------------------
