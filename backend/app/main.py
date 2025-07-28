@@ -170,3 +170,25 @@ async def activity_track(activity_id: str):
         for p in points:
             p["temperature"] = weather.get("temperature")
     return points
+
+
+@app.get("/routes")
+async def all_routes():
+    """Return all GPS coordinates from stored activities."""
+    coords = []
+    if garmin_client.has_credentials:
+        activities = garmin_client.get_activities()
+        for act in activities:
+            try:
+                track = garmin_client.get_track(act["activityId"])
+            except KeyError:
+                continue
+            coords.extend({"lat": p["lat"], "lon": p["lon"]} for p in track)
+    else:
+        for act in dummy_activities:
+            start = datetime.datetime.fromisoformat(act["startTimeLocal"])
+            lat = act.get("startLat", base_lat)
+            lon = act.get("startLon", base_lon)
+            for i in range(20):
+                coords.append({"lat": lat + i * 0.001, "lon": lon + i * 0.001})
+    return coords

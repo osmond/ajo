@@ -78,3 +78,11 @@ def test_activity_track():
     data = resp.json()
     assert isinstance(data, list)
     assert data and 'timestamp' in data[0] and 'lat' in data[0] and 'lon' in data[0]
+
+
+def test_routes_endpoint():
+    resp = client.get('/routes')
+    assert resp.status_code == 200
+    data = resp.json()
+    assert isinstance(data, list)
+    assert data and 'lat' in data[0] and 'lon' in data[0]
