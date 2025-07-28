@@ -59,3 +59,9 @@ frontend knows where to reach your backend. Vercel will run `npm run build` and
 serve the generated static files from `frontend/dist`.
 
 The backend can be hosted separately on any platform that supports FastAPI.
+
+## Dark Mode
+
+The UI's colors are now defined with `defineTheme` from the
+`tailwindcss-shadcn-ui` preset. Toggling the "Dark" button switches CSS
+variables so backgrounds become darker and text lightens automatically.
