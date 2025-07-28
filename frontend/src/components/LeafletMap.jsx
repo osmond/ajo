@@ -1,8 +1,13 @@
 import React from "react";
-import { MapContainer, TileLayer, Polyline } from "react-leaflet";
+import { MapContainer, TileLayer, Polyline, CircleMarker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
-export default function LeafletMap({ points, metricKey = "heartRate" }) {
+export default function LeafletMap({
+  points,
+  metricKey = "heartRate",
+  showWeather = false,
+  onHoverPoint,
+}) {
   if (!points.length) return null;
   const center = [points[0].lat, points[0].lon];
 
@@ -28,10 +33,27 @@ export default function LeafletMap({ points, metricKey = "heartRate" }) {
           [prev.lat, prev.lon],
           [curr.lat, curr.lon],
         ]}
-        color={color}
+        pathOptions={{ color }}
+        eventHandlers={{
+          mouseover: () => onHoverPoint && onHoverPoint(i),
+          mouseout: () => onHoverPoint && onHoverPoint(null),
+        }}
       />
     );
   }
+
+  const markers = points.map((p, idx) => (
+    <CircleMarker
+      key={`pt-${idx}`}
+      center={[p.lat, p.lon]}
+      radius={2}
+      pathOptions={{ opacity: 0, fillOpacity: 0 }}
+      eventHandlers={{
+        mouseover: () => onHoverPoint && onHoverPoint(idx),
+        mouseout: () => onHoverPoint && onHoverPoint(null),
+      }}
+    />
+  ));
 
   return (
     <MapContainer center={center} zoom={13} style={{ height: "100%", width: "100%" }}>
@@ -39,7 +61,14 @@ export default function LeafletMap({ points, metricKey = "heartRate" }) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; OpenStreetMap contributors"
       />
+      {showWeather && (
+        <TileLayer
+          url="https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=439d4b804bc8187953eb36d2a8c26a02"
+          attribution="&copy; <a href='https://openweathermap.org/'>OpenWeatherMap</a>"
+        />
+      )}
       {segments}
+      {markers}
     </MapContainer>
   );
 }

@@ -169,6 +169,7 @@ async def activity_track(activity_id: str):
                         "timestamp": ts,
                         "lat": lat + i * 0.001,
                         "lon": lon + i * 0.001,
+                        "elevation": 260 + random.uniform(-5, 5),
                         "heartRate": random.randint(60, 170),
                         "speed": round(random.uniform(2.5, 6.0), 2),
                     })
@@ -179,6 +180,8 @@ async def activity_track(activity_id: str):
     if points:
         weather = get_weather(points[0]["lat"], points[0]["lon"], points[0]["timestamp"])
         for p in points:
+            if "elevation" not in p:
+                p["elevation"] = 260 + random.uniform(-5, 5)
             p["temperature"] = weather.get("temperature")
             p["precipitation"] = weather.get("precipitation")
             p["windspeed"] = weather.get("windspeed")
