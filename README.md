@@ -47,8 +47,9 @@ npm test
 
 ## Configuration
 
-The frontend expects `VITE_BACKEND_URL` to point at the FastAPI server. When
-running locally this defaults to `http://localhost:8000`.
+The frontend expects `VITE_BACKEND_URL` to point at the FastAPI server.
+The provided `frontend/.env.example` file sets this to
+`http://localhost:8000` for local development.
 
 ## Deploying to Vercel
 
