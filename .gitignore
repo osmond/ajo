@@ -13,3 +13,12 @@ frontend/dist/
 # IDE files
 .idea/
 .vscode/
+
+# ignore Vite & NPM artifacts
+/node_modules
+/.vite
+*.log
+
+# VSCode metadata
+.vscode/
+**/.metadata.json
