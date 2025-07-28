@@ -2,8 +2,16 @@ import React, { createContext, useContext, useState } from "react";
 
 const TabsContext = createContext();
 
-export function Tabs({ defaultValue, className = "", children }) {
-  const [value, setValue] = useState(defaultValue);
+export function Tabs({
+  defaultValue,
+  value: controlledValue,
+  onValueChange,
+  className = "",
+  children,
+}) {
+  const [internalValue, setInternalValue] = useState(defaultValue);
+  const value = controlledValue !== undefined ? controlledValue : internalValue;
+  const setValue = onValueChange ?? setInternalValue;
   return (
     <TabsContext.Provider value={{ value, setValue }}>
       <div className={className}>{children}</div>
