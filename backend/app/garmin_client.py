@@ -40,7 +40,8 @@ class GarminClient:
 
     def __init_dummy_activities(self):
         activities = []
-        base_lat, base_lon = 37.7749, -122.4194
+        # Center the dummy data around Madison, WI
+        base_lat, base_lon = 43.0731, -89.4012
         for i in range(1, 6):
             lat = base_lat + random.uniform(-0.02, 0.02)
             lon = base_lon + random.uniform(-0.02, 0.02)
@@ -127,8 +128,9 @@ class GarminClient:
             if act["activityId"] == activity_id:
                 start = datetime.datetime.fromisoformat(act["startTimeLocal"])
                 points = []
-                lat = act.get("startLat", 37.7749)
-                lon = act.get("startLon", -122.4194)
+                # Default coordinates also fall back to Madison if missing
+                lat = act.get("startLat", 43.0731)
+                lon = act.get("startLon", -89.4012)
                 for i in range(20):
                     ts = (start + datetime.timedelta(minutes=i)).isoformat()
                     points.append(

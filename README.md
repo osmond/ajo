@@ -2,7 +2,7 @@
 
 This project contains a minimal React frontend and FastAPI backend used to mock
 Garmin activity data. The frontend uses Vite and Tailwind CSS while the backend
-serves dummy endpoints.
+serves dummy endpoints. All example GPS data is centered around **Madison, Wisconsin**.
 
 We use **Python&nbsp;3** on the backend and a Node/Vite stack on the frontend.
 On macOS with Homebrew‑managed Python you cannot install packages system‑wide

@@ -20,7 +20,8 @@ app.add_middleware(
 
 # Dummy activities list
 dummy_activities = []
-base_lat, base_lon = 37.7749, -122.4194
+# Dummy coordinates centered in Madison, WI
+base_lat, base_lon = 43.0731, -89.4012
 for i in range(1, 6):
     dummy_activities.append(
         {
@@ -152,8 +153,9 @@ async def activity_track(activity_id: str):
             if act["activityId"] == activity_id:
                 start = datetime.datetime.fromisoformat(act["startTimeLocal"])
                 points = []
-                lat = act.get("startLat", 37.7749)
-                lon = act.get("startLon", -122.4194)
+                # Default coordinates if missing are also Madison based
+                lat = act.get("startLat", 43.0731)
+                lon = act.get("startLon", -89.4012)
                 for i in range(20):
                     ts = (start + datetime.timedelta(minutes=i)).isoformat()
                     points.append({

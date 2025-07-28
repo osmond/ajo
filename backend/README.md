@@ -1,6 +1,7 @@
 # Dummy Garmin Official API Backend
 
 This backend serves dummy data until real Garmin credentials are available.
+The generated activities are located around **Madison, Wisconsin** for use in the demo maps.
 
 ## Setup
 
