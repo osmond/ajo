@@ -57,7 +57,7 @@ export default function MapSection() {
               </div>
             )}
             {error && (
-              <div className="flex h-full items-center justify-center text-sm text-red-500">
+              <div className="flex h-full items-center justify-center text-sm text-destructive">
                 {error}
               </div>
             )}
@@ -106,7 +106,7 @@ export default function MapSection() {
             </div>
           )}
           {errorRoutes && (
-            <div className="flex h-full items-center justify-center text-sm text-red-500">
+            <div className="flex h-full items-center justify-center text-sm text-destructive">
               {errorRoutes}
             </div>
           )}

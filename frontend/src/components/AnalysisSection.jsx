@@ -22,7 +22,7 @@ export default function AnalysisSection() {
           <div className="flex h-full items-center justify-center text-sm text-muted-foreground">Loading...</div>
         )}
         {error && (
-          <div className="flex h-full items-center justify-center text-sm text-red-500">{error}</div>
+          <div className="flex h-full items-center justify-center text-sm text-destructive">{error}</div>
         )}
         {!loading && !error && (
           <ResponsiveContainer width="100%" height="100%">
