@@ -2,22 +2,21 @@ import React from "react";
 import ChartCard from "./ChartCard";
 import ActivityCalendar from "./ActivityCalendar";
 import { fetchActivityTrack, fetchRoutes } from "../api";
-const LazyMap = React.lazy(() => import("./TrackMap"));
+const LazyMap = React.lazy(() => import("./LeafletMap"));
 const LazyHeatmap = React.lazy(() => import("./RouteHeatmap"));
 
 export default function MapSection() {
   const [points, setPoints] = React.useState([]);
-  const [center, setCenter] = React.useState(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(null);
   const [routes, setRoutes] = React.useState([]);
   const [loadingRoutes, setLoadingRoutes] = React.useState(true);
   const [errorRoutes, setErrorRoutes] = React.useState(null);
+  const [metric, setMetric] = React.useState("heartRate");
 
   const loadTrack = React.useCallback((act) => {
     setError(null);
     setLoading(true);
-    setCenter([act.lat, act.lon]);
     fetchActivityTrack(act.activityId)
       .then(setPoints)
       .catch(() => setError("Failed to load map"))
@@ -35,8 +34,16 @@ export default function MapSection() {
     <div className="space-y-6">
       <ChartCard title="Activity Map">
         <div className="flex flex-col gap-4 sm:flex-row">
-          <div className="sm:w-1/4">
+          <div className="sm:w-1/4 flex flex-col gap-2">
             <ActivityCalendar onSelect={loadTrack} />
+            <select
+              className="rounded-md border p-1 text-sm"
+              value={metric}
+              onChange={(e) => setMetric(e.target.value)}
+            >
+              <option value="heartRate">Heart Rate</option>
+              <option value="speed">Speed</option>
+            </select>
           </div>
           <div className="h-64 flex-1 rounded-md bg-muted">
             {loading && (
@@ -57,7 +64,7 @@ export default function MapSection() {
                   </div>
                 }
               >
-                <LazyMap points={points} center={center} />
+                <LazyMap points={points} metricKey={metric} />
               </React.Suspense>
             )}
           </div>
