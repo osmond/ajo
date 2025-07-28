@@ -148,6 +148,9 @@ def test_weather_cached(monkeypatch):
                     "hourly": {
                         "time": [params["start_date"] + "T12:00"],
                         "temperature_2m": [20],
+                        "precipitation": [0.1],
+                        "windspeed_10m": [5.5],
+                        "relativehumidity_2m": [60],
                     }
                 }
 
@@ -159,6 +162,13 @@ def test_weather_cached(monkeypatch):
     result1 = weather.get_weather(lat, lon, ts)
     result2 = weather.get_weather(lat, lon, ts)
 
-    assert result1 == {"temperature": 20}
-    assert result2 == {"temperature": 20}
+    expected = {
+        "temperature": 20,
+        "precipitation": 0.1,
+        "windspeed": 5.5,
+        "humidity": 60,
+    }
+
+    assert result1 == expected
+    assert result2 == expected
     assert len(calls) == 1
