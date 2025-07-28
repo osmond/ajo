@@ -19,6 +19,15 @@ This backend serves dummy data until real Garmin credentials are available.
    uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
    ```
 
+## Running Tests
+
+To execute the backend unit tests use `pytest`:
+
+```bash
+cd backend
+pytest
+```
+
 When the credentials are provided, the server will use them to query Garmin
 for activity data. If no credentials are set, all endpoints continue to return
 the built-in dummy responses.

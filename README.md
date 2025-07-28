@@ -20,6 +20,15 @@ serves dummy endpoints.
    npm run dev
    ```
 
+## Running Frontend Tests
+
+Execute Vitest from the frontend directory:
+
+```bash
+cd frontend
+npm test
+```
+
 ## Configuration
 
 The frontend expects `VITE_BACKEND_URL` to point at the FastAPI server. When
