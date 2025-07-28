@@ -26,7 +26,11 @@ export default function RouteHeatmap({ coords }) {
           key={i}
           center={[p.lat, p.lon]}
           radius={4 + (8 * p.count) / max}
-          pathOptions={{ color: "#fb923c", fillColor: "#fb923c", fillOpacity: 0.6 }}
+          pathOptions={{
+            color: "hsl(var(--accent))",
+            fillColor: "hsl(var(--accent))",
+            fillOpacity: 0.6,
+          }}
         />
       ))}
     </MapContainer>

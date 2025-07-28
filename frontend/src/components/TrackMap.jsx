@@ -48,11 +48,11 @@ export default function TrackMap({ points, center }) {
     if (i === 0) continue;
     const prev = points[i - 1];
     const t = curr.temperature;
-    let color = "#2563eb";
+    let color = "hsl(var(--primary))";
     if (t !== undefined && t !== null) {
-      if (t < 10) color = "#60a5fa"; // blue for cold
-      else if (t < 20) color = "#10b981"; // green for mild
-      else color = "#ef4444"; // red for warm
+      if (t < 10) color = "hsl(var(--accent))"; // blue for cold
+      else if (t < 20) color = "hsl(var(--secondary))"; // green for mild
+      else color = "hsl(var(--destructive))"; // red for warm
     }
     segments.push(
       <Polyline

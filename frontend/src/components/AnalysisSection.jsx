@@ -31,7 +31,7 @@ export default function AnalysisSection() {
               <XAxis dataKey="temperature" name="Temp" unit="°C" />
               <YAxis dataKey="avgPace" name="Pace" unit="min/km" />
               <Tooltip />
-              <Scatter data={data} fill="#2563eb" />
+              <Scatter data={data} fill="hsl(var(--primary))" />
             </ScatterChart>
           </ResponsiveContainer>
         )}

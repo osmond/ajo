@@ -57,7 +57,7 @@ export default function TrendsSection() {
                   <XAxis dataKey="timestamp" tick={false} />
                   <YAxis />
                   <Tooltip />
-                  <Line type="monotone" dataKey="value" stroke="#3b82f6" dot={false} />
+                  <Line type="monotone" dataKey="value" stroke="hsl(var(--primary))" dot={false} />
                 </LineChart>
               </ResponsiveContainer>
             )}
@@ -84,7 +84,7 @@ export default function TrendsSection() {
                   <XAxis dataKey="timestamp" tick={false} />
                   <YAxis />
                   <Tooltip />
-                  <Line type="monotone" dataKey="value" stroke="#ef4444" dot={false} />
+                  <Line type="monotone" dataKey="value" stroke="hsl(var(--destructive))" dot={false} />
                 </LineChart>
               </ResponsiveContainer>
             )}
