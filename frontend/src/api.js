@@ -19,3 +19,5 @@ export const fetchMap = () => apiGet('/map');
 export const fetchActivityTrack = (id) => apiGet(`/activities/${id}/track`);
 export const fetchActivitiesByDate = () => apiGet('/activities/by-date');
 export const fetchRoutes = () => apiGet('/routes');
+export const fetchDailyTotals = () => apiGet('/daily-totals');
+export const fetchAnalysis = () => apiGet('/analysis');

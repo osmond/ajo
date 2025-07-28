@@ -2,8 +2,10 @@ import React from "react";
 import Header from "./components/Header";
 import KPIGrid from "./components/KPIGrid";
 import TrendsSection from "./components/TrendsSection";
+import DailyHeatmap from "./components/DailyHeatmap";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/Tabs";
 const MapSection = React.lazy(() => import("./components/MapSection"));
+const AnalysisSection = React.lazy(() => import("./components/AnalysisSection"));
 
 export default function App() {
   return (
@@ -14,10 +16,12 @@ export default function App() {
           <TabsList className="mb-4">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
             <TabsTrigger value="map">Map</TabsTrigger>
+            <TabsTrigger value="analysis">Analysis</TabsTrigger>
           </TabsList>
           <TabsContent value="dashboard" className="space-y-6">
             <KPIGrid />
             <TrendsSection />
+            <DailyHeatmap />
           </TabsContent>
           <TabsContent value="map" className="space-y-6">
             <React.Suspense
@@ -28,6 +32,17 @@ export default function App() {
               }
             >
               <MapSection />
+            </React.Suspense>
+          </TabsContent>
+          <TabsContent value="analysis" className="space-y-6">
+            <React.Suspense
+              fallback={
+                <div className="h-64 flex items-center justify-center text-sm text-muted-foreground">
+                  Loading analysis...
+                </div>
+              }
+            >
+              <AnalysisSection />
             </React.Suspense>
           </TabsContent>
         </Tabs>

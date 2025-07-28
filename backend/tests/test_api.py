@@ -87,3 +87,19 @@ def test_routes_endpoint():
     data = resp.json()
     assert isinstance(data, list)
     assert data and 'lat' in data[0] and 'lon' in data[0]
+
+
+def test_daily_totals_endpoint():
+    resp = client.get('/daily-totals')
+    assert resp.status_code == 200
+    data = resp.json()
+    assert isinstance(data, list)
+    assert data and 'date' in data[0] and 'distance' in data[0] and 'duration' in data[0]
+
+
+def test_analysis_endpoint():
+    resp = client.get('/analysis')
+    assert resp.status_code == 200
+    data = resp.json()
+    assert isinstance(data, list)
+    assert data and 'avgPace' in data[0] and 'temperature' in data[0]

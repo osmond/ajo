@@ -194,3 +194,69 @@ async def all_routes():
             for i in range(20):
                 coords.append({"lat": lat + i * 0.001, "lon": lon + i * 0.001})
     return coords
+
+
+@app.get("/daily-totals")
+async def daily_totals():
+    """Return daily distance and duration totals."""
+    totals = {}
+    if garmin_client.has_credentials:
+        acts = garmin_client.get_activities()
+        for act in acts:
+            detail = garmin_client.get_activity(act["activityId"])
+            date = detail["startTimeLocal"].split("T")[0]
+            entry = totals.setdefault(date, {"distance": 0, "duration": 0})
+            entry["distance"] += detail.get("distance", 0)
+            entry["duration"] += detail.get("duration", 0)
+    else:
+        for act in dummy_activities:
+            date = act["startTimeLocal"].split("T")[0]
+            entry = totals.setdefault(date, {"distance": 0, "duration": 0})
+            # dummy detail
+            entry["distance"] += 5000 + len(act["activityId"]) * 10
+            entry["duration"] += 1800
+    return [{"date": d, **v} for d, v in sorted(totals.items())]
+
+
+@app.get("/analysis")
+async def analysis():
+    """Return activity pace/HR vs temperature data."""
+    acts = garmin_client.get_activities() if garmin_client.has_credentials else dummy_activities
+    results = []
+    for act in acts:
+        # get track
+        if garmin_client.has_credentials:
+            try:
+                track = garmin_client.get_track(act["activityId"])
+            except KeyError:
+                continue
+        else:
+            start = datetime.datetime.fromisoformat(act["startTimeLocal"])
+            lat = act.get("startLat", base_lat)
+            lon = act.get("startLon", base_lon)
+            track = []
+            for i in range(20):
+                ts = (start + datetime.timedelta(minutes=i)).isoformat()
+                track.append({
+                    "timestamp": ts,
+                    "lat": lat + i * 0.001,
+                    "lon": lon + i * 0.001,
+                    "heartRate": random.randint(60, 170),
+                    "speed": round(random.uniform(2.5, 6.0), 2),
+                })
+
+        if not track:
+            continue
+
+        weather = get_weather(track[0]["lat"], track[0]["lon"], track[0]["timestamp"])
+        temp = weather.get("temperature")
+        avg_speed = sum(p["speed"] for p in track) / len(track)
+        avg_hr = sum(p["heartRate"] for p in track) / len(track)
+        pace = 1000.0 / (60 * avg_speed)
+        results.append({
+            "activityId": act["activityId"],
+            "temperature": temp,
+            "avgPace": round(pace, 2),
+            "avgHeartRate": round(avg_hr, 1),
+        })
+    return results
