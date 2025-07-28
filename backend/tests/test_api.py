@@ -99,6 +99,18 @@ def test_routes_endpoint():
     assert data and 'lat' in data[0] and 'lon' in data[0]
 
 
+def test_routes_filtering():
+    """Filtering by type and date should limit returned coordinates."""
+    list_resp = client.get('/activities')
+    first = list_resp.json()[0]
+    date = first['startTimeLocal'].split('T')[0]
+    resp = client.get(f'/routes?activityType={first["activityType"]["typeKey"]}&startDate={date}&endDate={date}')
+    assert resp.status_code == 200
+    data = resp.json()
+    # each activity produces 20 coordinates
+    assert len(data) == 20
+
+
 def test_daily_totals_endpoint():
     resp = client.get('/daily-totals')
     assert resp.status_code == 200

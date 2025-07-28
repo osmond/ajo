@@ -187,11 +187,48 @@ async def activity_track(activity_id: str):
 
 
 @app.get("/routes")
-async def all_routes():
-    """Return all GPS coordinates from stored activities."""
+async def all_routes(
+    activityType: str | None = None,
+    startDate: str | None = None,
+    endDate: str | None = None,
+):
+    """Return all GPS coordinates from stored activities.
+
+    Optional query params:
+    ``activityType`` - filter by activity type
+    ``startDate`` / ``endDate`` - ISO dates bounding the activity start time
+    """
     coords = []
+
+    # Fetch and filter activities
     if garmin_client.has_credentials:
-        activities = garmin_client.get_activities()
+        activities = garmin_client.get_activities(activity_type=activityType)
+    else:
+        activities = dummy_activities
+        if activityType:
+            ltype = activityType.lower()
+            activities = [
+                a
+                for a in activities
+                if a["activityType"]["typeKey"].lower() == ltype
+            ]
+
+    if startDate or endDate:
+        start = datetime.date.fromisoformat(startDate) if startDate else None
+        end = datetime.date.fromisoformat(endDate) if endDate else None
+
+        def in_range(act):
+            d = datetime.date.fromisoformat(act["startTimeLocal"].split("T")[0])
+            if start and d < start:
+                return False
+            if end and d > end:
+                return False
+            return True
+
+        activities = [a for a in activities if in_range(a)]
+
+    # Collect coordinates for each activity
+    if garmin_client.has_credentials:
         for act in activities:
             try:
                 track = garmin_client.get_track(act["activityId"])
@@ -199,12 +236,13 @@ async def all_routes():
                 continue
             coords.extend({"lat": p["lat"], "lon": p["lon"]} for p in track)
     else:
-        for act in dummy_activities:
+        for act in activities:
             start = datetime.datetime.fromisoformat(act["startTimeLocal"])
             lat = act.get("startLat", base_lat)
             lon = act.get("startLon", base_lon)
             for i in range(20):
                 coords.append({"lat": lat + i * 0.001, "lon": lon + i * 0.001})
+
     return coords
 
 
