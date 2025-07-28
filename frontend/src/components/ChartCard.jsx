@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/Card";
 
 export default function ChartCard({ title, children }) {
   return (
-    <Card>
+    <Card className="animate-in fade-in">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>

@@ -18,6 +18,10 @@ module.exports = {
           DEFAULT: "#02343F",
           foreground: "#F0EDCC",
         },
+        tone: {
+          light: "#F0EDCC",
+          dark: "#02343F",
+        },
       },
     },
   },

@@ -31,7 +31,7 @@ export default function WeeklySummaryCard({ children }) {
   const totalDistanceKm = totals.reduce((sum, p) => sum + p.distance, 0) / 1000;
 
   return (
-    <Card className="mb-4">
+    <Card className="mb-4 animate-in fade-in">
       <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-1">
           {loading && <Skeleton className="h-6 w-32" />}

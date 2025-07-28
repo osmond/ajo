@@ -28,9 +28,9 @@ export default function DailyHeatmap() {
     <div className="grid grid-cols-7 gap-1 text-xs">
       {data.map((d) => {
         const intensity = d.distance / max;
-        let color = "bg-green-200";
-        if (intensity > 0.66) color = "bg-green-600";
-        else if (intensity > 0.33) color = "bg-green-400";
+        let color = "bg-tone-light";
+        if (intensity > 0.66) color = "bg-tone-dark";
+        else if (intensity > 0.33) color = "bg-tone-dark/60";
         return (
           <div
             key={d.date}
