@@ -38,11 +38,11 @@ environment.
 
 ## Running Frontend Tests
 
-Execute Vitest from the frontend directory:
+Execute Vitest once from the frontend directory:
 
 ```bash
 cd frontend
-npm test
+npm test  # runs vitest once and then exits
 ```
 
 ## Configuration
