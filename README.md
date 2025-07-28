@@ -78,3 +78,24 @@ clickable. Hook into the `onSelect` prop to load a track:
 The UI's colors are now defined with `defineTheme` from the
 `tailwindcss-shadcn-ui` preset. Toggling the "Dark" button switches CSS
 variables so backgrounds become darker and text lightens automatically.
+
+## Tailwind Theme Setup
+
+The `src/main.jsx` entry point imports `@/index.css` which includes `tailwindcss-shadcn-ui/style.css` so shadcn/ui component styles are loaded.
+
+The preset is enabled in `tailwind.config.js` via `createPreset` and `defineTheme` to provide light and dark colors:
+
+```js
+const { createPreset, defineTheme } = require("tailwindcss-shadcn-ui");
+
+module.exports = {
+  presets: [
+    createPreset({
+      theme: defineTheme({
+        // ...colors...
+      }),
+    }),
+  ],
+};
+```
+
