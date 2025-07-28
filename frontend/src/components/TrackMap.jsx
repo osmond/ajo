@@ -1,5 +1,5 @@
 import React from "react";
-import { MapContainer, TileLayer, Polyline, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Polyline, CircleMarker, Tooltip, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 function MapUpdater({ center }) {
@@ -30,9 +30,23 @@ export default function TrackMap({ points, center }) {
   if (!points.length) return null;
   const defaultCenter = [points[0].lat, points[0].lon];
   const segments = [];
-  for (let i = 1; i < Math.min(count, points.length); i++) {
-    const prev = points[i - 1];
+  const markers = [];
+  for (let i = 0; i < Math.min(count, points.length); i++) {
     const curr = points[i];
+    markers.push(
+      <CircleMarker key={`m-${i}`} center={[curr.lat, curr.lon]} radius={3}>
+        <Tooltip direction="top" offset={[0, -4]} opacity={0.9}>
+          <div className="text-xs">
+            Temp: {curr.temperature ?? "n/a"}°C<br />
+            Precip: {curr.precipitation ?? "n/a"} mm<br />
+            Wind: {curr.windspeed ?? "n/a"} m/s<br />
+            Humidity: {curr.humidity ?? "n/a"}%
+          </div>
+        </Tooltip>
+      </CircleMarker>
+    );
+    if (i === 0) continue;
+    const prev = points[i - 1];
     const t = curr.temperature;
     let color = "#2563eb";
     if (t !== undefined && t !== null) {
@@ -62,6 +76,7 @@ export default function TrackMap({ points, center }) {
       />
       <MapUpdater center={mapCenter} />
       {segments}
+      {markers}
     </MapContainer>
   );
 }

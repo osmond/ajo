@@ -79,6 +79,8 @@ def test_activity_track():
     assert isinstance(data, list)
     assert data and 'timestamp' in data[0] and 'lat' in data[0] and 'lon' in data[0]
     assert 'heartRate' in data[0] and 'speed' in data[0]
+    assert 'temperature' in data[0] and 'precipitation' in data[0]
+    assert 'windspeed' in data[0] and 'humidity' in data[0]
 
 
 def test_routes_endpoint():
