@@ -1,6 +1,7 @@
 import React from "react";
 import ChartCard from "./ChartCard";
 import ActivityCalendar from "./ActivityCalendar";
+import { Card, CardContent } from "./ui/Card";
 import { fetchActivityTrack, fetchRoutes } from "../api";
 const LazyMap = React.lazy(() => import("./LeafletMap"));
 const LazyHeatmap = React.lazy(() => import("./RouteHeatmap"));
@@ -42,7 +43,7 @@ export default function MapSection() {
           <div className="sm:w-1/4 flex flex-col gap-2">
             <ActivityCalendar onSelect={loadTrack} />
             <select
-              className="rounded-md border p-1 text-sm"
+              className="rounded-md p-1 text-sm"
               value={metric}
               onChange={(e) => setMetric(e.target.value)}
             >
@@ -50,35 +51,37 @@ export default function MapSection() {
               <option value="speed">Speed</option>
             </select>
           </div>
-          <div className="h-64 flex-1 rounded-md bg-muted">
-            {loading && (
-              <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-                Loading...
-              </div>
-            )}
-            {error && (
-              <div className="flex h-full items-center justify-center text-sm text-destructive">
-                {error}
-              </div>
-            )}
-            {!loading && !error && points.length > 0 && (
-              <React.Suspense
-                fallback={
-                  <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-                    Loading map...
-                  </div>
-                }
-              >
-                <LazyMap points={points} metricKey={metric} />
-              </React.Suspense>
-            )}
-          </div>
+          <Card className="flex-1">
+            <CardContent className="h-64 p-0">
+              {loading && (
+                <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                  Loading...
+                </div>
+              )}
+              {error && (
+                <div className="flex h-full items-center justify-center text-sm text-destructive">
+                  {error}
+                </div>
+              )}
+              {!loading && !error && points.length > 0 && (
+                <React.Suspense
+                  fallback={
+                    <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                      Loading map...
+                    </div>
+                  }
+                >
+                  <LazyMap points={points} metricKey={metric} />
+                </React.Suspense>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </ChartCard>
       <ChartCard title="Route Heatmap">
         <div className="mb-2 flex flex-col gap-2 sm:flex-row">
           <select
-            className="rounded-md border p-1 text-sm"
+            className="rounded-md p-1 text-sm"
             value={activityType}
             onChange={(e) => setActivityType(e.target.value)}
           >
@@ -88,40 +91,42 @@ export default function MapSection() {
           </select>
           <input
             type="date"
-            className="rounded-md border p-1 text-sm"
+            className="rounded-md p-1 text-sm"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
           />
           <input
             type="date"
-            className="rounded-md border p-1 text-sm"
+            className="rounded-md p-1 text-sm"
             value={endDate}
             onChange={(e) => setEndDate(e.target.value)}
           />
         </div>
-        <div className="h-64 rounded-md bg-muted">
-          {loadingRoutes && (
-            <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-              Loading...
-            </div>
-          )}
-          {errorRoutes && (
-            <div className="flex h-full items-center justify-center text-sm text-destructive">
-              {errorRoutes}
-            </div>
-          )}
-          {!loadingRoutes && !errorRoutes && routes.length > 0 && (
-            <React.Suspense
-              fallback={
-                <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-                  Loading map...
-                </div>
-              }
-            >
-              <LazyHeatmap coords={routes} />
-            </React.Suspense>
-          )}
-        </div>
+        <Card>
+          <CardContent className="h-64 p-0">
+            {loadingRoutes && (
+              <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                Loading...
+              </div>
+            )}
+            {errorRoutes && (
+              <div className="flex h-full items-center justify-center text-sm text-destructive">
+                {errorRoutes}
+              </div>
+            )}
+            {!loadingRoutes && !errorRoutes && routes.length > 0 && (
+              <React.Suspense
+                fallback={
+                  <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                    Loading map...
+                  </div>
+                }
+              >
+                <LazyHeatmap coords={routes} />
+              </React.Suspense>
+            )}
+          </CardContent>
+        </Card>
       </ChartCard>
     </div>
   );
