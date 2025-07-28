@@ -1,0 +1,21 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  // 1. Tell Tailwind where to look for class names:
+  content: [
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}"
+  ],
+  theme: {
+    extend: {},
+  },
+
+  // 2a) Use the shadcn preset (recommended) --------------------
+  presets: [
+    require("tailwindcss-shadcn-ui").createPreset(),
+  ],
+
+  // OR 2b) Use it as a plugin -------------------------------
+  // plugins: [
+  //   require("tailwindcss-shadcn-ui"),
+  // ],
+};
