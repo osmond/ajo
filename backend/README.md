@@ -10,12 +10,15 @@ This backend serves dummy data until real Garmin credentials are available.
    - `GC_CONSUMER_SECRET`
    - `GC_OAUTH_TOKEN`
    - `GC_OAUTH_TOKEN_SECRET`
-2. Install dependencies:
-   ```
+2. Install dependencies inside a virtual environment:
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   pip install --upgrade pip
    pip install -r requirements.txt
    ```
 3. Run the server:
-   ```
+   ```bash
    uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
    ```
 
