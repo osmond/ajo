@@ -1,52 +1,38 @@
-import React from "react";
-import Header from "./components/Header";
-import KPIGrid from "./components/KPIGrid";
-import TrendsSection from "./components/TrendsSection";
-import DailyHeatmap from "./components/DailyHeatmap";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/Tabs";
-const MapSection = React.lazy(() => import("./components/MapSection"));
-const AnalysisSection = React.lazy(() => import("./components/AnalysisSection"));
+import React from 'react'
+import Header from './components/Header'
+import KPIGrid from './components/KPIGrid'
+import TrendsSection from './components/TrendsSection'
+import MapSection from './components/MapSection'
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@shadcn/ui'
 
 export default function App() {
+  const [tab, setTab] = React.useState('dashboard')
+
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Header />
-      <main className="container mx-auto space-y-6 py-6">
-        <Tabs defaultValue="dashboard" className="space-y-6">
-          <TabsList className="mb-4">
+      <Header tab={tab} onTabChange={setTab} />
+
+      <main className="container mx-auto space-y-8 px-4 py-6">
+        <KPIGrid />
+
+        <Tabs value={tab} onValueChange={setTab} className="space-y-4">
+          <TabsList>
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
             <TabsTrigger value="map">Map</TabsTrigger>
             <TabsTrigger value="analysis">Analysis</TabsTrigger>
           </TabsList>
-          <TabsContent value="dashboard" className="space-y-6">
-            <KPIGrid />
+
+          <TabsContent value="dashboard">
             <TrendsSection />
-            <DailyHeatmap />
           </TabsContent>
-          <TabsContent value="map" className="space-y-6">
-            <React.Suspense
-              fallback={
-                <div className="h-64 flex items-center justify-center text-sm text-muted-foreground">
-                  Loading map...
-                </div>
-              }
-            >
-              <MapSection />
-            </React.Suspense>
+          <TabsContent value="map">
+            <MapSection />
           </TabsContent>
-          <TabsContent value="analysis" className="space-y-6">
-            <React.Suspense
-              fallback={
-                <div className="h-64 flex items-center justify-center text-sm text-muted-foreground">
-                  Loading analysis...
-                </div>
-              }
-            >
-              <AnalysisSection />
-            </React.Suspense>
+          <TabsContent value="analysis">
+            {/* your analysis view here */}
           </TabsContent>
         </Tabs>
       </main>
     </div>
-  );
+  )
 }
