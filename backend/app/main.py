@@ -19,10 +19,20 @@ app.add_middleware(
 )
 
 # Dummy activities list
-dummy_activities = [
-    {"activityId": f"act_{i}", "activityType": {"typeKey": "RUN"}, "startTimeLocal": (datetime.datetime.now() - datetime.timedelta(days=i)).isoformat()}
-    for i in range(1, 6)
-]
+dummy_activities = []
+base_lat, base_lon = 37.7749, -122.4194
+for i in range(1, 6):
+    dummy_activities.append(
+        {
+            "activityId": f"act_{i}",
+            "activityType": {"typeKey": "RUN"},
+            "startTimeLocal": (
+                datetime.datetime.now() - datetime.timedelta(days=i)
+            ).isoformat(),
+            "startLat": base_lat + random.uniform(-0.02, 0.02),
+            "startLon": base_lon + random.uniform(-0.02, 0.02),
+        }
+    )
 
 @app.get("/activities")
 async def activities(start: int = 0, limit: int = 50):
@@ -30,6 +40,23 @@ async def activities(start: int = 0, limit: int = 50):
     if garmin_client.has_credentials:
         return garmin_client.get_activities(start, limit)
     return dummy_activities[start:start + limit]
+
+
+@app.get("/activities/by-date")
+async def activities_by_date():
+    """Return activities grouped by date with start coordinates."""
+    if garmin_client.has_credentials:
+        return garmin_client.get_activities_by_date()
+    groups = {}
+    for act in dummy_activities:
+        date = act["startTimeLocal"].split("T")[0]
+        entry = {
+            "activityId": act["activityId"],
+            "lat": act["startLat"],
+            "lon": act["startLon"],
+        }
+        groups.setdefault(date, []).append(entry)
+    return groups
 
 @app.get("/activities/{activity_id}")
 async def activity(activity_id: str):
@@ -125,7 +152,8 @@ async def activity_track(activity_id: str):
             if act["activityId"] == activity_id:
                 start = datetime.datetime.fromisoformat(act["startTimeLocal"])
                 points = []
-                lat, lon = 37.7749, -122.4194
+                lat = act.get("startLat", 37.7749)
+                lon = act.get("startLon", -122.4194)
                 for i in range(20):
                     ts = (start + datetime.timedelta(minutes=i)).isoformat()
                     points.append({

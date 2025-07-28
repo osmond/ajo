@@ -16,6 +16,18 @@ def test_activities_list():
     assert 'activityId' in data[0]
 
 
+def test_activities_by_date():
+    resp = client.get('/activities/by-date')
+    assert resp.status_code == 200
+    data = resp.json()
+    assert isinstance(data, dict)
+    assert data
+    # pick first date
+    first_date = list(data.keys())[0]
+    first_entry = data[first_date][0]
+    assert 'activityId' in first_entry and 'lat' in first_entry and 'lon' in first_entry
+
+
 def test_activity_detail():
     list_resp = client.get('/activities')
     aid = list_resp.json()[0]['activityId']

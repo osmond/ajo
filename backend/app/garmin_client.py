@@ -39,16 +39,23 @@ class GarminClient:
         return points
 
     def __init_dummy_activities(self):
-        return [
-            {
-                "activityId": f"act_{i}",
-                "activityType": {"typeKey": "RUN"},
-                "startTimeLocal": (
-                    datetime.datetime.now() - datetime.timedelta(days=i)
-                ).isoformat(),
-            }
-            for i in range(1, 6)
-        ]
+        activities = []
+        base_lat, base_lon = 37.7749, -122.4194
+        for i in range(1, 6):
+            lat = base_lat + random.uniform(-0.02, 0.02)
+            lon = base_lon + random.uniform(-0.02, 0.02)
+            activities.append(
+                {
+                    "activityId": f"act_{i}",
+                    "activityType": {"typeKey": "RUN"},
+                    "startTimeLocal": (
+                        datetime.datetime.now() - datetime.timedelta(days=i)
+                    ).isoformat(),
+                    "startLat": lat,
+                    "startLon": lon,
+                }
+            )
+        return activities
 
     @property
     def dummy_activities(self):
@@ -58,6 +65,19 @@ class GarminClient:
 
     def get_activities(self, start: int = 0, limit: int = 50):
         return self.dummy_activities[start : start + limit]
+
+    def get_activities_by_date(self):
+        """Return activities grouped by date with start coords."""
+        groups = {}
+        for act in self.dummy_activities:
+            date = act["startTimeLocal"].split("T")[0]
+            entry = {
+                "activityId": act["activityId"],
+                "lat": act["startLat"],
+                "lon": act["startLon"],
+            }
+            groups.setdefault(date, []).append(entry)
+        return groups
 
     def get_activity(self, activity_id: str):
         for act in self.dummy_activities:
@@ -107,7 +127,8 @@ class GarminClient:
             if act["activityId"] == activity_id:
                 start = datetime.datetime.fromisoformat(act["startTimeLocal"])
                 points = []
-                lat, lon = 37.7749, -122.4194
+                lat = act.get("startLat", 37.7749)
+                lon = act.get("startLon", -122.4194)
                 for i in range(20):
                     ts = (start + datetime.timedelta(minutes=i)).isoformat()
                     points.append(
