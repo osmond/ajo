@@ -1,6 +1,7 @@
 import React from "react";
 import ChartCard from "./ChartCard";
 import ActivityCalendar from "./ActivityCalendar";
+import CalendarHeatmap from "./CalendarHeatmap";
 import { Card, CardContent } from "./ui/Card";
 import { fetchActivityTrack, fetchRoutes } from "../api";
 const LazyMap = React.lazy(() => import("./LeafletMap"));
@@ -77,6 +78,9 @@ export default function MapSection() {
             </CardContent>
           </Card>
         </div>
+      </ChartCard>
+      <ChartCard title="On This Day">
+        <CalendarHeatmap />
       </ChartCard>
       <ChartCard title="Route Heatmap">
         <div className="mb-2 flex flex-col gap-2 sm:flex-row">
