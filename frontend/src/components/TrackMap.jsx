@@ -1,0 +1,56 @@
+import React from "react";
+import { MapContainer, TileLayer, Polyline } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+
+export default function TrackMap({ points }) {
+  const [count, setCount] = React.useState(0);
+  React.useEffect(() => {
+    setCount(0);
+    if (!points.length) return;
+    const id = setInterval(() => {
+      setCount((c) => {
+        if (c >= points.length) {
+          clearInterval(id);
+          return c;
+        }
+        return c + 1;
+      });
+    }, 500);
+    return () => clearInterval(id);
+  }, [points]);
+
+  if (!points.length) return null;
+  const center = [points[0].lat, points[0].lon];
+  const segments = [];
+  for (let i = 1; i < Math.min(count, points.length); i++) {
+    const prev = points[i - 1];
+    const curr = points[i];
+    const t = curr.temperature;
+    let color = "#2563eb";
+    if (t !== undefined && t !== null) {
+      if (t < 10) color = "#60a5fa"; // blue for cold
+      else if (t < 20) color = "#10b981"; // green for mild
+      else color = "#ef4444"; // red for warm
+    }
+    segments.push(
+      <Polyline
+        key={i}
+        positions={[
+          [prev.lat, prev.lon],
+          [curr.lat, curr.lon],
+        ]}
+        color={color}
+      />
+    );
+  }
+
+  return (
+    <MapContainer center={center} zoom={13} style={{ height: "100%", width: "100%" }}>
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution="&copy; OpenStreetMap contributors"
+      />
+      {segments}
+    </MapContainer>
+  );
+}

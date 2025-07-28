@@ -1,7 +1,7 @@
 import React from "react";
 import ChartCard from "./ChartCard";
-import { fetchMap } from "../api";
-const LazyMap = React.lazy(() => import("./LeafletMap"));
+import { fetchActivityTrack } from "../api";
+const LazyMap = React.lazy(() => import("./TrackMap"));
 
 export default function MapSection() {
   const [points, setPoints] = React.useState([]);
@@ -9,7 +9,7 @@ export default function MapSection() {
   const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
-    fetchMap()
+    fetchActivityTrack("act_1")
       .then(setPoints)
       .catch(() => setError("Failed to load map"))
       .finally(() => setLoading(false));

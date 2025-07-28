@@ -16,3 +16,4 @@ export const fetchHeartrate = () => apiGet('/heartrate');
 export const fetchSleep = () => apiGet('/sleep');
 export const fetchVo2max = () => apiGet('/vo2max');
 export const fetchMap = () => apiGet('/map');
+export const fetchActivityTrack = (id) => apiGet(`/activities/${id}/track`);
