@@ -1,0 +1,13 @@
+# Ignore Python cache and env files
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Node dependencies and build output
+node_modules/
+frontend/dist/
+
+# IDE files
+.idea/
+.vscode/

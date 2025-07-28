@@ -4,12 +4,16 @@ export default function App() {
   const [activities, setActivities] = useState([]);
   const [error, setError] = useState(null);
 
+  const rawBase = import.meta.env.VITE_BACKEND_URL || "";
+  const baseUrl = rawBase.replace(/\/$/, "");
+
   useEffect(() => {
-    fetch("http://localhost:8000/activities?start=0&limit=20")
-      .then(res => res.json())
+    const url = `${baseUrl}/activities?start=0&limit=20`;
+    fetch(url)
+      .then((res) => res.json())
       .then(setActivities)
       .catch(setError);
-  }, []);
+  }, [baseUrl]);
 
   if (error) return <div className="p-4 text-red-600">Error: {error.toString()}</div>;
   if (!activities.length) return <div className="p-4">Loading…</div>;
