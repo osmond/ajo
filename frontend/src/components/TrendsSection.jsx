@@ -46,7 +46,7 @@ export default function TrendsSection() {
               </div>
             )}
             {errorSteps && (
-              <div className="flex h-full items-center justify-center text-sm text-red-500">
+              <div className="flex h-full items-center justify-center text-sm text-destructive">
                 {errorSteps}
               </div>
             )}
@@ -73,7 +73,7 @@ export default function TrendsSection() {
               </div>
             )}
             {errorHr && (
-              <div className="flex h-full items-center justify-center text-sm text-red-500">
+              <div className="flex h-full items-center justify-center text-sm text-destructive">
                 {errorHr}
               </div>
             )}

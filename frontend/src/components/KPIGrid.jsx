@@ -48,7 +48,7 @@ export default function KPIGrid() {
         </div>
       )}
       {error && (
-        <div className="col-span-3 text-center text-sm text-red-500">{error}</div>
+        <div className="col-span-3 text-center text-sm text-destructive">{error}</div>
       )}
       {!loading && !error &&
         items.map((item) => (

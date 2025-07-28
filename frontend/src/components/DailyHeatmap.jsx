@@ -17,7 +17,7 @@ export default function DailyHeatmap() {
     return <div className="text-sm text-muted-foreground">Loading...</div>;
   }
   if (error) {
-    return <div className="text-sm text-red-500">{error}</div>;
+    return <div className="text-sm text-destructive">{error}</div>;
   }
   if (!data.length) {
     return <div className="text-sm text-muted-foreground">No data</div>;
