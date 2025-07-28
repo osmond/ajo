@@ -100,3 +100,22 @@ class GarminClient:
     def get_map(self):
         start = datetime.datetime.now() - datetime.timedelta(minutes=19)
         return self._metric_points(20, start, datetime.timedelta(minutes=1), 0, 100)
+
+    def get_track(self, activity_id: str):
+        """Return dummy GPS points for an activity."""
+        for act in self.dummy_activities:
+            if act["activityId"] == activity_id:
+                start = datetime.datetime.fromisoformat(act["startTimeLocal"])
+                points = []
+                lat, lon = 37.7749, -122.4194
+                for i in range(20):
+                    ts = (start + datetime.timedelta(minutes=i)).isoformat()
+                    points.append(
+                        {
+                            "timestamp": ts,
+                            "lat": lat + i * 0.001,
+                            "lon": lon + i * 0.001,
+                        }
+                    )
+                return points
+        raise KeyError("Activity not found")

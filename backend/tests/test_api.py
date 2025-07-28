@@ -56,3 +56,13 @@ def test_sleep_endpoint():
 
 def test_map_endpoint():
     _check_metric_list('/map')
+
+
+def test_activity_track():
+    list_resp = client.get('/activities')
+    aid = list_resp.json()[0]['activityId']
+    resp = client.get(f'/activities/{aid}/track')
+    assert resp.status_code == 200
+    data = resp.json()
+    assert isinstance(data, list)
+    assert data and 'timestamp' in data[0] and 'lat' in data[0] and 'lon' in data[0]

@@ -5,6 +5,7 @@ import random
 import os
 from dotenv import load_dotenv
 from .garmin_client import GarminClient
+from .weather import get_weather
 
 load_dotenv()
 garmin_client = GarminClient()
@@ -109,3 +110,35 @@ async def map_endpoint():
         return garmin_client.get_map()
     start = datetime.datetime.now() - datetime.timedelta(minutes=19)
     return _metric_points(20, start, datetime.timedelta(minutes=1), 0, 100)
+
+
+@app.get("/activities/{activity_id}/track")
+async def activity_track(activity_id: str):
+    """Return GPS track for the activity."""
+    if garmin_client.has_credentials:
+        try:
+            points = garmin_client.get_track(activity_id)
+        except KeyError:
+            raise HTTPException(status_code=404, detail="Activity not found")
+    else:
+        for act in dummy_activities:
+            if act["activityId"] == activity_id:
+                start = datetime.datetime.fromisoformat(act["startTimeLocal"])
+                points = []
+                lat, lon = 37.7749, -122.4194
+                for i in range(20):
+                    ts = (start + datetime.timedelta(minutes=i)).isoformat()
+                    points.append({
+                        "timestamp": ts,
+                        "lat": lat + i * 0.001,
+                        "lon": lon + i * 0.001,
+                    })
+                break
+        else:
+            raise HTTPException(status_code=404, detail="Activity not found")
+
+    if points:
+        weather = get_weather(points[0]["lat"], points[0]["lon"], points[0]["timestamp"])
+        for p in points:
+            p["temperature"] = weather.get("temperature")
+    return points
