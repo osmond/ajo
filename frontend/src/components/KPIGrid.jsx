@@ -25,9 +25,9 @@ export default function KPIGrid() {
         const lastSleep = sleep[sleep.length - 1]?.value ?? 0;
 
         setItems([
-          { label: "Steps", value: latestSteps, goal: 10000 },
-          { label: "Sleep", value: lastSleep, goal: 8 },
-          { label: "HR Avg", value: avgHr, goal: 100 },
+          { label: "Steps", value: latestSteps, goal: 10000, unit: "" },
+          { label: "Sleep", value: lastSleep, goal: 8, unit: "h" },
+          { label: "HR Avg", value: avgHr, goal: 100, unit: "bpm" },
         ]);
       } catch (err) {
         setError("Failed to load metrics");
@@ -57,7 +57,7 @@ export default function KPIGrid() {
               <CardTitle>{item.label}</CardTitle>
             </CardHeader>
             <CardContent className="flex items-center justify-center h-32">
-              <ProgressRing value={item.value} max={item.goal} size={80} />
+              <ProgressRing value={item.value} max={item.goal} unit={item.unit} size={80} />
             </CardContent>
           </Card>
         ))}
