@@ -105,3 +105,40 @@ def test_analysis_endpoint():
     data = resp.json()
     assert isinstance(data, list)
     assert data and 'avgPace' in data[0] and 'temperature' in data[0]
+
+
+def test_weather_cached(monkeypatch):
+    """Repeated weather calls should hit the API only once."""
+    from app import weather
+
+    # Clear any existing cache
+    weather._CACHE.clear()
+
+    calls = []
+
+    def fake_get(url, params=None, timeout=5):
+        calls.append(1)
+
+        class Resp:
+            def raise_for_status(self):
+                pass
+
+            def json(self):
+                return {
+                    "hourly": {
+                        "time": [params["start_date"] + "T12:00"],
+                        "temperature_2m": [20],
+                    }
+                }
+
+        return Resp()
+
+    monkeypatch.setattr(weather.requests, "get", fake_get)
+
+    lat, lon, ts = 10.0, 20.0, "2022-01-01T12:34:56"
+    result1 = weather.get_weather(lat, lon, ts)
+    result2 = weather.get_weather(lat, lon, ts)
+
+    assert result1 == {"temperature": 20}
+    assert result2 == {"temperature": 20}
+    assert len(calls) == 1
