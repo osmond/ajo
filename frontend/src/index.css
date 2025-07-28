@@ -1,28 +1,11 @@
+/* 1) Tailwind base styles (resets, etc) */
 @tailwind base;
+
+/* 2) Component layer (you can add your own here after) */
 @tailwind components;
+
+/* 3) shadcn/ui\u2019s built-in component styles */
+@import 'tailwindcss-shadcn-ui/style.css';
+
+/* 4) Utility layer */
 @tailwind utilities;
-
-@layer base {
-  body {
-    @apply font-sans;
-    background-color: var(--color-bg);
-    color: var(--color-primary);
-  }
-}
-
-:root {
-  --color-primary: #02343F;
-  --color-bg: #F0EDCC;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-primary: #F0EDCC;
-    --color-bg: #02343F;
-  }
-}
-
-.dark {
-  --color-primary: #F0EDCC;
-  --color-bg: #02343F;
-}
