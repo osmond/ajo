@@ -1,5 +1,6 @@
 import React from "react";
 import { fetchDailyTotals } from "../api";
+import Skeleton from "./ui/Skeleton";
 
 export default function CalendarHeatmap() {
   const [data, setData] = React.useState([]);
@@ -14,7 +15,7 @@ export default function CalendarHeatmap() {
   }, []);
 
   if (loading) {
-    return <div className="text-sm text-muted-foreground">Loading...</div>;
+    return <Skeleton className="h-20 w-full" />;
   }
   if (error) {
     return <div className="text-sm text-destructive">{error}</div>;
@@ -38,7 +39,7 @@ export default function CalendarHeatmap() {
         return (
           <div
             key={d.date}
-            className={`h-4 w-4 rounded ${color}`}
+            className={`h-4 w-4 rounded ${color} transition-transform hover:scale-110 focus:scale-110`}
             title={title}
           />
         );

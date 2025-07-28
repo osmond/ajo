@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/Card";
 import ProgressRing from "./ui/ProgressRing";
 import { fetchHeartrate, fetchSleep, fetchSteps } from "../api";
+import Skeleton from "./ui/Skeleton";
 
 export default function KPIGrid() {
   const [items, setItems] = React.useState([]);
@@ -42,11 +43,19 @@ export default function KPIGrid() {
 
   return (
     <div className="grid gap-4 sm:grid-cols-3">
-      {loading && (
-        <div className="col-span-3 text-center text-sm text-muted-foreground">
-          Loading...
-        </div>
-      )}
+      {loading &&
+        Array.from({ length: 3 }).map((_, i) => (
+          <Card key={i} className="animate-pulse">
+            <CardHeader>
+              <CardTitle>
+                <Skeleton className="h-6 w-24" />
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="flex h-32 items-center justify-center">
+              <Skeleton className="h-20 w-20 rounded-full" />
+            </CardContent>
+          </Card>
+        ))}
       {error && (
         <div className="col-span-3 text-center text-sm text-destructive">{error}</div>
       )}

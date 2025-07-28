@@ -11,7 +11,23 @@ import {
   ReferenceLine,
   Brush,
 } from "recharts";
+import Skeleton from "./ui/Skeleton";
 import { fetchSteps } from "../api";
+
+function StepTooltip({ active, payload, label }) {
+  if (!active || !payload?.length) return null;
+  const value = payload[0].value;
+  const date = label.split("T")[0];
+  return (
+    <div className="rounded bg-background p-2 text-sm shadow">
+      <div>{date}</div>
+      <div className="flex items-center gap-1">
+        <span>🚶</span>
+        <span>{value} steps</span>
+      </div>
+    </div>
+  );
+}
 
 export default function StepsSparkline() {
   const [steps, setSteps] = React.useState([]);
@@ -29,11 +45,7 @@ export default function StepsSparkline() {
   return (
     <ChartCard title="Step Trend">
       <div className="h-40">
-        {loading && (
-          <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-            Loading...
-          </div>
-        )}
+        {loading && <Skeleton className="h-full w-full" />}
         {error && (
           <div className="flex h-full items-center justify-center text-sm text-destructive">
             {error}
@@ -51,7 +63,7 @@ export default function StepsSparkline() {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="timestamp" tick={false} />
               <YAxis />
-              <Tooltip />
+              <Tooltip content={<StepTooltip />} />
               <ReferenceLine y={10000} stroke="hsl(var(--primary))" strokeDasharray="3 3" label={{ position: 'right', value: 'Goal' }} />
               <Area type="monotone" dataKey="value" stroke="hsl(var(--primary))" fill={`url(#${gradientId})`} dot={false} />
               <Brush dataKey="timestamp" height={20} travellerWidth={10} />

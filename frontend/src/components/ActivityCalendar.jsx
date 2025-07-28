@@ -1,5 +1,6 @@
 import React from "react";
 import { fetchActivitiesByDate } from "../api";
+import Skeleton from "./ui/Skeleton";
 
 export default function ActivityCalendar({ onSelect }) {
   const [days, setDays] = React.useState({});
@@ -14,7 +15,7 @@ export default function ActivityCalendar({ onSelect }) {
   }, []);
 
   if (loading) {
-    return <div className="text-sm text-muted-foreground">Loading...</div>;
+    return <Skeleton className="h-40 w-full" />;
   }
   if (error) {
     return <div className="text-sm text-destructive">{error}</div>;
@@ -53,7 +54,7 @@ export default function ActivityCalendar({ onSelect }) {
             <button
               key={date}
               onClick={() => onSelect(acts[0])}
-              className="rounded-md bg-muted px-2 py-1 hover:bg-muted/70"
+              className="rounded-md bg-muted px-2 py-1 transition-transform hover:scale-105 focus:scale-105 hover:bg-muted/70 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
             >
               {dayNum}
             </button>

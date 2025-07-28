@@ -11,6 +11,20 @@ import {
   CartesianGrid,
 } from "recharts";
 
+function ElevationTooltip({ active, payload }) {
+  if (!active || !payload?.length) return null;
+  const { dist, elevation } = payload[0].payload;
+  return (
+    <div className="rounded bg-background p-2 text-sm shadow">
+      <div className="flex items-center gap-1">
+        <span>⛰️</span>
+        <span>{elevation.toFixed(0)} m</span>
+      </div>
+      <div className="text-xs text-muted-foreground">at {dist.toFixed(2)} km</div>
+    </div>
+  );
+}
+
 function haversine(lat1, lon1, lat2, lon2) {
   const R = 6371000; // meters
   const toRad = (v) => (v * Math.PI) / 180;
@@ -53,7 +67,7 @@ export default function ElevationChart({ points = [], activeIndex = null }) {
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="dist" unit="km" />
             <YAxis dataKey="elevation" unit="m" />
-            <Tooltip />
+            <Tooltip content={<ElevationTooltip />} />
             <Line type="monotone" dataKey="elevation" stroke="hsl(var(--primary))" dot={false} />
             {activeIndex !== null && data[activeIndex] && (
               <ReferenceDot

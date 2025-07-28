@@ -2,6 +2,24 @@ import React from "react";
 import ChartCard from "./ChartCard";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { fetchAnalysis } from "../api";
+import Skeleton from "./ui/Skeleton";
+
+function AnalysisTooltip({ active, payload }) {
+  if (!active || !payload?.length) return null;
+  const { temperature, avgPace } = payload[0].payload;
+  return (
+    <div className="rounded bg-background p-2 text-sm shadow">
+      <div className="flex items-center gap-1">
+        <span>🌡️</span>
+        <span>{temperature}°C</span>
+      </div>
+      <div className="flex items-center gap-1">
+        <span>⏱</span>
+        <span>{avgPace} min/km</span>
+      </div>
+    </div>
+  );
+}
 
 export default function AnalysisSection() {
   const [data, setData] = React.useState([]);
@@ -18,9 +36,7 @@ export default function AnalysisSection() {
   return (
     <ChartCard title="Pace vs Temperature">
       <div className="h-64">
-        {loading && (
-          <div className="flex h-full items-center justify-center text-sm text-muted-foreground">Loading...</div>
-        )}
+        {loading && <Skeleton className="h-full w-full" />}
         {error && (
           <div className="flex h-full items-center justify-center text-sm text-destructive">{error}</div>
         )}
@@ -30,7 +46,7 @@ export default function AnalysisSection() {
               <CartesianGrid />
               <XAxis dataKey="temperature" name="Temp" unit="°C" />
               <YAxis dataKey="avgPace" name="Pace" unit="min/km" />
-              <Tooltip />
+              <Tooltip content={<AnalysisTooltip />} />
               <Scatter data={data} fill="hsl(var(--primary))" />
             </ScatterChart>
           </ResponsiveContainer>

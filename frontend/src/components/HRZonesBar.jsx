@@ -9,6 +9,21 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { fetchHeartrate } from "../api";
+import Skeleton from "./ui/Skeleton";
+
+function ZoneTooltip({ active, payload }) {
+  if (!active || !payload?.length) return null;
+  const { zone, value } = payload[0].payload;
+  return (
+    <div className="rounded bg-background p-2 text-sm shadow">
+      <div>{zone}</div>
+      <div className="flex items-center gap-1">
+        <span>❤️</span>
+        <span>{value} samples</span>
+      </div>
+    </div>
+  );
+}
 
 export default function HRZonesBar() {
   const [zones, setZones] = React.useState([]);
@@ -45,11 +60,7 @@ export default function HRZonesBar() {
   return (
     <ChartCard title="HR Zones">
       <div className="h-40">
-        {loading && (
-          <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-            Loading...
-          </div>
-        )}
+        {loading && <Skeleton className="h-full w-full" />}
         {error && (
           <div className="flex h-full items-center justify-center text-sm text-destructive">
             {error}
@@ -66,7 +77,7 @@ export default function HRZonesBar() {
               </defs>
               <XAxis dataKey="zone" />
               <YAxis allowDecimals={false} />
-              <Tooltip />
+              <Tooltip content={<ZoneTooltip />} />
               <Bar dataKey="value" fill={`url(#${gradientId})`} />
             </BarChart>
           </ResponsiveContainer>
