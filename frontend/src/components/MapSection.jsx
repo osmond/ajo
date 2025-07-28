@@ -12,6 +12,9 @@ export default function MapSection() {
   const [routes, setRoutes] = React.useState([]);
   const [loadingRoutes, setLoadingRoutes] = React.useState(true);
   const [errorRoutes, setErrorRoutes] = React.useState(null);
+  const [activityType, setActivityType] = React.useState("");
+  const [startDate, setStartDate] = React.useState("");
+  const [endDate, setEndDate] = React.useState("");
   const [metric, setMetric] = React.useState("heartRate");
 
   const loadTrack = React.useCallback((act) => {
@@ -24,11 +27,13 @@ export default function MapSection() {
   }, []);
 
   React.useEffect(() => {
-    fetchRoutes()
+    setLoadingRoutes(true);
+    setErrorRoutes(null);
+    fetchRoutes({ activityType, startDate, endDate })
       .then(setRoutes)
       .catch(() => setErrorRoutes("Failed to load routes"))
       .finally(() => setLoadingRoutes(false));
-  }, []);
+  }, [activityType, startDate, endDate]);
 
   return (
     <div className="space-y-6">
@@ -71,6 +76,29 @@ export default function MapSection() {
         </div>
       </ChartCard>
       <ChartCard title="Route Heatmap">
+        <div className="mb-2 flex flex-col gap-2 sm:flex-row">
+          <select
+            className="rounded-md border p-1 text-sm"
+            value={activityType}
+            onChange={(e) => setActivityType(e.target.value)}
+          >
+            <option value="">All Types</option>
+            <option value="run">Run</option>
+            <option value="bike">Bike</option>
+          </select>
+          <input
+            type="date"
+            className="rounded-md border p-1 text-sm"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+          <input
+            type="date"
+            className="rounded-md border p-1 text-sm"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+        </div>
         <div className="h-64 rounded-md bg-muted">
           {loadingRoutes && (
             <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
