@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import { Button } from "./Button";
 
 const TabsContext = createContext();
 
@@ -31,17 +32,13 @@ export function TabsTrigger({ value, className = "", children }) {
   const ctx = useContext(TabsContext);
   const active = ctx.value === value;
   return (
-    <button
+    <Button
       onClick={() => ctx.setValue(value)}
-      className={
-        "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 " +
-        (active ? "bg-background text-foreground shadow" : "bg-transparent text-muted-foreground") +
-        " " +
-        className
-      }
+      variant={active ? "default" : "ghost"}
+      className={"px-3 py-1.5 text-sm " + className}
     >
       {children}
-    </button>
+    </Button>
   );
 }
 
