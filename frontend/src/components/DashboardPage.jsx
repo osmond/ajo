@@ -2,9 +2,6 @@ import React from "react";
 import { Card, CardContent } from "./ui/Card";
 import KPIGrid from "./KPIGrid";
 import StepsSparkline from "./StepsSparkline";
-import HRZonesBar from "./HRZonesBar";
-import CumulativeTimeChart from "./CumulativeTimeChart";
-import CumulativeChart from "./CumulativeChart";
 import WeatherChart from "./WeatherChart";
 import TemperatureChart from "./TemperatureChart";
 import StatesVisited from "./StatesVisited";
@@ -25,9 +22,6 @@ export default function DashboardPage() {
         <CardContent className="space-y-6">
           <div className="grid gap-6 sm:grid-cols-2">
             <StepsSparkline />
-            <HRZonesBar />
-            <CumulativeTimeChart />
-            <CumulativeChart />
           </div>
           <React.Suspense
             fallback={
@@ -47,7 +41,6 @@ export default function DashboardPage() {
           >
             <AnalysisSection />
           </React.Suspense>
-          <CumulativeChart />
           <KPIGrid />
           <div className="grid gap-6 sm:grid-cols-2">
             <TemperatureChart />
