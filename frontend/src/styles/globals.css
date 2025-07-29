@@ -1,22 +1,8 @@
 /* globals.css */
 
-/* 1) Light‑mode defaults */
-:root {
-  --background:         #F0EDCC;
-  --foreground:         #02343F;
-  --accent:             #02343F;
-  --accent-foreground:  #F0EDCC;
-}
+/* Theme colors come from tailwindcss-shadcn-ui's preset */
 
-/* 2) Dark‑mode overrides */
-.dark {
-  --background:         #02343F;
-  --foreground:         #F0EDCC;
-  --accent:             #F0EDCC;
-  --accent-foreground:  #02343F;
-}
-
-/* 3) Tailwind layers */
+/* Tailwind layers */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
