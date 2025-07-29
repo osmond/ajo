@@ -3,6 +3,7 @@ import {
   PieChart, Pie, Cell,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
   ResponsiveContainer,
+  Tooltip,
 } from 'recharts';
 import { modeData, timeData, mileageData } from './data';
 
@@ -67,6 +68,7 @@ export default function DemoCharts() {
                 <PolarAngleAxis dataKey="day" stroke="#AAA" />
                 <PolarRadiusAxis angle={30} domain={[0, 6]} tick={false} />
                 <Radar name="mileage" dataKey="mi" stroke={MILEAGE_COLOR} fill={MILEAGE_COLOR} fillOpacity={0.6} />
+                <Tooltip formatter={(val) => [`${val} mi`, ""]} />
               </RadarChart>
             </ResponsiveContainer>
           </div>
