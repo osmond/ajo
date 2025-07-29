@@ -30,16 +30,15 @@ export default function CalendarHeatmap() {
     <div className="grid grid-cols-7 gap-1 text-xs">
       {data.map((d) => {
         const intensity = d.distance / max;
-        let color = "bg-tone-light";
-        if (intensity > 0.66) color = "bg-tone-dark";
-        else if (intensity > 0.33) color = "bg-tone-dark/60";
-        const title = `${d.date} - ${(d.distance / 1000).toFixed(1)} km, ${(
-          d.duration / 60
-        ).toFixed(0)} min`;
+        let idx = 0;
+        if (intensity > 0.75) idx = 3;
+        else if (intensity > 0.5) idx = 2;
+        else if (intensity > 0.25) idx = 1;
+        const title = `${d.date} - ${(d.distance / 1000).toFixed(1)} km, ${(d.duration / 60).toFixed(0)} min`;
         return (
           <div
             key={d.date}
-            className={`h-4 w-4 rounded ${color} transition-transform hover:scale-110 focus:scale-110`}
+            className={`h-4 w-4 rounded transition-transform hover:scale-110 focus:scale-110 heatmap-scale-${idx}`}
             title={title}
           />
         );
