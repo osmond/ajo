@@ -249,6 +249,70 @@ async def all_routes(
     return coords
 
 
+@app.get("/runs")
+async def runs():
+    """Return summary data for run activities."""
+    if garmin_client.has_credentials:
+        activities = garmin_client.get_activities(activity_type="run")
+    else:
+        activities = [
+            a for a in dummy_activities if a["activityType"]["typeKey"] == "RUN"
+        ]
+
+    results = []
+    for act in activities:
+        activity_id = act["activityId"]
+        date = act["startTimeLocal"].split("T")[0]
+
+        if garmin_client.has_credentials:
+            try:
+                detail = garmin_client.get_activity(activity_id)
+                track = garmin_client.get_track(activity_id)
+            except KeyError:
+                continue
+        else:
+            detail = {
+                "distance": 5000 + len(activity_id) * 10,
+                "duration": 1800,
+            }
+            start = datetime.datetime.fromisoformat(act["startTimeLocal"])
+            lat = act.get("startLat", base_lat)
+            lon = act.get("startLon", base_lon)
+            track = []
+            for i in range(20):
+                ts = (start + datetime.timedelta(minutes=i)).isoformat()
+                track.append(
+                    {
+                        "timestamp": ts,
+                        "lat": lat + i * 0.001,
+                        "lon": lon + i * 0.001,
+                        "elevation": 260 + random.uniform(-5, 5),
+                    }
+                )
+
+        # Calculate elevation gain
+        elev_gain = 0.0
+        prev = None
+        for pt in track:
+            elev = pt.get("elevation")
+            if elev is None:
+                elev = 260 + random.uniform(-5, 5)
+            if prev is not None and elev > prev:
+                elev_gain += elev - prev
+            prev = elev
+
+        results.append(
+            {
+                "date": date,
+                "distance": detail.get("distance", 0),
+                "duration": detail.get("duration", 0),
+                "elevationGain": round(elev_gain, 2),
+            }
+        )
+
+    return sorted(results, key=lambda r: r["date"])
+
+
 @app.get("/daily-totals")
 async def daily_totals():
     """Return daily distance and duration totals."""
