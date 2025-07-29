@@ -4,8 +4,7 @@
 /* 2) Component layer (you can add your own here after) */
 @tailwind components;
 
-/* 3) shadcn/ui\u2019s built-in component styles */
-@import 'tailwindcss-shadcn-ui/style.css';
+/* 3) shadcn/ui's built-in component styles load automatically via the preset */
 
 /* 4) Utility layer */
 @tailwind utilities;
