@@ -8,7 +8,7 @@ export default function StatesTable() {
 
   const renderRows = (list) =>
     list.map((s) => (
-      <tr key={s.abbr} className="group hover:bg-gray-50">
+      <tr key={s.abbr} className="group hover:bg-muted">
         {/* use the default sans-serif font (Inter) for consistency */}
         <td className="py-2 px-4 text-sm cursor-pointer">› {s.name}</td>
         <td className="py-2 px-4 text-sm tabular-nums">{s.days}</td>

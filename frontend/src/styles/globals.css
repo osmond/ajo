@@ -3,17 +3,18 @@
 /* 1) Light‑mode defaults */
 :root {
   /* neutral black & white palette */
-  --background:         #ffffff;
-  --foreground:         #000000;
-  --accent:             #000000;
+  /* adopt the dark palette used in DemoCharts */
+  --background:         #111827; /* matches bg-gray-900 */
+  --foreground:         #ffffff; /* text-white */
+  --accent:             #3b82f6; /* blue accent for charts */
   --accent-foreground:  #ffffff;
 
-  /* set plugin variables to greyscale */
-  --primary:            0 0% 0%;
+  /* plugin variables tweaked for the dark theme */
+  --primary:            215 80% 56%;
   --primary-foreground: 0 0% 100%;
-  --secondary:          0 0% 100%;
-  --secondary-foreground: 0 0% 0%;
-  --destructive:        0 0% 0%;
+  --secondary:          222 47% 10%;
+  --secondary-foreground: 0 0% 100%;
+  --destructive:        0 84% 60%;
   --destructive-foreground: 0 0% 100%;
 }
 

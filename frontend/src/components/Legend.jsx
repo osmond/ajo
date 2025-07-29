@@ -6,7 +6,7 @@ export default function Legend() {
   return (
     <div className="flex items-center gap-4 mt-4 text-sm">
       <div className="flex items-center gap-1">
-        <span className="w-4 h-4 bg-gray-200 border rounded-sm"></span>
+        <span className="w-4 h-4 bg-muted border rounded-sm"></span>
         <span>Not visited ({notVisited})</span>
       </div>
       <div className="flex items-center gap-1">
