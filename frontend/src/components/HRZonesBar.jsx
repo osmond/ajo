@@ -7,6 +7,7 @@ import {
   YAxis,
   Tooltip,
   ResponsiveContainer,
+  Cell,
 } from "recharts";
 import { fetchHeartrate } from "../api";
 import Skeleton from "./ui/Skeleton";
@@ -29,19 +30,16 @@ export default function HRZonesBar() {
   const [zones, setZones] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
-  const gradientId = React.useId();
-  const styles = getComputedStyle(document.documentElement);
-  const accent = styles.getPropertyValue('--color-accent').trim();
-  const destructive = styles.getPropertyValue('--destructive').trim();
+  // Using colored bars for each zone
 
   React.useEffect(() => {
     fetchHeartrate()
       .then((data) => {
         const zoneDefs = [
-          { label: "Easy", min: 0, max: 99 },
-          { label: "Fat Burn", min: 100, max: 119 },
-          { label: "Cardio", min: 120, max: 139 },
-          { label: "Peak", min: 140, max: Infinity },
+          { label: "Easy", min: 0, max: 99, color: "#10b981" },
+          { label: "Fat Burn", min: 100, max: 119, color: "#facc15" },
+          { label: "Cardio", min: 120, max: 139, color: "#f97316" },
+          { label: "Peak", min: 140, max: Infinity, color: "#ef4444" },
         ];
         const counts = zoneDefs.map(() => 0);
         for (const p of data) {
@@ -53,7 +51,7 @@ export default function HRZonesBar() {
           }
         }
         setZones(
-          zoneDefs.map((z, i) => ({ zone: z.label, value: counts[i] }))
+          zoneDefs.map((z, i) => ({ zone: z.label, value: counts[i], color: z.color }))
         );
       })
       .catch(() => setError("Failed to load"))
@@ -72,16 +70,14 @@ export default function HRZonesBar() {
         {!loading && !error && (
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={zones} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-              <defs>
-                <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor={accent} />
-                  <stop offset="100%" stopColor={destructive} />
-                </linearGradient>
-              </defs>
               <XAxis dataKey="zone" />
               <YAxis allowDecimals={false} />
               <Tooltip content={<ZoneTooltip />} />
-              <Bar dataKey="value" fill={`url(#${gradientId})`} />
+              <Bar dataKey="value">
+                {zones.map((z, idx) => (
+                  <Cell key={idx} fill={z.color} />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         )}
