@@ -11,6 +11,11 @@ const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
 export default function DashboardPage() {
   return (
     <div className="space-y-6 p-6">
+
+      <h2 className="text-sm font-medium text-gray-600 mb-2">Activity Overview</h2>
+      <WeeklySummaryCard />
+      <SummaryCard />
+
       <Card className="animate-in fade-in">
         <CardContent className="space-y-6">
           <div className="grid gap-6 sm:grid-cols-2">

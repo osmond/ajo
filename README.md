@@ -113,9 +113,10 @@ from dummy tracks otherwise.
 
 The Summary Card shown at the top of the app is implemented in
 `frontend/src/components/WeeklySummaryCard.jsx`. It fetches step counts, sleep
-hours and daily totals using the API helpers. The header now offers a date range
-selector, quick filter buttons and export/share actions while the metrics and
-sparklines sit in the card content below.
+hours and daily totals using the API helpers. A small "Activity Overview" heading
+now sits above the card on the dashboard. The card header itself offers a date
+range selector, quick filter buttons and export/share actions while the metrics
+and sparklines sit in the card content below.
 
 ## Run Summary Card
 
