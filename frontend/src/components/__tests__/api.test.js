@@ -1,4 +1,4 @@
-import { fetchRuns } from '../../api';
+import { fetchRuns, fetchActivities } from '../../api';
 import { vi } from 'vitest';
 
 test('fetchRuns returns parsed JSON', async () => {
@@ -12,4 +12,14 @@ test('fetchRuns returns parsed JSON', async () => {
 
   const result = await fetchRuns();
   expect(result).toEqual(data);
+});
+
+test('fetchActivities adds query string with leading ? when params provided', async () => {
+  global.fetch = vi.fn().mockResolvedValue({
+    ok: true,
+    json: () => Promise.resolve([]),
+  });
+
+  await fetchActivities({ type: 'run' });
+  expect(global.fetch).toHaveBeenCalledWith('/activities?type=run');
 });
