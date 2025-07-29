@@ -8,6 +8,9 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Download, Share2, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import ProgressRing from "./ui/ProgressRing";
+
+const STEP_GOAL = 10000;
 
 export function computeStats(currSteps = [], prevSteps = [], currSleep = [], prevSleep = [], currTotals = [], prevTotals = []) {
   const sum = (arr, key) => arr.reduce((s, p) => s + (p[key] || 0), 0);
@@ -40,6 +43,8 @@ export default function WeeklySummaryCard({ children }) {
   const [range, setRange] = React.useState("7");
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
+
+  const todaySteps = steps[steps.length - 1]?.value ?? 0;
 
   React.useEffect(() => {
     Promise.all([fetchSteps(), fetchSleep(), fetchDailyTotals()])
@@ -249,6 +254,7 @@ export default function WeeklySummaryCard({ children }) {
                 </LineChart>
               </ResponsiveContainer>
             </div>
+            <ProgressRing value={todaySteps} max={STEP_GOAL} size={60} />
             {children}
           </div>
         )}
