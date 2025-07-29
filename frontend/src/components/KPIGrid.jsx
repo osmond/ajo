@@ -45,7 +45,7 @@ export default function KPIGrid() {
     <div className="grid gap-4 sm:grid-cols-3">
       {loading &&
         Array.from({ length: 3 }).map((_, i) => (
-          <Card key={i} className="animate-pulse">
+          <Card key={i} className="animate-in fade-in animate-pulse">
             <CardHeader>
               <CardTitle>
                 <Skeleton className="h-6 w-24" />
@@ -61,7 +61,7 @@ export default function KPIGrid() {
       )}
       {!loading && !error &&
         items.map((item) => (
-          <Card key={item.label}>
+          <Card key={item.label} className="animate-in fade-in">
             <CardHeader>
               <CardTitle>{item.label}</CardTitle>
             </CardHeader>
