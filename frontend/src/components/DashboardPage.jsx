@@ -7,7 +7,6 @@ import TemperatureChart from "./TemperatureChart";
 import StatesVisited from "./StatesVisited";
 import WeeklySummaryCard from "./WeeklySummaryCard";
 import SummaryCard from "./SummaryCard";
-import TodayDistanceCard from "./TodayDistanceCard";
 const MapSection = React.lazy(() => import("./MapSection"));
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
 
@@ -16,9 +15,6 @@ export default function DashboardPage() {
     <div className="space-y-6 p-6">
 
       <h2 className="text-sm font-medium text-gray-600 mb-2">Activity Overview</h2>
-
-      <TodayDistanceCard />
-
 
       <React.Suspense
         fallback={
@@ -36,7 +32,6 @@ export default function DashboardPage() {
       </div>
 
       <StatesVisited />
-
 
       <WeeklySummaryCard />
       <SummaryCard />

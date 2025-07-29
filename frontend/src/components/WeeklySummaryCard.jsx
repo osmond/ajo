@@ -8,9 +8,10 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Download, Share2, ArrowUpRight, ArrowDownRight } from "lucide-react";
-import { TodayDistanceSparkbar } from "./ui/TodayDistanceSparkbar";
+import ProgressRing from "./ui/ProgressRing";
 
 const STEP_GOAL = 10000;
+const DISTANCE_GOAL_KM = 20;
 
 export function computeStats(currSteps = [], prevSteps = [], currSleep = [], prevSleep = [], currTotals = [], prevTotals = []) {
   const sum = (arr, key) => arr.reduce((s, p) => s + (p[key] || 0), 0);
@@ -47,9 +48,6 @@ export default function WeeklySummaryCard({ children }) {
 
   const todayDistanceKm =
     (totals[totals.length - 1]?.distance ?? 0) / 1000;
-  const distanceHistoryKm = totals
-    .slice(-8)
-    .map((t) => (t.distance ?? 0) / 1000);
 
   React.useEffect(() => {
     Promise.all([fetchSteps(), fetchSleep(), fetchDailyTotals()])
@@ -271,9 +269,12 @@ export default function WeeklySummaryCard({ children }) {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-            <TodayDistanceSparkbar
-              history={distanceHistoryKm}
-              todayValue={todayDistanceKm}
+            <ProgressRing
+              value={todayDistanceKm}
+              max={DISTANCE_GOAL_KM}
+              unit="km"
+              title="Distance today"
+              size={60}
             />
             {children}
           </div>
