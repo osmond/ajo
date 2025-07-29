@@ -83,7 +83,7 @@ variables so backgrounds become darker and text lightens automatically.
 
 ## Tailwind Theme Setup
 
-The `src/main.jsx` entry point imports `@/index.css` which includes `tailwindcss-shadcn-ui/style.css` so shadcn/ui component styles are loaded.
+The `src/main.jsx` entry point imports `./index.css` which includes `tailwindcss-shadcn-ui/style.css` so shadcn/ui component styles are loaded.
 
 The preset is enabled in `tailwind.config.js` via `createPreset` and `defineTheme` to provide light and dark colors:
 
