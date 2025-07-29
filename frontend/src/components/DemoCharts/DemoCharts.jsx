@@ -16,7 +16,6 @@ export default function DemoCharts() {
       {/* 1) Donut */}
       <div className="text-center">
         <h2 className="text-lg font-semibold">TREADMILL VS OUTDOOR</h2>
-        <p className="text-sm opacity-60">i’ll always run outside if i have a choice…</p>
         <div className="relative mx-auto" style={{ width: 200, height: 200 }}>
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
@@ -43,7 +42,6 @@ export default function DemoCharts() {
         {/* 2) Activity by Time */}
         <div className="text-center">
           <h2 className="text-lg font-semibold">WORKOUT ACTIVITY BY TIME</h2>
-          <p className="text-sm opacity-60">definitely a morning runner…</p>
           <div style={{ width: '100%', height: 250 }}>
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={timeData}>
@@ -59,7 +57,6 @@ export default function DemoCharts() {
         {/* 3) Mileage by Day */}
         <div className="text-center">
           <h2 className="text-lg font-semibold">AVERAGE DAILY MILEAGE BY DAY</h2>
-          <p className="text-sm opacity-60">used to do my long runs on Saturdays…</p>
           <div style={{ width: '100%', height: 250 }}>
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={mileageData}>

@@ -3,6 +3,7 @@ import ChartCard from "./ChartCard";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { fetchAnalysis } from "../api";
 import Skeleton from "./ui/Skeleton";
+import TimeOfDay from "./TimeOfDay";
 import CumulativeTimeChart from "./CumulativeTimeChart";
 import DemoCharts from "./DemoCharts/DemoCharts";
 
@@ -29,13 +30,7 @@ export default function AnalysisSection() {
   const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
-    fetchAnalysis()
-      .then(setData)
-      .catch(() => setError("Failed to load"))
-      .finally(() => setLoading(false));
-  }, []);
-
-  return (
+@@ -39,31 +39,31 @@ export default function AnalysisSection() {
     <div className="space-y-10">
       <div className="grid gap-10 sm:grid-cols-2">
       <ChartCard title="Pace vs Temperature">
@@ -61,6 +56,7 @@ export default function AnalysisSection() {
           )}
         </div>
       </ChartCard>
+        <TimeOfDay />
         <CumulativeTimeChart />
       </div>
       <DemoCharts />
