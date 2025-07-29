@@ -255,6 +255,13 @@ export default function WeeklySummaryCard({ children }) {
         </div>
         {!loading && !error && (
           <div className="flex items-end gap-4">
+            <ProgressRing
+              value={todayDistanceKm}
+              max={DISTANCE_GOAL_KM}
+              unit="km"
+              title="Distance today"
+              size={60}
+            />
             <div className="h-8 w-20">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={filteredSteps} margin={{ top: 2, bottom: 2 }}>
@@ -269,13 +276,6 @@ export default function WeeklySummaryCard({ children }) {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-            <ProgressRing
-              value={todayDistanceKm}
-              max={DISTANCE_GOAL_KM}
-              unit="km"
-              title="Distance today"
-              size={60}
-            />
             {children}
           </div>
         )}
