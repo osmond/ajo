@@ -1,0 +1,115 @@
+import React from 'react';
+import {
+  ResponsiveContainer,
+  BarChart, Bar,
+  XAxis, YAxis, Tooltip,
+} from 'recharts';
+import {
+  Thermometer, Cloud, Sun, CloudRain, CloudSnow,
+  CloudHaze, Droplet, CloudFog, Zap,
+} from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from './ui/Card';
+import { temperatureData, weatherData } from './DemoWeatherData';
+
+export default function DemoWeatherCharts() {
+  return (
+    <div className="space-y-8">
+      {/* Temperature Chart */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Temperature</CardTitle>
+          <p className="text-sm text-muted-foreground">
+            i prefer running in the 40s, but unfortunately i don\u2019t control the weather
+          </p>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="100%" height={350}>
+            <BarChart
+              layout="vertical"
+              data={temperatureData}
+              margin={{ left: 100, right: 20, top: 20, bottom: 20 }}
+            >
+              <XAxis type="number" hide />
+              <YAxis
+                type="category"
+                dataKey="label"
+                width={100}
+                tickLine={false}
+                axisLine={false}
+                tick={({ x, y, payload }) => (
+                  <text
+                    x={x - 8}
+                    y={y + 4}
+                    textAnchor="end"
+                    fontSize={12}
+                    fill="#334155"
+                  >
+                    {payload.value}
+                    <tspan fill="#64748B">  {temperatureData.find(d => d.label === payload.value).range}</tspan>
+                  </text>
+                )}
+              />
+              <Tooltip
+                formatter={(val) => [`${val} runs`, ""]}
+                cursor={{ fill: "rgba(56, 189, 248, 0.1)" }}
+              />
+              <Bar
+                dataKey="count"
+                fill="#94A3B8"
+                barSize={20}
+                radius={[4, 4, 4, 4]}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+
+      {/* Weather Conditions Chart */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Weather Conditions</CardTitle>
+          <p className="text-sm text-muted-foreground">rain or shine!</p>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="100%" height={350}>
+            <BarChart
+              layout="vertical"
+              data={weatherData}
+              margin={{ left: 120, right: 20, top: 20, bottom: 20 }}
+            >
+              <XAxis type="number" hide />
+              <YAxis
+                type="category"
+                dataKey="condition"
+                width={120}
+                tickLine={false}
+                axisLine={false}
+                tick={({ x, y, payload }) => {
+                  const Icon = weatherData.find(d => d.condition === payload.value).icon;
+                  return (
+                    <g transform={`translate(${x - 40},${y - 10})`}>
+                      <Icon size={16} fill="none" stroke="#334155" />
+                      <text x={24} y={16} fontSize={12} fill="#334155">
+                        {payload.value}
+                      </text>
+                    </g>
+                  );
+                }}
+              />
+              <Tooltip
+                formatter={(val) => [`${val} runs`, ""]}
+                cursor={{ fill: "rgba(56, 189, 248, 0.1)" }}
+              />
+              <Bar
+                dataKey="count"
+                fill="#CBD5E1"
+                barSize={20}
+                radius={[4, 4, 4, 4]}
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
