@@ -55,7 +55,7 @@ export default function StepsSparkline() {
         {!loading && !error && (
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={steps} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-              <CartesianGrid stroke="hsl(var(--muted))" strokeDasharray="3 3" />
+              <CartesianGrid stroke="#E5E7EB" strokeWidth={1} strokeDasharray="4 4" />
               <XAxis dataKey="timestamp" tick={false} />
               <YAxis />
               <Tooltip content={<StepTooltip />} />

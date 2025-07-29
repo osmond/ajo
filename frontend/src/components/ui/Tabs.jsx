@@ -38,9 +38,8 @@ export function TabsTrigger({ value, className = "", children }) {
       className={
         "px-3 py-1.5 text-sm border-b-2 transition-colors " +
         (active
-          ? "border-accent text-accent-foreground"
-          : "border-transparent hover:border-accent hover:bg-accent/10") +
-        (active ? "" : "") +
+          ? "border-accent text-primary"
+          : "border-transparent text-gray-600 hover:border-accent") +
         " " +
         className
       }

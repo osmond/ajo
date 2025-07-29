@@ -64,7 +64,7 @@ export default function ElevationChart({ points = [], activeIndex = null }) {
       <div className="h-40">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" />
+            <CartesianGrid stroke="#E5E7EB" strokeWidth={1} strokeDasharray="4 4" />
             <XAxis dataKey="dist" unit="km" />
             <YAxis dataKey="elevation" unit="m" />
             <Tooltip content={<ElevationTooltip />} />
