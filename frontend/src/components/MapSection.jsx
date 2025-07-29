@@ -1,7 +1,6 @@
 import React from "react";
 import ChartCard from "./ChartCard";
 import ActivityCalendar from "./ActivityCalendar";
-import CalendarHeatmap from "./CalendarHeatmap";
 import { Card, CardContent } from "./ui/Card";
 import {
   fetchActivityTrack,
@@ -119,9 +118,6 @@ export default function MapSection() {
       {points.length > 0 && (
         <ElevationChart points={points} activeIndex={hoverIdx} />
       )}
-      <ChartCard title="On This Day">
-        <CalendarHeatmap />
-      </ChartCard>
       <ChartCard title="Route Heatmap">
         <div className="mb-2 flex flex-col gap-2 sm:flex-row">
           <select
