@@ -9,10 +9,27 @@
 
 /* 4) Utility layer */
 @tailwind utilities;
+
 @layer utilities {
   .heatmap-1 { background-color: rgba(59, 130, 246, 0.2); }
   .heatmap-2 { background-color: rgba(59, 130, 246, 0.4); }
   .heatmap-3 { background-color: rgba(59, 130, 246, 0.6); }
   .heatmap-4 { background-color: rgba(59, 130, 246, 0.8); }
   .heatmap-empty { background-color: rgba(0, 0, 0, 0.05); }
+
+
+@layer base {
+  :root {
+    --color-accent: #4f46e5;
+    --color-water: #0ea5e9;
+    --color-fertilize: #16a34a;
+    --color-healthy: #15803d;
+  }
+  .dark {
+    --color-accent: #e0e7ff;
+    --color-water: #7dd3fc;
+    --color-fertilize: #6ee7b7;
+    --color-healthy: #bbf7d0;
+  }
+
 }
