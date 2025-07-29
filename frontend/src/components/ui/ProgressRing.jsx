@@ -7,13 +7,18 @@ export default function ProgressRing({
   size = 40,
   unit = "",
   className = "",
+  title = "",
 }) {
   const percent = Math.max(0, Math.min(1, value / max)) * 100;
   const data = [{ name: "progress", value: percent }];
   const gradientId = React.useId();
 
   return (
-    <div className={"relative " + className} style={{ width: size, height: size }}>
+    <div
+      className={"relative " + className}
+      style={{ width: size, height: size }}
+      title={title}
+    >
       <ResponsiveContainer width="100%" height="100%">
         <RadialBarChart
           data={data}

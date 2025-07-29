@@ -11,6 +11,7 @@ import { Download, Share2, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import ProgressRing from "./ui/ProgressRing";
 
 const STEP_GOAL = 10000;
+const DISTANCE_GOAL_KM = 20;
 
 export function computeStats(currSteps = [], prevSteps = [], currSleep = [], prevSleep = [], currTotals = [], prevTotals = []) {
   const sum = (arr, key) => arr.reduce((s, p) => s + (p[key] || 0), 0);
@@ -45,7 +46,8 @@ export default function WeeklySummaryCard({ children }) {
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
 
-  const todaySteps = steps[steps.length - 1]?.value ?? 0;
+  const todayDistanceKm =
+    (totals[totals.length - 1]?.distance ?? 0) / 1000;
 
   React.useEffect(() => {
     Promise.all([fetchSteps(), fetchSleep(), fetchDailyTotals()])
@@ -267,7 +269,13 @@ export default function WeeklySummaryCard({ children }) {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-            <ProgressRing value={todaySteps} max={STEP_GOAL} size={60} />
+            <ProgressRing
+              value={todayDistanceKm}
+              max={DISTANCE_GOAL_KM}
+              unit="km"
+              title="Distance today"
+              size={60}
+            />
             {children}
           </div>
         )}
