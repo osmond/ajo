@@ -16,6 +16,8 @@ export default function DashboardPage() {
 
       <h2 className="text-sm font-medium text-gray-600 mb-2">Activity Overview</h2>
 
+      <WeeklySummaryCard />
+
       <React.Suspense
         fallback={
           <div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">
@@ -33,7 +35,6 @@ export default function DashboardPage() {
 
       <StatesVisited />
 
-      <WeeklySummaryCard />
       <SummaryCard />
 
       <Card className="animate-in fade-in">
