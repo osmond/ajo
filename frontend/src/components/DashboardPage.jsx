@@ -1,6 +1,7 @@
 import React from "react";
 import WeeklySummaryCard from "./WeeklySummaryCard";
 import SummaryCard from "./SummaryCard";
+import { Card, CardContent } from "./ui/Card";
 import KPIGrid from "./KPIGrid";
 import StepsSparkline from "./StepsSparkline";
 import HRZonesBar from "./HRZonesBar";
@@ -16,7 +17,9 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6 p-6">
       <WeeklySummaryCard />
-      <SummaryCard>
+      <SummaryCard />
+      <Card className="animate-in fade-in">
+        <CardContent className="space-y-6">
         <Tabs defaultValue="dashboard" className="space-y-6">
           <TabsList className="grid w-full grid-cols-4 mb-4">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
@@ -62,7 +65,8 @@ export default function DashboardPage() {
             <CumulativeChart />
           </TabsContent>
         </Tabs>
-      </SummaryCard>
+        </CardContent>
+      </Card>
     </div>
   );
 }
