@@ -5,6 +5,7 @@ import { fetchAnalysis } from "../api";
 import Skeleton from "./ui/Skeleton";
 import TimeOfDay from "./TimeOfDay";
 import DemoCharts from "./DemoCharts/DemoCharts";
+import DemoWeatherCharts from "./DemoWeatherCharts";
 
 function AnalysisTooltip({ active, payload }) {
   if (!active || !payload?.length) return null;
@@ -64,6 +65,7 @@ export default function AnalysisSection() {
         <TimeOfDay />
       </div>
       <DemoCharts />
+      <DemoWeatherCharts />
     </div>
   );
 }
