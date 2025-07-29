@@ -59,6 +59,7 @@ export default function RunHeatmap() {
     count: r.distance / 1609.34,
   }));
 
+  const palette = ["heatmap-scale-0", "heatmap-scale-1", "heatmap-scale-2", "heatmap-scale-3"];
   return (
     <div ref={heatmapRef}>
       <CalendarHeatmap
@@ -69,6 +70,7 @@ export default function RunHeatmap() {
         titleForValue={(v) =>
           v && v.date ? `${v.date}: ${(v.count ?? 0).toFixed(1)} mi` : null
         }
+
         classForValue={(v) => {
           if (!v || v.count === null || v.count === undefined) {
             return "heatmap-empty";
@@ -86,5 +88,18 @@ export default function RunHeatmap() {
         })}
       />
     </div>
+
+        const c = v.count;
+        let idx = 0;
+        if (c > 10) idx = 3;
+        else if (c > 5) idx = 2;
+        else if (c > 2) idx = 1;
+        return palette[idx];
+      }}
+      tooltipDataAttrs={(v) => ({
+        "data-tip": `${v.date}: ${(v.count ?? 0).toFixed(1)}\u00a0mi`,
+      })}
+    />
+
   );
 }
