@@ -31,3 +31,10 @@ it('renders radial bar chart and displays value', () => {
   // The numeric value should appear in the overlay
   expect(getByText('50')).toBeInTheDocument();
 });
+
+it('shows unit label when provided', () => {
+  const { getByText } = render(
+    <ProgressRing value={3000} max={10000} unit="steps" />
+  );
+  expect(getByText('steps')).toBeInTheDocument();
+});
