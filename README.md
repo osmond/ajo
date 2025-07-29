@@ -109,5 +109,6 @@ from dummy tracks otherwise.
 The Summary Card shown at the top of the app is implemented in
 `frontend/src/components/WeeklySummaryCard.jsx`. It fetches step counts, sleep
 hours and daily totals using the API helpers and displays the aggregated values
-with two sparklines.
+with two sparklines. Weekly totals only take the most recent seven days into
+account.
 
