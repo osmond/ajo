@@ -37,7 +37,7 @@ export default function WeeklySummaryCard({ children }) {
     totalsLast7.reduce((sum, p) => sum + p.distance, 0) / 1000;
 
   return (
-    <Card className="mb-4 animate-in fade-in">
+    <Card className="mb-4 animate-in fade-in bg-secondary text-secondary-foreground">
       <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-1">
           {loading && <Skeleton className="h-6 w-32" />}
@@ -69,7 +69,7 @@ export default function WeeklySummaryCard({ children }) {
                     <Line
                       type="monotone"
                       dataKey="value"
-                      stroke="hsl(var(--primary))"
+                      stroke="hsl(var(--accent))"
                       fill="none"
                       dot={false}
                     />
@@ -82,7 +82,7 @@ export default function WeeklySummaryCard({ children }) {
                     <Line
                       type="monotone"
                       dataKey="value"
-                      stroke="hsl(var(--primary))"
+                      stroke="hsl(var(--accent))"
                       fill="none"
                       dot={false}
                     />

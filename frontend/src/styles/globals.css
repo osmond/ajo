@@ -2,19 +2,24 @@
 
 /* 1) Light‑mode defaults */
 :root {
-  /* neutral black & white palette */
-  --background:         #ffffff;
-  --foreground:         #000000;
-  --accent:             #000000;
-  --accent-foreground:  #ffffff;
+  /* core palette */
+  --background:          0 0% 97%;      /* Neutral 200 */
+  --foreground:          194 88% 13%;   /* On Secondary */
+  --card:                46 59% 87%;    /* Secondary */
+  --card-foreground:     194 88% 13%;   /* On Secondary */
+  --accent:              45 46% 56%;    /* Accent */
+  --accent-foreground:   194 88% 13%;   /* On Accent */
 
-  /* set plugin variables to greyscale */
-  --primary:            0 0% 0%;
-  --primary-foreground: 0 0% 100%;
-  --secondary:          0 0% 100%;
-  --secondary-foreground: 0 0% 0%;
-  --destructive:        0 0% 0%;
+  /* shadcn/ui variables */
+  --primary:             194 88% 13%;
+  --primary-foreground:  46 59% 87%;
+  --secondary:           46 59% 87%;
+  --secondary-foreground: 194 88% 13%;
+  --destructive:         0 85% 60%;
   --destructive-foreground: 0 0% 100%;
+  --border:              48 25% 76%;
+  --input:               48 25% 76%;
+  --ring:                45 46% 56%;
 }
 
 /* 2) Tailwind layers */
