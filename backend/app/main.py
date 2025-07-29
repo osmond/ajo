@@ -23,6 +23,8 @@ dummy_activities = []
 base_lat, base_lon = 43.0731, -89.4012
 for i in range(1, 101):
     act_type = "RUN" if i % 2 else "BIKE"
+    dist_km = random.uniform(3, 12)
+    duration = int(dist_km * random.uniform(5.5, 7.0) * 60)
     dummy_activities.append(
         {
             "activityId": f"act_{i}",
@@ -32,6 +34,8 @@ for i in range(1, 101):
             ).isoformat(),
             "startLat": base_lat + random.uniform(-0.02, 0.02),
             "startLon": base_lon + random.uniform(-0.02, 0.02),
+            "distance": round(dist_km * 1000),
+            "duration": duration,
         }
     )
 
@@ -78,8 +82,8 @@ async def activity(activity_id: str):
         if act["activityId"] == activity_id:
             return {
                 **act,
-                "distance": 5000 + len(activity_id) * 10,
-                "duration": 1800,
+                "distance": act.get("distance", 0),
+                "duration": act.get("duration", 0),
                 "calories": 300,
                 "type": "Run",
                 "startTimeLocal": act["startTimeLocal"],
@@ -271,8 +275,8 @@ async def runs():
                 continue
         else:
             detail = {
-                "distance": 5000 + len(activity_id) * 10,
-                "duration": 1800,
+                "distance": act.get("distance", 0),
+                "duration": act.get("duration", 0),
             }
             start = datetime.datetime.fromisoformat(act["startTimeLocal"])
             lat = act.get("startLat", base_lat)
@@ -328,9 +332,8 @@ async def daily_totals():
         for act in dummy_activities:
             date = act["startTimeLocal"].split("T")[0]
             entry = totals.setdefault(date, {"distance": 0, "duration": 0})
-            # dummy detail
-            entry["distance"] += 5000 + len(act["activityId"]) * 10
-            entry["duration"] += 1800
+            entry["distance"] += act.get("distance", 0)
+            entry["duration"] += act.get("duration", 0)
     return [{"date": d, **v} for d, v in sorted(totals.items())]
 
 
