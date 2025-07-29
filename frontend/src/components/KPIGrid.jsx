@@ -3,6 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/Card";
 import ProgressRing from "./ui/ProgressRing";
 import { fetchHeartrate, fetchSleep, fetchSteps } from "../api";
 import Skeleton from "./ui/Skeleton";
+import { GiFootsteps } from "react-icons/gi";
+import { FaBed, FaHeart } from "react-icons/fa";
 
 export default function KPIGrid() {
   const [items, setItems] = React.useState([]);
@@ -26,9 +28,27 @@ export default function KPIGrid() {
         const lastSleep = sleep[sleep.length - 1]?.value ?? 0;
 
         setItems([
-          { label: "Steps", value: latestSteps, goal: 10000, unit: "" },
-          { label: "Sleep", value: lastSleep, goal: 8, unit: "h" },
-          { label: "HR Avg", value: avgHr, goal: 100, unit: "bpm" },
+          {
+            label: "Steps",
+            value: latestSteps,
+            goal: 10000,
+            unit: "",
+            icon: GiFootsteps,
+          },
+          {
+            label: "Sleep",
+            value: lastSleep,
+            goal: 8,
+            unit: "h",
+            icon: FaBed,
+          },
+          {
+            label: "HR Avg",
+            value: avgHr,
+            goal: 100,
+            unit: "bpm",
+            icon: FaHeart,
+          },
         ]);
       } catch (err) {
         setError("Failed to load metrics");
@@ -48,12 +68,12 @@ export default function KPIGrid() {
 
           <Card key={i} className="animate-in fade-in animate-pulse h-40">
 
-            <CardHeader>
-              <CardTitle>
+            <CardHeader className="items-center">
+              <CardTitle className="text-center">
                 <Skeleton className="h-6 w-24" />
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex h-32 items-center justify-center">
+            <CardContent className="flex items-center justify-center h-32">
               <Skeleton className="h-20 w-20 rounded-full" />
             </CardContent>
           </Card>
@@ -66,8 +86,11 @@ export default function KPIGrid() {
 
           <Card key={item.label} className="animate-in fade-in h-40">
 
-            <CardHeader>
-              <CardTitle>{item.label}</CardTitle>
+            <CardHeader className="items-center">
+              <CardTitle className="flex items-center gap-2 text-center">
+                {item.icon && <item.icon />}
+                {item.label}
+              </CardTitle>
             </CardHeader>
             <CardContent className="flex items-center justify-center h-32">
               <ProgressRing value={item.value} max={item.goal} unit={item.unit} size={80} />
