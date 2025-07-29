@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react';
 import { vi } from 'vitest';
 import CumulativeChart from '../CumulativeChart';
 
+afterEach(() => vi.restoreAllMocks());
+
 beforeAll(() => {
   global.ResizeObserver = class {
     constructor(cb) {

@@ -2,6 +2,8 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { vi } from 'vitest';
 import MapSection from '../MapSection';
 
+afterEach(() => vi.restoreAllMocks());
+
 vi.mock('../ActivityCalendar', () => ({ default: () => <div data-testid="calendar" /> }));
 vi.mock('../CalendarHeatmap', () => ({ default: () => <div data-testid="heatmap" /> }));
 vi.mock('../LeafletMap', () => ({ default: () => <div data-testid="leaflet" /> }));

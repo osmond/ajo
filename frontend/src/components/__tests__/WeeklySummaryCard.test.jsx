@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react';
 import WeeklySummaryCard, { computeStats } from '../WeeklySummaryCard';
 import { vi } from 'vitest';
 
+afterEach(() => vi.restoreAllMocks());
+
 beforeAll(() => {
   global.ResizeObserver = class {
     constructor(cb) {

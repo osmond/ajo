@@ -1,6 +1,8 @@
 import { fetchRuns, fetchActivities } from '../../api';
 import { vi } from 'vitest';
 
+afterEach(() => vi.restoreAllMocks());
+
 test('fetchRuns returns parsed JSON', async () => {
   const data = [
     { date: '2023-01-01', distance: 5000, duration: 1800 },
