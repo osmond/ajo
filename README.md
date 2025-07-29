@@ -77,7 +77,7 @@ The "Mileage" tab visualizes your cumulative distance per month in a line chart.
 
 ## Tailwind Theme Setup
 
-The `src/main.jsx` entry point imports `@/index.css` which includes `tailwindcss-shadcn-ui/style.css` so shadcn/ui component styles are loaded.
+The `src/main.jsx` entry point imports `@/index.css` which includes `tailwindcss-shadcn-ui/style.css` so shadcn/ui component styles are loaded. The interface uses icons from the **Lucide** set via the `lucide-react` package.
 
 The preset is enabled in `tailwind.config.js` via `createPreset` to load the component styles and map colors to CSS variables:
 

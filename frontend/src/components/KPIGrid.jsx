@@ -3,8 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/Card";
 import ProgressRing from "./ui/ProgressRing";
 import { fetchHeartrate, fetchSleep, fetchSteps } from "../api";
 import Skeleton from "./ui/Skeleton";
-import { GiFootsteps } from "react-icons/gi";
-import { FaBed, FaHeart } from "react-icons/fa";
+import { Footprints, BedDouble, Heart } from "lucide-react";
 
 export default function KPIGrid() {
   const [items, setItems] = React.useState([]);
@@ -33,21 +32,21 @@ export default function KPIGrid() {
             value: latestSteps,
             goal: 10000,
             unit: "",
-            icon: GiFootsteps,
+            icon: Footprints,
           },
           {
             label: "Sleep",
             value: lastSleep,
             goal: 8,
             unit: "h",
-            icon: FaBed,
+            icon: BedDouble,
           },
           {
             label: "HR Avg",
             value: avgHr,
             goal: 100,
             unit: "bpm",
-            icon: FaHeart,
+            icon: Heart,
           },
         ]);
       } catch (err) {
