@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import datetime
 import random
 from dotenv import load_dotenv
-from .garmin_client import GarminClient
+from .garmin_client import GarminClient, generate_dummy_activities
 from .weather import get_weather
 
 load_dotenv()
@@ -18,32 +18,9 @@ app.add_middleware(
 )
 
 # Dummy activities list
-dummy_activities = []
+dummy_activities = generate_dummy_activities(365)
 # Dummy coordinates centered in Madison, WI
 base_lat, base_lon = 43.0731, -89.4012
-# Generate roughly a year of dummy activities
-for i in range(1, 366):
-    act_type = "RUN" if i % 2 else "BIKE"
-    dist_km = random.uniform(3, 12)
-    duration = int(dist_km * random.uniform(5.5, 7.0) * 60)
-    start = datetime.datetime.now() - datetime.timedelta(days=i)
-    start = start.replace(
-        hour=random.randint(0, 23),
-        minute=random.randint(0, 59),
-        second=random.randint(0, 59),
-        microsecond=0,
-    )
-    dummy_activities.append(
-        {
-            "activityId": f"act_{i}",
-            "activityType": {"typeKey": act_type},
-            "startTimeLocal": start.isoformat(),
-            "startLat": base_lat + random.uniform(-0.02, 0.02),
-            "startLon": base_lon + random.uniform(-0.02, 0.02),
-            "distance": round(dist_km * 1000),
-            "duration": duration,
-        }
-    )
 
 @app.get("/activities")
 async def activities(start: int = 0, limit: int = 50, type: str | None = None):
