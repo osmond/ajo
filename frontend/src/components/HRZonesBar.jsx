@@ -36,10 +36,10 @@ export default function HRZonesBar() {
     fetchHeartrate()
       .then((data) => {
         const zoneDefs = [
-          { label: "Easy", min: 0, max: 99, color: "#10b981" },
-          { label: "Fat Burn", min: 100, max: 119, color: "#facc15" },
-          { label: "Cardio", min: 120, max: 139, color: "#f97316" },
-          { label: "Peak", min: 140, max: Infinity, color: "#ef4444" },
+          { label: "Easy", min: 0, max: 99, shade: 0.25 },
+          { label: "Fat Burn", min: 100, max: 119, shade: 0.5 },
+          { label: "Cardio", min: 120, max: 139, shade: 0.75 },
+          { label: "Peak", min: 140, max: Infinity, shade: 1 },
         ];
         const counts = zoneDefs.map(() => 0);
         for (const p of data) {
@@ -51,7 +51,11 @@ export default function HRZonesBar() {
           }
         }
         setZones(
-          zoneDefs.map((z, i) => ({ zone: z.label, value: counts[i], color: z.color }))
+          zoneDefs.map((z, i) => ({
+            zone: z.label,
+            value: counts[i],
+            color: `hsl(var(--accent) / ${z.shade})`,
+          }))
         );
       })
       .catch(() => setError("Failed to load"))
