@@ -25,13 +25,18 @@ for i in range(1, 101):
     act_type = "RUN" if i % 2 else "BIKE"
     dist_km = random.uniform(3, 12)
     duration = int(dist_km * random.uniform(5.5, 7.0) * 60)
+    start = datetime.datetime.now() - datetime.timedelta(days=i)
+    start = start.replace(
+        hour=random.randint(0, 23),
+        minute=random.randint(0, 59),
+        second=random.randint(0, 59),
+        microsecond=0,
+    )
     dummy_activities.append(
         {
             "activityId": f"act_{i}",
             "activityType": {"typeKey": act_type},
-            "startTimeLocal": (
-                datetime.datetime.now() - datetime.timedelta(days=i)
-            ).isoformat(),
+            "startTimeLocal": start.isoformat(),
             "startLat": base_lat + random.uniform(-0.02, 0.02),
             "startLon": base_lon + random.uniform(-0.02, 0.02),
             "distance": round(dist_km * 1000),
