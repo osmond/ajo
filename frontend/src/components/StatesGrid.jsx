@@ -7,7 +7,7 @@ export default function StatesGrid() {
         <div
           key={s.abbr}
           style={{ gridColumn: s.col, gridRow: s.row }}
-          className={`w-8 h-8 flex items-center justify-center text-xs font-semibold rounded-sm cursor-pointer ${s.visited ? "bg-foreground text-background" : "bg-gray-200 text-gray-400"}`}
+          className={`w-8 h-8 flex items-center justify-center text-xs font-semibold rounded-sm cursor-pointer ${s.visited ? "bg-foreground text-background" : "bg-muted text-muted-foreground"}`}
           title={`${s.name}${s.visited ? ` – ${s.days} days, ${s.miles} mi` : ""}`}
         >
           {s.abbr}
