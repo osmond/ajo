@@ -5,7 +5,6 @@ export default function ProgressRing({
   value = 0,
   max = 100,
   size = 40,
-  thickness = 30,
   unit = "",
   className = "",
 }) {
@@ -20,7 +19,7 @@ export default function ProgressRing({
           data={data}
           cx="50%"
           cy="50%"
-          innerRadius={`${100 - thickness}%`}
+          innerRadius="70%"
           outerRadius="100%"
           startAngle={90}
           endAngle={-270}
