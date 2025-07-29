@@ -127,3 +127,4 @@ and sparklines sit in the card content below.
 now includes a mini map for the most recent run and a small filled distance
 sparkline to visualize trends.
 
+help
