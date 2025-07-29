@@ -1,13 +1,19 @@
 import datetime
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Any
 
 import requests
 
 API_URL = "https://api.open-meteo.com/v1/forecast"
 
-# Simple in-memory cache of fetched weather data
-# keyed by (lat, lon, date_iso)
-_CACHE: Dict[Tuple[float, float, str], dict] = {}
+# Simple in-memory cache of fetched weather data keyed by
+# ``(lat, lon, date_iso)``. Each entry stores a tuple of
+# ``(timestamp, data)`` so that stale values can be discarded.
+_CACHE: Dict[Tuple[float, float, str], Tuple[float, dict]] = {}
+
+# Entries older than this many seconds are ignored. The value is
+# intentionally small to keep the cache from growing unbounded when
+# the server runs for a long time.
+_CACHE_TTL = 60 * 60  # one hour
 
 
 def get_weather(lat: float, lon: float, timestamp: str) -> dict:
@@ -23,8 +29,14 @@ def get_weather(lat: float, lon: float, timestamp: str) -> dict:
 
     date_key = dt.date().isoformat()
     cache_key = (float(lat), float(lon), date_key)
+    now = datetime.datetime.now().timestamp()
     if cache_key in _CACHE:
-        return _CACHE[cache_key]
+        cached_ts, cached_data = _CACHE[cache_key]
+        if now - cached_ts < _CACHE_TTL:
+            return cached_data
+        else:
+            # remove stale entry
+            del _CACHE[cache_key]
 
     params = {
         "latitude": lat,
@@ -63,5 +75,5 @@ def get_weather(lat: float, lon: float, timestamp: str) -> dict:
     except Exception:
         pass
 
-    _CACHE[cache_key] = result
+    _CACHE[cache_key] = (now, result)
     return result
