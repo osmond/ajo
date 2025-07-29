@@ -1,6 +1,7 @@
 from fastapi.testclient import TestClient
 import os
 import sys
+import requests
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 from app.main import app
 
@@ -149,6 +150,7 @@ def test_weather_cached(monkeypatch):
 
     # Clear any existing cache
     weather._CACHE.clear()
+    weather._FAIL_CACHE.clear()
 
     calls = []
 
@@ -195,6 +197,7 @@ def test_weather_cache_expiry(monkeypatch):
     from app import weather
 
     weather._CACHE.clear()
+    weather._FAIL_CACHE.clear()
     # expire immediately
     monkeypatch.setattr(weather, "_CACHE_TTL", 0)
 
@@ -228,3 +231,38 @@ def test_weather_cache_expiry(monkeypatch):
 
     assert len(calls) == 2
     assert len(weather._CACHE) == 1
+
+
+def test_weather_failure_cache(monkeypatch):
+    """Failed requests should not populate the main cache."""
+    from app import weather
+
+    weather._CACHE.clear()
+    weather._FAIL_CACHE.clear()
+
+    calls = []
+
+    def fake_get(url, params=None, timeout=5):
+        calls.append(1)
+
+        class Resp:
+            def raise_for_status(self):
+                raise requests.RequestException("boom")
+
+        return Resp()
+
+    monkeypatch.setattr(weather.requests, "get", fake_get)
+
+    lat, lon, ts = 3.0, 4.0, "2022-01-03T10:00:00"
+    weather.get_weather(lat, lon, ts)
+    assert len(weather._CACHE) == 0
+    assert len(weather._FAIL_CACHE) == 1
+
+    # second call should use failure cache and not call the API again
+    weather.get_weather(lat, lon, ts)
+    assert len(calls) == 1
+
+    # expire failure cache and ensure API is retried
+    monkeypatch.setattr(weather, "_FAIL_TTL", 0)
+    weather.get_weather(lat, lon, ts)
+    assert len(calls) == 2
