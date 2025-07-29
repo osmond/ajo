@@ -15,6 +15,24 @@ export default function DashboardPage() {
     <div className="space-y-6 p-6">
 
       <h2 className="text-sm font-medium text-gray-600 mb-2">Activity Overview</h2>
+
+      <React.Suspense
+        fallback={
+          <div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">
+            Loading analysis...
+          </div>
+        }
+      >
+        <AnalysisSection />
+      </React.Suspense>
+
+      <div className="grid gap-6 sm:grid-cols-2">
+        <TemperatureChart />
+        <WeatherChart />
+      </div>
+
+      <StatesVisited />
+
       <WeeklySummaryCard />
       <SummaryCard />
 
@@ -32,23 +50,9 @@ export default function DashboardPage() {
           >
             <MapSection />
           </React.Suspense>
-          <React.Suspense
-            fallback={
-              <div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">
-                Loading analysis...
-              </div>
-            }
-          >
-            <AnalysisSection />
-          </React.Suspense>
           <KPIGrid />
-          <div className="grid gap-6 sm:grid-cols-2">
-            <TemperatureChart />
-            <WeatherChart />
-          </div>
         </CardContent>
       </Card>
-      <StatesVisited />
     </div>
   );
 }
