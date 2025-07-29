@@ -26,9 +26,15 @@ export default function WeeklySummaryCard({ children }) {
       .finally(() => setLoading(false));
   }, []);
 
-  const totalSteps = steps.reduce((sum, p) => sum + p.value, 0);
-  const totalSleep = sleep.reduce((sum, p) => sum + p.value, 0);
-  const totalDistanceKm = totals.reduce((sum, p) => sum + p.distance, 0) / 1000;
+  // Only consider the last 7 days for the weekly summary
+  const stepsLast7 = steps.slice(-7);
+  const sleepLast7 = sleep.slice(-7);
+  const totalsLast7 = totals.slice(-7);
+
+  const totalSteps = stepsLast7.reduce((sum, p) => sum + p.value, 0);
+  const totalSleep = sleepLast7.reduce((sum, p) => sum + p.value, 0);
+  const totalDistanceKm =
+    totalsLast7.reduce((sum, p) => sum + p.distance, 0) / 1000;
 
   return (
     <Card className="mb-4 animate-in fade-in">
@@ -59,7 +65,7 @@ export default function WeeklySummaryCard({ children }) {
             <>
               <div className="h-8 w-20">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={steps} margin={{ top: 2, bottom: 2 }}>
+                  <LineChart data={stepsLast7} margin={{ top: 2, bottom: 2 }}>
                     <Line
                       type="monotone"
                       dataKey="value"
@@ -72,7 +78,7 @@ export default function WeeklySummaryCard({ children }) {
               </div>
               <div className="h-8 w-20">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={sleep} margin={{ top: 2, bottom: 2 }}>
+                  <LineChart data={sleepLast7} margin={{ top: 2, bottom: 2 }}>
                     <Line
                       type="monotone"
                       dataKey="value"
