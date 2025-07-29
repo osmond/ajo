@@ -46,7 +46,7 @@ export default function SummaryCard({ children }) {
 
   return (
     <Card className="animate-in fade-in">
-      <CardHeader>
+      <CardHeader className="border-b border-border text-primary">
         {loading && <Skeleton className="h-6 w-32" />}
         {error && !loading && (
           <div className="text-sm text-destructive">{error}</div>

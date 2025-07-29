@@ -19,13 +19,13 @@ module.exports = {
       // 3. Map semantic Tailwind colors to your CSS variables
       colors: {
         // page-level
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        background: "hsl(var(--background) / <alpha-value>)",
+        foreground: "hsl(var(--foreground) / <alpha-value>)",
 
         // primary accent
         accent: {
-          DEFAULT: "var(--accent)",
-          foreground: "var(--accent-foreground)",
+          DEFAULT: "hsl(var(--accent) / <alpha-value>)",
+          foreground: "hsl(var(--accent-foreground) / <alpha-value>)",
         },
 
         // optional “tone” palette if you still need it
