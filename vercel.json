@@ -3,6 +3,12 @@
   "functions": {
     "api/**/*.py": { "runtime": "python3.11" }
   },
+  "builds": [
+    { "src": "frontend/package.json", "use": "@vercel/static-build" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/frontend/dist/index.html" }
+  ],
   "rewrites": [
     { "source": "/activities", "destination": "/api/index.py" },
     { "source": "/activities/by-date", "destination": "/api/index.py" },
