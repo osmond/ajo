@@ -34,7 +34,8 @@ export default function TemperatureChart() {
               tickLine={false}
               axisLine={false}
               tick={({ x, y, payload }) => {
-                const { range } = temperatureData.find(d => d.label === payload.value);
+                const entry = temperatureData.find(d => d.label === payload.value);
+                const range = entry ? entry.range : "";
                 return (
                   <text
                     x={x - 8}
