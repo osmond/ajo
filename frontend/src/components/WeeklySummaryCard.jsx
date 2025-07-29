@@ -19,7 +19,8 @@ export function computeStats(currSteps = [], prevSteps = [], currSleep = [], pre
   const totalDistance = sum(currTotals, "distance");
   const prevDistance = sum(prevTotals, "distance");
 
-  const pct = (cur, prev) => (prev ? ((cur - prev) / prev) * 100 : 0);
+  const pct = (cur, prev) =>
+    prev ? ((cur - prev) / prev) * 100 : null;
 
   return {
     totalSteps,
@@ -197,36 +198,48 @@ export default function WeeklySummaryCard({ children }) {
               <span className="mr-1">
                 {totalDistanceKm.toFixed(1)} km
                 <span className="ml-1 inline-flex items-center">
-                  {distancePct >= 0 ? (
+                  {distancePct === null ? null : distancePct >= 0 ? (
                     <ArrowUpRight className="h-3 w-3 text-emerald-600" />
                   ) : (
                     <ArrowDownRight className="h-3 w-3 text-destructive" />
                   )}
-                  <span className="ml-0.5">{Math.abs(distancePct).toFixed(0)}%</span>
+                  <span className="ml-0.5">
+                    {distancePct === null
+                      ? 'N/A'
+                      : `${Math.abs(distancePct).toFixed(0)}%`}
+                  </span>
                 </span>
               </span>
               &bull;
               <span className="mx-1">
                 {totalSteps} steps
                 <span className="ml-1 inline-flex items-center">
-                  {stepsPct >= 0 ? (
+                  {stepsPct === null ? null : stepsPct >= 0 ? (
                     <ArrowUpRight className="h-3 w-3 text-emerald-600" />
                   ) : (
                     <ArrowDownRight className="h-3 w-3 text-destructive" />
                   )}
-                  <span className="ml-0.5">{Math.abs(stepsPct).toFixed(0)}%</span>
+                  <span className="ml-0.5">
+                    {stepsPct === null
+                      ? 'N/A'
+                      : `${Math.abs(stepsPct).toFixed(0)}%`}
+                  </span>
                 </span>
               </span>
               &bull;
               <span className="ml-1">
                 {totalSleep.toFixed(1)}h sleep
                 <span className="ml-1 inline-flex items-center">
-                  {sleepPct >= 0 ? (
+                  {sleepPct === null ? null : sleepPct >= 0 ? (
                     <ArrowUpRight className="h-3 w-3 text-emerald-600" />
                   ) : (
                     <ArrowDownRight className="h-3 w-3 text-destructive" />
                   )}
-                  <span className="ml-0.5">{Math.abs(sleepPct).toFixed(0)}%</span>
+                  <span className="ml-0.5">
+                    {sleepPct === null
+                      ? 'N/A'
+                      : `${Math.abs(sleepPct).toFixed(0)}%`}
+                  </span>
                 </span>
               </span>
               <div className="text-xs">{comparisonLabel}</div>
