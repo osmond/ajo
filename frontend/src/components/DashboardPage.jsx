@@ -20,14 +20,14 @@ export default function DashboardPage() {
       <Card className="animate-in fade-in">
         <CardContent className="space-y-6">
         <Tabs defaultValue="dashboard" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 mb-4">
+          <TabsList className="grid w-full grid-cols-5 mb-4">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
             <TabsTrigger value="map">Map</TabsTrigger>
             <TabsTrigger value="analysis">Analysis</TabsTrigger>
             <TabsTrigger value="mileage">Mileage</TabsTrigger>
+            <TabsTrigger value="gq">GQ</TabsTrigger>
           </TabsList>
           <TabsContent value="dashboard" className="space-y-6">
-            <KPIGrid />
             <div className="grid gap-6 sm:grid-cols-2">
               <StepsSparkline />
               <HRZonesBar />
@@ -60,6 +60,9 @@ export default function DashboardPage() {
           </TabsContent>
           <TabsContent value="mileage" className="space-y-6">
             <CumulativeChart />
+          </TabsContent>
+          <TabsContent value="gq" className="space-y-6">
+            <KPIGrid />
           </TabsContent>
         </Tabs>
         </CardContent>
