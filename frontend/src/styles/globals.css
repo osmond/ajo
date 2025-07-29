@@ -21,3 +21,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ColorBrewer YlOrRd palette for heatmap intensity */
+.heatmap-scale-0 { background-color: #ffffb2; }
+.heatmap-scale-1 { background-color: #fecc5c; }
+.heatmap-scale-2 { background-color: #fd8d3c; }
+.heatmap-scale-3 { background-color: #e31a1c; }
