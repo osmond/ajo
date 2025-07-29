@@ -75,28 +75,18 @@ clickable. Hook into the `onSelect` prop to load a track:
 
 The "Mileage" tab visualizes your cumulative distance per month in a line chart.
 
-## Dark Mode
-
-The UI's colors are now defined with `defineTheme` from the
-`tailwindcss-shadcn-ui` preset. Toggling the "Dark" button switches CSS
-variables so backgrounds become darker and text lightens automatically.
-
 ## Tailwind Theme Setup
 
 The `src/main.jsx` entry point imports `@/index.css` which includes `tailwindcss-shadcn-ui/style.css` so shadcn/ui component styles are loaded.
 
-The preset is enabled in `tailwind.config.js` via `createPreset` and `defineTheme` to provide light and dark colors:
+The preset is enabled in `tailwind.config.js` via `createPreset` to load the component styles and map colors to CSS variables:
 
 ```js
-const { createPreset, defineTheme } = require("tailwindcss-shadcn-ui");
+const { createPreset } = require("tailwindcss-shadcn-ui");
 
 module.exports = {
   presets: [
-    createPreset({
-      theme: defineTheme({
-        // ...colors...
-      }),
-    }),
+    createPreset(),
   ],
 };
 ```
@@ -119,6 +109,5 @@ from dummy tracks otherwise.
 The Summary Card shown at the top of the app is implemented in
 `frontend/src/components/WeeklySummaryCard.jsx`. It fetches step counts, sleep
 hours and daily totals using the API helpers and displays the aggregated values
-with two sparklines. The component is wrapped around the dark mode toggle in
-`Header.jsx`.
+with two sparklines.
 
