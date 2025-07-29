@@ -30,11 +30,18 @@ export default function WeeklySummaryCard({ children }) {
   const stepsLast7 = steps.slice(-7);
   const sleepLast7 = sleep.slice(-7);
   const totalsLast7 = totals.slice(-7);
+  const totalsPrev7 = totals.slice(-14, -7);
 
   const totalSteps = stepsLast7.reduce((sum, p) => sum + p.value, 0);
   const totalSleep = sleepLast7.reduce((sum, p) => sum + p.value, 0);
   const totalDistanceKm =
     totalsLast7.reduce((sum, p) => sum + p.distance, 0) / 1000;
+  const prevDistanceKm =
+    totalsPrev7.reduce((sum, p) => sum + p.distance, 0) / 1000;
+  const distanceChange = prevDistanceKm
+    ? ((totalDistanceKm - prevDistanceKm) / prevDistanceKm) * 100
+    : 0;
+  const arrow = distanceChange >= 0 ? "▲" : "▼";
 
   return (
     <Card className="mb-4 animate-in fade-in">
@@ -50,6 +57,12 @@ export default function WeeklySummaryCard({ children }) {
               <div className="text-sm font-normal text-muted-foreground">
                 {totalDistanceKm.toFixed(1)} km &bull; {totalSteps} steps &bull;{' '}
                 {totalSleep.toFixed(1)}h sleep
+              </div>
+              <div className="flex items-center gap-1 text-xs font-normal text-muted-foreground">
+                <span>
+                  {arrow} {Math.abs(distanceChange).toFixed(1)}%
+                </span>
+                <span className="rounded bg-muted px-1 py-0.5">vs last week</span>
               </div>
             </>
           )}
@@ -69,7 +82,7 @@ export default function WeeklySummaryCard({ children }) {
                     <Line
                       type="monotone"
                       dataKey="value"
-                      stroke="hsl(var(--primary))"
+                      stroke="hsl(var(--accent))"
                       fill="none"
                       dot={false}
                     />
@@ -82,7 +95,20 @@ export default function WeeklySummaryCard({ children }) {
                     <Line
                       type="monotone"
                       dataKey="value"
-                      stroke="hsl(var(--primary))"
+                      stroke="hsl(var(--accent))"
+                      fill="none"
+                      dot={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+              <div className="h-8 w-20">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={totalsLast7} margin={{ top: 2, bottom: 2 }}>
+                    <Line
+                      type="monotone"
+                      dataKey="distance"
+                      stroke="hsl(var(--accent))"
                       fill="none"
                       dot={false}
                     />
