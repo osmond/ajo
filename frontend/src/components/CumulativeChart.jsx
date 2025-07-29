@@ -76,7 +76,7 @@ export default function CumulativeChart() {
         {!loading && !error && data.length > 0 && (
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-              <CartesianGrid stroke="hsl(var(--muted))" strokeDasharray="3 3" horizontal={false} />
+              <CartesianGrid stroke="#E5E7EB" strokeWidth={1} horizontal={false} />
               <XAxis dataKey="month" />
               <YAxis unit="km" />
               <Tooltip formatter={(v) => `${v.toFixed(1)} km`} />

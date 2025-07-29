@@ -43,7 +43,7 @@ export default function ProgressRing({
         </RadialBarChart>
       </ResponsiveContainer>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-3xl font-extrabold leading-none">{value}</span>
+        <span className="text-[2rem] font-bold leading-none">{value}</span>
         {unit && (
           <span className="text-xs text-muted-foreground">{unit}</span>
         )}

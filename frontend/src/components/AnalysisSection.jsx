@@ -45,7 +45,7 @@ export default function AnalysisSection() {
           {!loading && !error && (
             <ResponsiveContainer width="100%" height="100%">
               <ScatterChart>
-                <CartesianGrid />
+                <CartesianGrid stroke="#E5E7EB" strokeWidth={1} />
                 <XAxis dataKey="temperature" name="Temp" unit="°C" />
                 <YAxis dataKey="avgPace" name="Pace" unit="min/km" />
                 <Tooltip content={<AnalysisTooltip />} />
