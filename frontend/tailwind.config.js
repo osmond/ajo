@@ -1,4 +1,4 @@
-const { createPreset, defineTheme } = require("tailwindcss-shadcn-ui");
+const { createPreset } = require("tailwindcss-shadcn-ui");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -41,21 +41,6 @@ module.exports = {
 
   // 4. Pull in the shadcn preset for extra utilities/components
   presets: [
-    createPreset({
-      theme: defineTheme({
-        light: {
-          background: "#F0EDCC",
-          foreground: "#02343F",
-          accent: "#02343F",
-          accentForeground: "#F0EDCC",
-        },
-        dark: {
-          background: "#02343F",
-          foreground: "#F0EDCC",
-          accent: "#F0EDCC",
-          accentForeground: "#02343F",
-        },
-      }),
-    }),
+    createPreset(),
   ],
 };
