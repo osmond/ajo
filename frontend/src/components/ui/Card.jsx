@@ -4,7 +4,7 @@ export function Card({ className = "", children }) {
   return (
     <div
       className={
-        "rounded-lg border bg-card text-card-foreground shadow-sm transition-shadow transition-transform hover:-translate-y-0.5 hover:shadow-lg focus-within:shadow-md " +
+        "rounded-xl border bg-card text-card-foreground shadow-sm transition-shadow transition-transform hover:-translate-y-0.5 hover:shadow-lg focus-within:shadow-md " +
         className
       }
     >
