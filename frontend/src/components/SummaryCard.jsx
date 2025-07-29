@@ -8,8 +8,8 @@ import {
   fetchActivityTrack,
 } from "../api";
 import {
-  LineChart,
-  Line,
+  AreaChart,
+  Area,
   ResponsiveContainer,
 } from "recharts";
 import { parseISO, differenceInCalendarDays } from "date-fns";
@@ -100,14 +100,16 @@ export default function SummaryCard({ children }) {
             {distanceData.length > 0 && (
               <div className="h-32 sm:w-1/3">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={distanceData} margin={{ top: 2, bottom: 2 }}>
-                    <Line
+                  <AreaChart data={distanceData} margin={{ top: 2, bottom: 2 }}>
+                    <Area
                       type="monotone"
                       dataKey="km"
                       stroke="hsl(var(--primary))"
+                      fill="hsl(var(--primary) / 0.2)"
+                      strokeWidth={2}
                       dot={false}
                     />
-                  </LineChart>
+                  </AreaChart>
                 </ResponsiveContainer>
               </div>
             )}
