@@ -2,7 +2,6 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import datetime
 import random
-import os
 from dotenv import load_dotenv
 from .garmin_client import GarminClient
 from .weather import get_weather
