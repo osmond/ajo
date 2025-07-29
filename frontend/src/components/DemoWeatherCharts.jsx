@@ -6,7 +6,7 @@ import {
 } from 'recharts';
 import {
   Thermometer, Cloud, Sun, CloudRain, CloudSnow,
-  CloudHaze, Droplet, CloudFog, Zap,
+  Haze, Droplet, CloudFog, Zap,
 } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from './ui/Card';
 import { temperatureData, weatherData } from './DemoWeatherData';
