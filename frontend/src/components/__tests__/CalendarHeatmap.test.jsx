@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react';
 import CalendarHeatmap from '../CalendarHeatmap';
 import { vi } from 'vitest';
 
+afterEach(() => vi.restoreAllMocks());
+
 it('renders squares with tooltip text', async () => {
   global.fetch = vi.fn().mockResolvedValue({
     ok: true,

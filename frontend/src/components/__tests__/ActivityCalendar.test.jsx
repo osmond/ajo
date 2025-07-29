@@ -3,6 +3,8 @@ import userEvent from '@testing-library/user-event';
 import ActivityCalendar from '../ActivityCalendar';
 import { vi } from 'vitest';
 
+afterEach(() => vi.restoreAllMocks());
+
 it('renders month view and triggers selection', async () => {
   global.fetch = vi.fn().mockResolvedValue({
     ok: true,

@@ -2,6 +2,8 @@ import { render, screen } from '@testing-library/react';
 import SummaryCard, { computeSummary } from '../SummaryCard';
 import { vi } from 'vitest';
 
+afterEach(() => vi.restoreAllMocks());
+
 vi.mock('../TrackMap', () => ({ default: () => <div data-testid="track" /> }));
 
 beforeAll(() => {

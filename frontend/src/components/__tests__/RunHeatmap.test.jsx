@@ -2,6 +2,8 @@ import { render, waitFor } from '@testing-library/react';
 import RunHeatmap from '../RunHeatmap';
 import { vi } from 'vitest';
 
+afterEach(() => vi.restoreAllMocks());
+
 it('renders rects with tooltip data', async () => {
   const d1 = new Date();
   const d0 = new Date(Date.now() - 86400000);
