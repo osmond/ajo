@@ -77,3 +77,40 @@ it('renders trend indicators with arrows', async () => {
   expect(arrows.length).toBeGreaterThanOrEqual(3);
   expect(screen.getAllByText('100%')[0]).toBeInTheDocument();
 });
+
+it('shows N/A when previous totals are zero', async () => {
+  const makeData = () => {
+    const start = new Date('2023-01-01');
+    const steps = [];
+    const sleep = [];
+    const totals = [];
+    for (let i = 0; i < 14; i++) {
+      const d = new Date(start.getTime() + i * 86400000);
+      const stamp = d.toISOString();
+      steps.push({ timestamp: stamp, value: i < 7 ? 0 : 200 });
+      sleep.push({ timestamp: stamp, value: i < 7 ? 0 : 6 });
+      const date = stamp.split('T')[0];
+      totals.push({ date, distance: i < 7 ? 0 : 2000, duration: 0 });
+    }
+    return { steps, sleep, totals };
+  };
+  const { steps, sleep, totals } = makeData();
+
+  global.fetch = vi.fn((url) => {
+    if (url === '/steps') {
+      return Promise.resolve({ ok: true, json: () => Promise.resolve(steps) });
+    }
+    if (url === '/sleep') {
+      return Promise.resolve({ ok: true, json: () => Promise.resolve(sleep) });
+    }
+    if (url === '/daily-totals') {
+      return Promise.resolve({ ok: true, json: () => Promise.resolve(totals) });
+    }
+    return Promise.resolve({ ok: true, json: () => Promise.resolve([]) });
+  });
+
+  render(<WeeklySummaryCard />);
+  await screen.findByText('vs last week');
+  const naTexts = screen.getAllByText('N/A');
+  expect(naTexts.length).toBeGreaterThanOrEqual(3);
+});
