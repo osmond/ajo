@@ -24,7 +24,8 @@
 
 @layer base {
   body {
-    @apply leading-snug;
+    /* ensure all text uses the Inter font stack */
+    @apply font-sans leading-snug;
   }
 }
 
