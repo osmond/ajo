@@ -8,6 +8,8 @@ import CumulativeChart from "./CumulativeChart";
 import WeatherChart from "./WeatherChart";
 import TemperatureChart from "./TemperatureChart";
 import StatesVisited from "./StatesVisited";
+import WeeklySummaryCard from "./WeeklySummaryCard";
+import SummaryCard from "./SummaryCard";
 const MapSection = React.lazy(() => import("./MapSection"));
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
 
