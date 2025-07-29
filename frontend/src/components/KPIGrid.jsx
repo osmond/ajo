@@ -46,7 +46,7 @@ export default function KPIGrid() {
       {loading &&
         Array.from({ length: 3 }).map((_, i) => (
 
-          <Card key={i} className="animate-in fade-in animate-pulse">
+          <Card key={i} className="animate-in fade-in animate-pulse h-40">
 
             <CardHeader>
               <CardTitle>
@@ -64,7 +64,7 @@ export default function KPIGrid() {
       {!loading && !error &&
         items.map((item) => (
 
-          <Card key={item.label} className="animate-in fade-in">
+          <Card key={item.label} className="animate-in fade-in h-40">
 
             <CardHeader>
               <CardTitle>{item.label}</CardTitle>
