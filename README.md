@@ -73,6 +73,8 @@ clickable. Hook into the `onSelect` prop to load a track:
 <ActivityCalendar onSelect={(act) => console.log(act)} />
 ```
 
+The "Mileage" tab visualizes your cumulative distance per month in a line chart.
+
 ## Dark Mode
 
 The UI's colors are now defined with `defineTheme` from the
