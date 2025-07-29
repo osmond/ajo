@@ -3,6 +3,7 @@ import ChartCard from "./ChartCard";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { fetchAnalysis } from "../api";
 import Skeleton from "./ui/Skeleton";
+import TimeOfDay from "./TimeOfDay";
 
 function AnalysisTooltip({ active, payload }) {
   if (!active || !payload?.length) return null;
@@ -34,24 +35,27 @@ export default function AnalysisSection() {
   }, []);
 
   return (
-    <ChartCard title="Pace vs Temperature">
-      <div className="h-64">
-        {loading && <Skeleton className="h-full w-full" />}
-        {error && (
-          <div className="flex h-full items-center justify-center text-sm text-destructive">{error}</div>
-        )}
-        {!loading && !error && (
-          <ResponsiveContainer width="100%" height="100%">
-            <ScatterChart>
-              <CartesianGrid />
-              <XAxis dataKey="temperature" name="Temp" unit="°C" />
-              <YAxis dataKey="avgPace" name="Pace" unit="min/km" />
-              <Tooltip content={<AnalysisTooltip />} />
-              <Scatter data={data} fill="hsl(var(--primary))" />
-            </ScatterChart>
-          </ResponsiveContainer>
-        )}
-      </div>
-    </ChartCard>
+    <div className="grid gap-4 sm:grid-cols-2">
+      <ChartCard title="Pace vs Temperature">
+        <div className="h-64">
+          {loading && <Skeleton className="h-full w-full" />}
+          {error && (
+            <div className="flex h-full items-center justify-center text-sm text-destructive">{error}</div>
+          )}
+          {!loading && !error && (
+            <ResponsiveContainer width="100%" height="100%">
+              <ScatterChart>
+                <CartesianGrid />
+                <XAxis dataKey="temperature" name="Temp" unit="°C" />
+                <YAxis dataKey="avgPace" name="Pace" unit="min/km" />
+                <Tooltip content={<AnalysisTooltip />} />
+                <Scatter data={data} fill="hsl(var(--primary))" />
+              </ScatterChart>
+            </ResponsiveContainer>
+          )}
+        </div>
+      </ChartCard>
+      <TimeOfDay />
+    </div>
   );
 }

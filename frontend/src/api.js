@@ -30,3 +30,5 @@ export const fetchRoutes = (params = {}) => {
 export const fetchDailyTotals = () => apiGet('/daily-totals');
 export const fetchRuns = () => apiGet('/runs');
 export const fetchAnalysis = () => apiGet('/analysis');
+export const fetchActivities = (params = {}) =>
+  apiGet('/activities' + new URLSearchParams(params).toString());
