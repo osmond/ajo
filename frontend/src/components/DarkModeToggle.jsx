@@ -1,24 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button } from "./ui/Button";
+import { ThemeContext } from "../ThemeContext";
 
 export default function DarkModeToggle() {
-  const [enabled, setEnabled] = React.useState(false);
-
-  React.useEffect(() => {
-    const stored = localStorage.getItem("darkMode");
-    const prefers =
-      typeof window.matchMedia === "function" &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const initial = stored === null ? prefers : stored === "true";
-    setEnabled(initial);
-    if (initial) document.documentElement.classList.add("dark");
-  }, []);
+  const { theme, setTheme } = useContext(ThemeContext);
+  const enabled = theme === "dark";
 
   const toggle = () => {
-    const next = !enabled;
-    setEnabled(next);
-    localStorage.setItem("darkMode", next);
-    document.documentElement.classList.toggle("dark", next);
+    setTheme(enabled ? "light" : "dark");
   };
 
   const SunIcon = (

@@ -9,3 +9,18 @@
 
 /* 4) Utility layer */
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --color-accent: #4f46e5;
+    --color-water: #0ea5e9;
+    --color-fertilize: #16a34a;
+    --color-healthy: #15803d;
+  }
+  .dark {
+    --color-accent: #e0e7ff;
+    --color-water: #7dd3fc;
+    --color-fertilize: #6ee7b7;
+    --color-healthy: #bbf7d0;
+  }
+}
