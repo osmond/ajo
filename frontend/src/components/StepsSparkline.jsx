@@ -19,7 +19,7 @@ function StepTooltip({ active, payload, label }) {
   const value = payload[0].value;
   const date = label.split("T")[0];
   return (
-    <div className="rounded bg-background p-2 text-sm font-normal shadow">
+    <div className="rounded border border-border bg-background p-2 text-sm font-normal shadow">
       <div>{date}</div>
       <div className="flex items-center gap-1">
         <span>🚶</span>

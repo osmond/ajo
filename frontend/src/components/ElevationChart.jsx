@@ -15,7 +15,7 @@ function ElevationTooltip({ active, payload }) {
   if (!active || !payload?.length) return null;
   const { dist, elevation } = payload[0].payload;
   return (
-    <div className="rounded bg-background p-2 text-sm font-normal shadow">
+    <div className="rounded border border-border bg-background p-2 text-sm font-normal shadow">
       <div className="flex items-center gap-1">
         <span>⛰️</span>
         <span>{elevation.toFixed(0)} m</span>

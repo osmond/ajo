@@ -9,7 +9,7 @@ function AnalysisTooltip({ active, payload }) {
   if (!active || !payload?.length) return null;
   const { temperature, avgPace } = payload[0].payload;
   return (
-    <div className="rounded bg-background p-2 text-sm font-normal shadow">
+    <div className="rounded border border-border bg-background p-2 text-sm font-normal shadow">
       <div className="flex items-center gap-1">
         <span>🌡️</span>
         <span>{temperature}°C</span>

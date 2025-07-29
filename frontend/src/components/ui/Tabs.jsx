@@ -34,8 +34,16 @@ export function TabsTrigger({ value, className = "", children }) {
   return (
     <Button
       onClick={() => ctx.setValue(value)}
-      variant={active ? "default" : "ghost"}
-      className={"px-3 py-1.5 text-sm " + className}
+      variant="ghost"
+      className={
+        "px-3 py-1.5 text-sm border-b-2 transition-colors " +
+        (active
+          ? "border-accent text-accent-foreground"
+          : "border-transparent hover:border-accent hover:bg-accent/10") +
+        (active ? "" : "") +
+        " " +
+        className
+      }
     >
       {children}
     </Button>
