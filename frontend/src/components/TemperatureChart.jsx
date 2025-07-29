@@ -15,9 +15,6 @@ export default function TemperatureChart() {
     <Card className="bg-background text-foreground">
       <CardHeader>
         <CardTitle>Temperature</CardTitle>
-        <p className="text-sm text-muted-foreground">
-          i prefer running in the 40s, but unfortunately i don\u2019t control the weather
-        </p>
       </CardHeader>
       <CardContent className="h-80">
         <ResponsiveContainer width="100%" height="100%">

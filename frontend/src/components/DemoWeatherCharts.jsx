@@ -18,9 +18,6 @@ export default function DemoWeatherCharts() {
       <Card>
         <CardHeader>
           <CardTitle>Temperature</CardTitle>
-          <p className="text-sm text-muted-foreground">
-            i prefer running in the 40s, but unfortunately i don\u2019t control the weather
-          </p>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={350}>
@@ -72,7 +69,6 @@ export default function DemoWeatherCharts() {
       <Card>
         <CardHeader>
           <CardTitle>Weather Conditions</CardTitle>
-          <p className="text-sm text-muted-foreground">rain or shine!</p>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={350}>
