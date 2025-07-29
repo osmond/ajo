@@ -1,43 +1,83 @@
 import { states } from "@/data/states";
+import {
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "./ui/Table";
+import React from "react";
 
 export default function StatesTable() {
-  const visited = states.filter((s) => s.visited);
-  const mid = Math.ceil(visited.length / 2);
-  const left = visited.slice(0, mid);
-  const right = visited.slice(mid);
+  const [sortField, setSortField] = React.useState("miles");
+  const [sortDir, setSortDir] = React.useState("desc");
+
+  const visited = React.useMemo(() => states.filter((s) => s.visited), []);
+
+  const sorted = React.useMemo(() => {
+    const arr = [...visited];
+    arr.sort((a, b) => {
+      let cmp = 0;
+      if (sortField === "name") {
+        cmp = a.name.localeCompare(b.name);
+      } else {
+        cmp = a[sortField] - b[sortField];
+      }
+      return sortDir === "asc" ? cmp : -cmp;
+    });
+    return arr;
+  }, [visited, sortField, sortDir]);
+
+  const mid = Math.ceil(sorted.length / 2);
+  const left = sorted.slice(0, mid);
+  const right = sorted.slice(mid);
+
+  const handleSort = (field) => {
+    setSortDir((dir) => (field === sortField ? (dir === "asc" ? "desc" : "asc") : "desc"));
+    setSortField(field);
+  };
+
+  const indicator = (field) => {
+    if (field !== sortField) return null;
+    return sortDir === "asc" ? "↑" : "↓";
+  };
 
   const renderRows = (list) =>
     list.map((s) => (
-      <tr key={s.abbr} className="group hover:bg-muted">
-        {/* use the default sans-serif font (Inter) for consistency */}
-        <td className="py-2 px-4 text-sm cursor-pointer">› {s.name}</td>
-        <td className="py-2 px-4 text-sm tabular-nums">{s.days}</td>
-        <td className="py-2 px-4 text-sm tabular-nums">{s.miles.toFixed(1)}</td>
-      </tr>
+      <TableRow key={s.abbr} className="group">
+        <TableCell className="cursor-pointer">› {s.name}</TableCell>
+        <TableCell className="tabular-nums">{s.days}</TableCell>
+        <TableCell className="tabular-nums">{s.miles.toFixed(1)}</TableCell>
+      </TableRow>
     ));
+
+  const renderTable = (list) => (
+    <Table className="text-left">
+      <TableHeader>
+        <TableRow>
+          <TableHead onClick={() => handleSort("name")}
+            className="cursor-pointer select-none">
+            STATE {indicator("name")}
+          </TableHead>
+          <TableHead onClick={() => handleSort("days")}
+            className="cursor-pointer select-none">
+            DAYS {indicator("days")}
+          </TableHead>
+          <TableHead onClick={() => handleSort("miles")}
+            className="cursor-pointer select-none">
+            MILES {indicator("miles")}
+          </TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>{renderRows(list)}</TableBody>
+    </Table>
+  );
 
   return (
     <div className="grid grid-cols-2 gap-4">
-      <table className="w-full text-left">
-        <thead className="border-b">
-          <tr>
-            <th className="px-4 py-2">STATE</th>
-            <th className="px-4 py-2">DAYS</th>
-            <th className="px-4 py-2">↓ MILES</th>
-          </tr>
-        </thead>
-        <tbody>{renderRows(left)}</tbody>
-      </table>
-      <table className="w-full text-left">
-        <thead className="border-b">
-          <tr>
-            <th className="px-4 py-2">STATE</th>
-            <th className="px-4 py-2">DAYS</th>
-            <th className="px-4 py-2">↓ MILES</th>
-          </tr>
-        </thead>
-        <tbody>{renderRows(right)}</tbody>
-      </table>
+      {renderTable(left)}
+      {renderTable(right)}
     </div>
   );
 }
