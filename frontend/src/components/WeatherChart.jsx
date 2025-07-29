@@ -12,7 +12,6 @@ export default function WeatherChart() {
     <Card className="bg-background text-foreground">
       <CardHeader>
         <CardTitle>Weather Conditions</CardTitle>
-        <p className="text-sm text-muted-foreground">rain or shine!</p>
       </CardHeader>
       <CardContent className="h-80">
         <ResponsiveContainer width="100%" height="100%">
