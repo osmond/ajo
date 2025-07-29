@@ -21,7 +21,7 @@ app.add_middleware(
 dummy_activities = []
 # Dummy coordinates centered in Madison, WI
 base_lat, base_lon = 43.0731, -89.4012
-for i in range(1, 6):
+for i in range(1, 101):
     act_type = "RUN" if i % 2 else "BIKE"
     dummy_activities.append(
         {
@@ -102,8 +102,8 @@ async def steps():
     """Return daily step counts."""
     if garmin_client.has_credentials:
         return garmin_client.get_steps()
-    now = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) - datetime.timedelta(days=6)
-    return _metric_points(7, now, datetime.timedelta(days=1), 3000, 12000)
+    now = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) - datetime.timedelta(days=99)
+    return _metric_points(100, now, datetime.timedelta(days=1), 3000, 12000)
 
 
 @app.get("/heartrate")
@@ -129,9 +129,9 @@ async def sleep():
     """Return nightly sleep duration in hours."""
     if garmin_client.has_credentials:
         return garmin_client.get_sleep()
-    now = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) - datetime.timedelta(days=6)
+    now = datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) - datetime.timedelta(days=99)
     # Sleep hours scaled in minutes but stored as float hours
-    points = _metric_points(7, now, datetime.timedelta(days=1), 5, 9)
+    points = _metric_points(100, now, datetime.timedelta(days=1), 5, 9)
     for p in points:
         p["value"] = float(p["value"])
     return points

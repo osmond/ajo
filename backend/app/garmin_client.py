@@ -42,7 +42,7 @@ class GarminClient:
         activities = []
         # Center the dummy data around Madison, WI
         base_lat, base_lon = 43.0731, -89.4012
-        for i in range(1, 6):
+        for i in range(1, 101):
             lat = base_lat + random.uniform(-0.02, 0.02)
             lon = base_lon + random.uniform(-0.02, 0.02)
             act_type = "RUN" if i % 2 else "BIKE"
@@ -101,9 +101,9 @@ class GarminClient:
     def get_steps(self):
         now = (
             datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-            - datetime.timedelta(days=6)
+            - datetime.timedelta(days=99)
         )
-        return self._metric_points(7, now, datetime.timedelta(days=1), 3000, 12000)
+        return self._metric_points(100, now, datetime.timedelta(days=1), 3000, 12000)
 
     def get_heartrate(self):
         now = datetime.datetime.now() - datetime.timedelta(hours=23)
@@ -116,9 +116,9 @@ class GarminClient:
     def get_sleep(self):
         now = (
             datetime.datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
-            - datetime.timedelta(days=6)
+            - datetime.timedelta(days=99)
         )
-        points = self._metric_points(7, now, datetime.timedelta(days=1), 5, 9)
+        points = self._metric_points(100, now, datetime.timedelta(days=1), 5, 9)
         for p in points:
             p["value"] = float(p["value"])
         return points
