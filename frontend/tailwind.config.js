@@ -30,8 +30,8 @@ module.exports = {
 
         // optional “tone” palette if you still need it
         tone: {
-          light: "#F0EDCC",
-          dark: "#02343F",
+          light: "#ffffff",
+          dark: "#000000",
         },
       },
     },

@@ -2,10 +2,19 @@
 
 /* 1) Light‑mode defaults */
 :root {
-  --background:         #F0EDCC;
-  --foreground:         #02343F;
-  --accent:             #02343F;
-  --accent-foreground:  #F0EDCC;
+  /* neutral black & white palette */
+  --background:         #ffffff;
+  --foreground:         #000000;
+  --accent:             #000000;
+  --accent-foreground:  #ffffff;
+
+  /* set plugin variables to greyscale */
+  --primary:            0 0% 0%;
+  --primary-foreground: 0 0% 100%;
+  --secondary:          0 0% 100%;
+  --secondary-foreground: 0 0% 0%;
+  --destructive:        0 0% 0%;
+  --destructive-foreground: 0 0% 100%;
 }
 
 /* 2) Tailwind layers */
