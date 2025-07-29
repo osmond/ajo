@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import KPIGrid from "./components/KPIGrid";
 import TrendsSection from "./components/TrendsSection";
 import DailyHeatmap from "./components/DailyHeatmap";
+import RunHeatmap from "./components/RunHeatmap";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/Tabs";
 const MapSection = React.lazy(() => import("./components/MapSection"));
 const AnalysisSection = React.lazy(() => import("./components/AnalysisSection"));
@@ -22,6 +23,7 @@ export default function App() {
             <KPIGrid />
             <TrendsSection />
             <DailyHeatmap />
+            <RunHeatmap />
           </TabsContent>
           <TabsContent value="map" className="space-y-6">
             <React.Suspense
