@@ -38,3 +38,11 @@ it('shows unit label when provided', () => {
   );
   expect(getByText('steps')).toBeInTheDocument();
 });
+
+it('applies custom value class name', () => {
+  const { getByText } = render(
+    <ProgressRing value={42} max={100} valueClassName="text-sm" />
+  );
+  const span = getByText('42');
+  expect(span.className).toContain('text-sm');
+});
