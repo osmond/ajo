@@ -1,7 +1,17 @@
 import React from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/Card";
 import Skeleton from "./ui/Skeleton";
-import { fetchRuns } from "../api";
+import TrackMap from "./TrackMap";
+import {
+  fetchRuns,
+  fetchActivities,
+  fetchActivityTrack,
+} from "../api";
+import {
+  LineChart,
+  Line,
+  ResponsiveContainer,
+} from "recharts";
 import { parseISO, differenceInCalendarDays } from "date-fns";
 
 export function computeSummary(runs = []) {
@@ -34,15 +44,31 @@ export function computeSummary(runs = []) {
 
 export default function SummaryCard({ children }) {
   const [summary, setSummary] = React.useState(null);
+  const [runs, setRuns] = React.useState([]);
+  const [track, setTrack] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
-    fetchRuns()
-      .then((data) => setSummary(computeSummary(data)))
+    Promise.all([
+      fetchRuns(),
+      fetchActivities({ type: "run", limit: 1 }).then((acts) =>
+        acts.length ? fetchActivityTrack(acts[0].activityId) : []
+      ),
+    ])
+      .then(([runData, trackData]) => {
+        setRuns(runData);
+        setSummary(computeSummary(runData));
+        setTrack(trackData);
+      })
       .catch(() => setError("Failed to load"))
       .finally(() => setLoading(false));
   }, []);
+
+  const distanceData = runs.map((r) => ({
+    date: r.date,
+    km: (r.distance || 0) / 1000,
+  }));
 
   return (
     <Card className="animate-in fade-in">
@@ -62,7 +88,33 @@ export default function SummaryCard({ children }) {
           </>
         )}
       </CardHeader>
-      {children && <CardContent>{children}</CardContent>}
+      <CardContent>
+        {loading && <Skeleton className="h-24 w-full" />}
+        {!loading && !error && (
+          <div className="flex flex-col gap-4 sm:flex-row">
+            {track.length > 0 && (
+              <div className="h-32 flex-1">
+                <TrackMap points={track} />
+              </div>
+            )}
+            {distanceData.length > 0 && (
+              <div className="h-32 sm:w-1/3">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={distanceData} margin={{ top: 2, bottom: 2 }}>
+                    <Line
+                      type="monotone"
+                      dataKey="km"
+                      stroke="hsl(var(--primary))"
+                      dot={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            )}
+          </div>
+        )}
+        {children}
+      </CardContent>
     </Card>
   );
 }
