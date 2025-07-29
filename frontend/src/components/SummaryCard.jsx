@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardHeader, CardTitle } from "./ui/Card";
+import { Card, CardHeader, CardTitle, CardContent } from "./ui/Card";
 import Skeleton from "./ui/Skeleton";
 import { fetchRuns } from "../api";
 import { parseISO, differenceInCalendarDays } from "date-fns";
@@ -32,7 +32,7 @@ export function computeSummary(runs = []) {
   return { runCount: runs.length, streak, ...totals };
 }
 
-export default function SummaryCard() {
+export default function SummaryCard({ children }) {
   const [summary, setSummary] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
@@ -62,6 +62,7 @@ export default function SummaryCard() {
           </>
         )}
       </CardHeader>
+      {children && <CardContent>{children}</CardContent>}
     </Card>
   );
 }
