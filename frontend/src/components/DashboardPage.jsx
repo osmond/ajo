@@ -7,6 +7,7 @@ import CumulativeTimeChart from "./CumulativeTimeChart";
 import CumulativeChart from "./CumulativeChart";
 import WeatherChart from "./WeatherChart";
 import TemperatureChart from "./TemperatureChart";
+import StatesVisited from "./StatesVisited";
 const MapSection = React.lazy(() => import("./MapSection"));
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
 
@@ -52,6 +53,7 @@ export default function DashboardPage() {
           </div>
         </CardContent>
       </Card>
+      <StatesVisited />
     </div>
   );
 }
