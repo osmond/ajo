@@ -1,11 +1,8 @@
-from backend.app.main import app
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 
-# Create FastAPI app
 app = FastAPI()
 
-# Dummy data for now - replace with your real backend logic
 @app.get("/steps")
 def get_steps():
     return JSONResponse({
@@ -24,7 +21,6 @@ def get_heartrate():
         "heartrate": [65, 70, 68, 72, 69, 71, 67]
     })
 
-# Health check route
 @app.get("/")
 def root():
     return {"message": "API is live"}
