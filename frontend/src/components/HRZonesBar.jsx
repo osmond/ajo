@@ -16,7 +16,7 @@ function ZoneTooltip({ active, payload }) {
   if (!active || !payload?.length) return null;
   const { zone, value } = payload[0].payload;
   return (
-    <div className="rounded bg-background p-2 text-sm font-normal shadow">
+    <div className="rounded border border-border bg-background p-2 text-sm font-normal shadow">
       <div>{zone}</div>
       <div className="flex items-center gap-1">
         <span>❤️</span>
