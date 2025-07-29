@@ -2,22 +2,35 @@ const { createPreset } = require("tailwindcss-shadcn-ui");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  // Drive dark mode via a “dark” class on <html>
   darkMode: 'class',
-  // 1. Tell Tailwind where to look for class names:
+
+  // 1. Tell Tailwind where to look for your classes
   content: [
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}"
   ],
+
   theme: {
     extend: {
+      // 2. Your custom font stack
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
       },
+
+      // 3. Map semantic Tailwind colors to your CSS variables
       colors: {
+        // page-level
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+
+        // primary accent
         accent: {
-          DEFAULT: "#02343F",
-          foreground: "#F0EDCC",
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
         },
+
+        // optional “tone” palette if you still need it
         tone: {
           light: "#F0EDCC",
           dark: "#02343F",
@@ -26,13 +39,8 @@ module.exports = {
     },
   },
 
-  // 2a) Use the shadcn preset (recommended) --------------------
+  // 4. Pull in the shadcn preset for extra utilities/components
   presets: [
     createPreset(),
   ],
-
-  // OR 2b) Use it as a plugin -------------------------------
-  // plugins: [
-  //   require("tailwindcss-shadcn-ui"),
-  // ],
 };
