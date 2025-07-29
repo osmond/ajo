@@ -3,7 +3,7 @@ import {
   PieChart, Pie, Cell,
   RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
   ResponsiveContainer,
-  Tooltip,
+  Tooltip, Label,
 } from 'recharts';
 import { modeData, timeData, mileageData } from './data';
 
@@ -31,7 +31,12 @@ export default function DemoCharts() {
                 {modeData.map((_, idx) => (
                   <Cell key={idx} fill={COLORS[idx]} />
                 ))}
+                <Label
+                  value={`${modeData[0].value}% / ${modeData[1].value}%`}
+                  position="center"
+                />
               </Pie>
+              <Tooltip formatter={(v, n) => [`${v}%`, n]} />
             </PieChart>
           </ResponsiveContainer>
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
