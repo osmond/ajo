@@ -107,6 +107,27 @@ export default function WeeklySummaryCard({ children }) {
     prevTotals
   );
 
+  let comparisonLabel = 'vs last week';
+  if (range === 'month') {
+    comparisonLabel = 'vs last month';
+  } else if (range === '30') {
+    comparisonLabel = 'vs last 30 days';
+  } else if (range === '7') {
+    comparisonLabel = 'vs last week';
+  } else if (range === 'custom' && startDate && endDate) {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const days = Math.max(1, Math.round((end - start) / 86400000) + 1);
+    comparisonLabel = `vs previous ${days} days`;
+  } else if (range === 'all') {
+    comparisonLabel = 'vs previous period';
+  } else {
+    const num = parseInt(range, 10);
+    if (!isNaN(num)) {
+      comparisonLabel = `vs last ${num} days`;
+    }
+  }
+
   function quick(days) {
     setRange(days);
     setStartDate("");
@@ -208,7 +229,7 @@ export default function WeeklySummaryCard({ children }) {
                   <span className="ml-0.5">{Math.abs(sleepPct).toFixed(0)}%</span>
                 </span>
               </span>
-              <div className="text-xs">vs last week</div>
+              <div className="text-xs">{comparisonLabel}</div>
             </>
           )}
         </div>
