@@ -4,6 +4,7 @@ import KPIGrid from "./components/KPIGrid";
 import TrendsSection from "./components/TrendsSection";
 import DailyHeatmap from "./components/DailyHeatmap";
 import RunHeatmap from "./components/RunHeatmap";
+import SummaryCard from "./components/SummaryCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/Tabs";
 const MapSection = React.lazy(() => import("./components/MapSection"));
 const AnalysisSection = React.lazy(() => import("./components/AnalysisSection"));
@@ -13,6 +14,7 @@ export default function App() {
     <div className="min-h-screen bg-background text-foreground">
       <Header />
       <main className="container mx-auto space-y-6 py-6">
+        <SummaryCard />
         <Tabs defaultValue="dashboard" className="space-y-6">
           <TabsList className="mb-4">
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
