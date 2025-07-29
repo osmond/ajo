@@ -42,10 +42,10 @@ export default function KPIGrid() {
   }, []);
 
   return (
-    <div className="grid gap-4 sm:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-3 auto-rows-fr">
       {loading &&
         Array.from({ length: 3 }).map((_, i) => (
-          <Card key={i} className="animate-pulse">
+          <Card key={i} className="animate-pulse flex flex-col h-full">
             <CardHeader>
               <CardTitle>
                 <Skeleton className="h-6 w-24" />
@@ -61,7 +61,7 @@ export default function KPIGrid() {
       )}
       {!loading && !error &&
         items.map((item) => (
-          <Card key={item.label}>
+          <Card key={item.label} className="flex flex-col h-full">
             <CardHeader>
               <CardTitle>{item.label}</CardTitle>
             </CardHeader>
