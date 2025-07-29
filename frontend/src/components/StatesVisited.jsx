@@ -11,7 +11,7 @@ export default function StatesVisited() {
       <CardHeader className="text-center">
         <CardTitle>US STATES VISITED</CardTitle>
         <p className="text-sm text-muted-foreground">
-          {visitedCount} of 50 states visited, still a few to go
+          {visitedCount} of 50 states visited
         </p>
       </CardHeader>
       <CardContent className="lg:flex lg:gap-8">
