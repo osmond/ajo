@@ -15,7 +15,8 @@ export default function DemoCharts() {
     <div className="space-y-8 p-6 bg-gray-900 text-white rounded-xl relative">
       {/* 1) Donut */}
       <div className="text-center">
-        <h2 className="text-lg font-semibold">TREADMILL VS OUTDOOR</h2>
+        <h2 className="text-lg font-semibold">Treadmill vs Outdoor</h2>
+        <p className="text-sm text-gray-400">Andy runs inside a lot</p>
         <div className="relative mx-auto" style={{ width: 200, height: 200 }}>
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
@@ -41,7 +42,8 @@ export default function DemoCharts() {
       <div className="grid md:grid-cols-2 gap-12">
         {/* 2) Activity by Time */}
         <div className="text-center">
-          <h2 className="text-lg font-semibold">WORKOUT ACTIVITY BY TIME</h2>
+          <h2 className="text-lg font-semibold">Workout Activity by Time</h2>
+          <p className="text-sm text-gray-400">Andy spends a lot of time doing this</p>
           <div style={{ width: '100%', height: 250 }}>
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={timeData}>
@@ -56,7 +58,8 @@ export default function DemoCharts() {
 
         {/* 3) Mileage by Day */}
         <div className="text-center">
-          <h2 className="text-lg font-semibold">AVERAGE DAILY MILEAGE BY DAY</h2>
+          <h2 className="text-lg font-semibold">Average Daily Mileage by Day</h2>
+          <p className="text-sm text-gray-400">Andy probaly runs more on the weekend</p>
           <div style={{ width: '100%', height: 250 }}>
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={mileageData}>
