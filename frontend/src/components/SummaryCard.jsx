@@ -49,12 +49,12 @@ export default function SummaryCard({ children }) {
       <CardHeader>
         {loading && <Skeleton className="h-6 w-32" />}
         {error && !loading && (
-          <div className="text-sm text-destructive">{error}</div>
+          <div className="text-sm font-normal text-destructive">{error}</div>
         )}
         {!loading && !error && summary && (
           <>
             <CardTitle>Run Summary</CardTitle>
-            <div className="text-sm text-muted-foreground">
+            <div className="text-sm font-normal text-muted-foreground">
               {summary.runCount} runs &bull;{" "}
               {(summary.totalDistance / 1000).toFixed(1)} km &bull;{" "}
               {summary.streak} day streak

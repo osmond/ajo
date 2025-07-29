@@ -87,19 +87,19 @@ export default function MapSection() {
           <Card className="flex-1">
             <CardContent className="h-64 p-0">
               {loading && (
-                <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                <div className="flex h-full items-center justify-center text-sm font-normal text-muted-foreground">
                   Loading...
                 </div>
               )}
               {error && (
-                <div className="flex h-full items-center justify-center text-sm text-destructive">
+                <div className="flex h-full items-center justify-center text-sm font-normal text-destructive">
                   {error}
                 </div>
               )}
               {!loading && !error && points.length > 0 && (
                 <React.Suspense
                   fallback={
-                    <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                    <div className="flex h-full items-center justify-center text-sm font-normal text-muted-foreground">
                       Loading map...
                     </div>
                   }
@@ -149,19 +149,19 @@ export default function MapSection() {
         <Card>
           <CardContent className="h-64 p-0">
             {loadingRoutes && (
-              <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+              <div className="flex h-full items-center justify-center text-sm font-normal text-muted-foreground">
                 Loading...
               </div>
             )}
             {errorRoutes && (
-              <div className="flex h-full items-center justify-center text-sm text-destructive">
+              <div className="flex h-full items-center justify-center text-sm font-normal text-destructive">
                 {errorRoutes}
               </div>
             )}
             {!loadingRoutes && !errorRoutes && routes.length > 0 && (
               <React.Suspense
                 fallback={
-                  <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                  <div className="flex h-full items-center justify-center text-sm font-normal text-muted-foreground">
                     Loading map...
                   </div>
                 }

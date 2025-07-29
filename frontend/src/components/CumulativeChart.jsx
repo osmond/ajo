@@ -66,12 +66,12 @@ export default function CumulativeChart() {
       <div className="h-64">
         {loading && <Skeleton className="h-full w-full" />}
         {error && (
-          <div className="flex h-full items-center justify-center text-sm text-destructive">
+          <div className="flex h-full items-center justify-center text-sm font-normal text-destructive">
             {error}
           </div>
         )}
         {!loading && !error && data.length === 0 && (
-          <div className="text-sm text-muted-foreground">No data</div>
+          <div className="text-sm font-normal text-muted-foreground">No data</div>
         )}
         {!loading && !error && data.length > 0 && (
           <ResponsiveContainer width="100%" height="100%">

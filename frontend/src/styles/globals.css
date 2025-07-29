@@ -22,6 +22,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply leading-snug;
+  }
+}
+
 /* ColorBrewer YlOrRd palette for heatmap intensity */
 .heatmap-scale-0 { background-color: #ffffb2; }
 .heatmap-scale-1 { background-color: #fecc5c; }

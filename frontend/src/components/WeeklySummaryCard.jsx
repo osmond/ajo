@@ -42,12 +42,12 @@ export default function WeeklySummaryCard({ children }) {
         <div className="flex flex-col gap-1">
           {loading && <Skeleton className="h-6 w-32" />}
           {error && !loading && (
-            <div className="text-sm text-destructive">{error}</div>
+            <div className="text-sm font-normal text-destructive">{error}</div>
           )}
           {!loading && !error && (
             <>
-              <div className="text-xl font-semibold">Weekly Totals</div>
-              <div className="text-sm text-muted-foreground">
+              <div className="text-2xl font-semibold">Weekly Totals</div>
+              <div className="text-sm font-normal text-muted-foreground">
                 {totalDistanceKm.toFixed(1)} km &bull; {totalSteps} steps &bull;{' '}
                 {totalSleep.toFixed(1)}h sleep
               </div>
