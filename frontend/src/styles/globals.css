@@ -8,15 +8,7 @@
   --accent-foreground:  #F0EDCC;
 }
 
-/* 2) Dark‑mode overrides */
-.dark {
-  --background:         #02343F;
-  --foreground:         #F0EDCC;
-  --accent:             #F0EDCC;
-  --accent-foreground:  #02343F;
-}
-
-/* 3) Tailwind layers */
+/* 2) Tailwind layers */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

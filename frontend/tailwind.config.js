@@ -2,8 +2,6 @@ const { createPreset } = require("tailwindcss-shadcn-ui");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  // Drive dark mode via a “dark” class on <html>
-  darkMode: 'class',
 
   // 1. Tell Tailwind where to look for your classes
   content: [
