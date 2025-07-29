@@ -43,14 +43,17 @@ export default function DemoCharts() {
       <div className="grid md:grid-cols-2 gap-12">
         {/* 2) Activity by Time */}
         <div className="text-center">
-          <h2 className="text-lg font-semibold">Workout Activity by Time</h2>
-          <p className="text-sm text-muted-foreground">Andy spends a lot of time doing this</p>
+        <h2 className="text-lg font-semibold">Workout Activity by Time</h2>
+        <p className="text-sm text-muted-foreground">
+          Andy spends a lot of time doing this. Radial distance shows the
+          percentage of workouts that begin in each three-hour slot.
+        </p>
           <div style={{ width: '100%', height: 250 }}>
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={timeData}>
                 <PolarGrid stroke="#444" />
                 <PolarAngleAxis dataKey="time" stroke="#AAA" />
-                <PolarRadiusAxis angle={30} domain={[0, 30]} tick={false} />
+                <PolarRadiusAxis angle={30} domain={[0, 30]} tick={{ fill: '#AAA' }} />
                 <Radar name="activity" dataKey="pct" stroke={TIME_COLOR} fill={TIME_COLOR} fillOpacity={0.6} />
               </RadarChart>
             </ResponsiveContainer>
