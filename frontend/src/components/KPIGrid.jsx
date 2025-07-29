@@ -84,13 +84,7 @@ export default function KPIGrid() {
 
             <CardContent className="flex flex-col items-center justify-center gap-2 h-full">
               {item.icon && <item.icon className="h-6 w-6" />}
-              <ProgressRing
-                value={item.value}
-                max={item.goal}
-                unit={item.unit}
-                size={48}
-                thickness={15}
-              />
+              <ProgressRing value={item.value} max={item.goal} unit={item.unit} size={80} />
               <div className="text-sm font-medium text-gray-500 text-center">{item.label}</div>
             </CardContent>
           </Card>
