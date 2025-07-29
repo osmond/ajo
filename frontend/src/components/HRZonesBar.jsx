@@ -30,6 +30,9 @@ export default function HRZonesBar() {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
   const gradientId = React.useId();
+  const styles = getComputedStyle(document.documentElement);
+  const accent = styles.getPropertyValue('--color-accent').trim();
+  const destructive = styles.getPropertyValue('--destructive').trim();
 
   React.useEffect(() => {
     fetchHeartrate()
@@ -71,8 +74,8 @@ export default function HRZonesBar() {
             <BarChart data={zones} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
               <defs>
                 <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="hsl(var(--accent))" />
-                  <stop offset="100%" stopColor="hsl(var(--destructive))" />
+                  <stop offset="0%" stopColor={accent} />
+                  <stop offset="100%" stopColor={destructive} />
                 </linearGradient>
               </defs>
               <XAxis dataKey="zone" />

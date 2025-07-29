@@ -34,6 +34,9 @@ export default function StepsSparkline() {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
   const gradientId = React.useId();
+  const styles = getComputedStyle(document.documentElement);
+  const accent = styles.getPropertyValue('--color-accent').trim();
+  const primary = styles.getPropertyValue('--primary').trim();
 
   React.useEffect(() => {
     fetchSteps()
@@ -56,16 +59,16 @@ export default function StepsSparkline() {
             <AreaChart data={steps} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
               <defs>
                 <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity={0.8} />
-                  <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0.2} />
+                  <stop offset="0%" stopColor={accent} stopOpacity={0.8} />
+                  <stop offset="100%" stopColor={primary} stopOpacity={0.2} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="timestamp" tick={false} />
               <YAxis />
               <Tooltip content={<StepTooltip />} />
-              <ReferenceLine y={10000} stroke="hsl(var(--primary))" strokeDasharray="3 3" label={{ position: 'right', value: 'Goal' }} />
-              <Area type="monotone" dataKey="value" stroke="hsl(var(--primary))" fill={`url(#${gradientId})`} dot={false} />
+              <ReferenceLine y={10000} stroke={primary} strokeDasharray="3 3" label={{ position: 'right', value: 'Goal' }} />
+              <Area type="monotone" dataKey="value" stroke={primary} fill={`url(#${gradientId})`} dot={false} />
               <Brush dataKey="timestamp" height={20} travellerWidth={10} />
             </AreaChart>
           </ResponsiveContainer>
