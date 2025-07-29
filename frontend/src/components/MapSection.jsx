@@ -85,7 +85,7 @@ export default function MapSection() {
           </label>
         </div>
           <Card className="flex-1">
-            <CardContent className="h-64 p-0">
+            <CardContent className="h-64 p-6">
               {loading && (
                 <div className="flex h-full items-center justify-center text-sm font-normal text-muted-foreground">
                   Loading...
@@ -147,7 +147,7 @@ export default function MapSection() {
           />
         </div>
         <Card>
-          <CardContent className="h-64 p-0">
+          <CardContent className="h-64 p-6">
             {loadingRoutes && (
               <div className="flex h-full items-center justify-center text-sm font-normal text-muted-foreground">
                 Loading...

@@ -35,7 +35,7 @@ export default function AnalysisSection() {
   }, []);
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2">
+    <div className="grid gap-10 sm:grid-cols-2">
       <ChartCard title="Pace vs Temperature">
         <div className="h-64">
           {loading && <Skeleton className="h-full w-full" />}

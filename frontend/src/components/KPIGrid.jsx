@@ -62,7 +62,7 @@ export default function KPIGrid() {
   }, []);
 
   return (
-    <div className="grid gap-4 sm:grid-cols-3 auto-rows-fr">
+    <div className="grid gap-10 sm:grid-cols-3 auto-rows-fr">
       {loading &&
         Array.from({ length: 3 }).map((_, i) => (
 
