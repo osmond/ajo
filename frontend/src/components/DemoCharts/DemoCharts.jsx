@@ -39,9 +39,6 @@ export default function DemoCharts() {
               <Tooltip formatter={(v, n) => [`${v}%`, n]} />
             </PieChart>
           </ResponsiveContainer>
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <span className="uppercase opacity-60">treadmill</span>
-          </div>
         </div>
       </div>
 
