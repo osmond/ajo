@@ -9,6 +9,7 @@ import TimeOfDay from "./TimeOfDay";
 import RunHeatmap from "./RunHeatmap";
 import CumulativeChart from "./CumulativeChart";
 import ChartCard from "./ChartCard";
+import DemoCharts from "./DemoCharts/DemoCharts";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/Tabs";
 const MapSection = React.lazy(() => import("./MapSection"));
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
@@ -38,6 +39,7 @@ export default function DashboardPage() {
             <ChartCard title="Run Heatmap">
               <RunHeatmap />
             </ChartCard>
+            <DemoCharts />
           </TabsContent>
           <TabsContent value="map" className="space-y-6">
             <React.Suspense
