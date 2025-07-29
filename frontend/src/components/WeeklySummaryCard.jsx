@@ -7,7 +7,29 @@ import {
   Line,
   ResponsiveContainer,
 } from "recharts";
-import { Download, Share2 } from "lucide-react";
+import { Download, Share2, ArrowUpRight, ArrowDownRight } from "lucide-react";
+
+export function computeStats(currSteps = [], prevSteps = [], currSleep = [], prevSleep = [], currTotals = [], prevTotals = []) {
+  const sum = (arr, key) => arr.reduce((s, p) => s + (p[key] || 0), 0);
+
+  const totalSteps = sum(currSteps, "value");
+  const prevStepsTotal = sum(prevSteps, "value");
+  const totalSleep = sum(currSleep, "value");
+  const prevSleepTotal = sum(prevSleep, "value");
+  const totalDistance = sum(currTotals, "distance");
+  const prevDistance = sum(prevTotals, "distance");
+
+  const pct = (cur, prev) => (prev ? ((cur - prev) / prev) * 100 : 0);
+
+  return {
+    totalSteps,
+    totalSleep,
+    totalDistanceKm: totalDistance / 1000,
+    stepsPct: pct(totalSteps, prevStepsTotal),
+    sleepPct: pct(totalSleep, prevSleepTotal),
+    distancePct: pct(totalDistance, prevDistance),
+  };
+}
 
 export default function WeeklySummaryCard({ children }) {
   const [steps, setSteps] = React.useState([]);
@@ -63,11 +85,27 @@ export default function WeeklySummaryCard({ children }) {
       return d >= start && d <= end;
     });
   }
+  const len = filteredSteps.length || 1;
+  const startIndex = steps.length - len;
+  const prevSteps = steps.slice(Math.max(0, startIndex - len), startIndex);
+  const prevSleep = sleep.slice(Math.max(0, startIndex - len), startIndex);
+  const prevTotals = totals.slice(Math.max(0, startIndex - len), startIndex);
 
-  const totalSteps = filteredSteps.reduce((sum, p) => sum + p.value, 0);
-  const totalSleep = filteredSleep.reduce((sum, p) => sum + p.value, 0);
-  const totalDistanceKm =
-    filteredTotals.reduce((sum, p) => sum + p.distance, 0) / 1000;
+  const {
+    totalSteps,
+    totalSleep,
+    totalDistanceKm,
+    stepsPct,
+    sleepPct,
+    distancePct,
+  } = computeStats(
+    filteredSteps,
+    prevSteps,
+    filteredSleep,
+    prevSleep,
+    filteredTotals,
+    prevTotals
+  );
 
   function quick(days) {
     setRange(days);
@@ -135,8 +173,42 @@ export default function WeeklySummaryCard({ children }) {
           {error && !loading && <div className="text-destructive">{error}</div>}
           {!loading && !error && (
             <>
-              {totalDistanceKm.toFixed(1)} km &bull; {totalSteps} steps &bull; {" "}
-              {totalSleep.toFixed(1)}h sleep
+              <span className="mr-1">
+                {totalDistanceKm.toFixed(1)} km
+                <span className="ml-1 inline-flex items-center">
+                  {distancePct >= 0 ? (
+                    <ArrowUpRight className="h-3 w-3 text-emerald-600" />
+                  ) : (
+                    <ArrowDownRight className="h-3 w-3 text-destructive" />
+                  )}
+                  <span className="ml-0.5">{Math.abs(distancePct).toFixed(0)}%</span>
+                </span>
+              </span>
+              &bull;
+              <span className="mx-1">
+                {totalSteps} steps
+                <span className="ml-1 inline-flex items-center">
+                  {stepsPct >= 0 ? (
+                    <ArrowUpRight className="h-3 w-3 text-emerald-600" />
+                  ) : (
+                    <ArrowDownRight className="h-3 w-3 text-destructive" />
+                  )}
+                  <span className="ml-0.5">{Math.abs(stepsPct).toFixed(0)}%</span>
+                </span>
+              </span>
+              &bull;
+              <span className="ml-1">
+                {totalSleep.toFixed(1)}h sleep
+                <span className="ml-1 inline-flex items-center">
+                  {sleepPct >= 0 ? (
+                    <ArrowUpRight className="h-3 w-3 text-emerald-600" />
+                  ) : (
+                    <ArrowDownRight className="h-3 w-3 text-destructive" />
+                  )}
+                  <span className="ml-0.5">{Math.abs(sleepPct).toFixed(0)}%</span>
+                </span>
+              </span>
+              <div className="text-xs">vs last week</div>
             </>
           )}
         </div>
