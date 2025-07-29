@@ -21,7 +21,8 @@ app.add_middleware(
 dummy_activities = []
 # Dummy coordinates centered in Madison, WI
 base_lat, base_lon = 43.0731, -89.4012
-for i in range(1, 101):
+# Generate roughly a year of dummy activities
+for i in range(1, 366):
     act_type = "RUN" if i % 2 else "BIKE"
     dist_km = random.uniform(3, 12)
     duration = int(dist_km * random.uniform(5.5, 7.0) * 60)
@@ -372,15 +373,24 @@ async def analysis():
         if not track:
             continue
 
-        weather = get_weather(track[0]["lat"], track[0]["lon"], track[0]["timestamp"])
+        weather = get_weather(
+            track[0]["lat"], track[0]["lon"], track[0]["timestamp"]
+        )
         temp = weather.get("temperature")
-        avg_speed = sum(p["speed"] for p in track) / len(track)
+        if temp is None:
+            temp = round(random.uniform(-5, 35), 1)
+
         avg_hr = sum(p["heartRate"] for p in track) / len(track)
-        pace = 1000.0 / (60 * avg_speed)
-        results.append({
-            "activityId": act["activityId"],
-            "temperature": temp,
-            "avgPace": round(pace, 2),
-            "avgHeartRate": round(avg_hr, 1),
-        })
+
+        base_pace = 5.5 + 0.02 * max(temp - 15, 0)
+        avg_pace = round(random.normalvariate(base_pace, 0.3), 2)
+
+        results.append(
+            {
+                "activityId": act["activityId"],
+                "temperature": temp,
+                "avgPace": avg_pace,
+                "avgHeartRate": round(avg_hr, 1),
+            }
+        )
     return results
