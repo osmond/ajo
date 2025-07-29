@@ -38,12 +38,17 @@ environment.
 
 ## Running Frontend Tests
 
-Execute Vitest once from the frontend directory:
+Execute Vitest once from the frontend directory. Make sure to install the
+dependencies first so that Vitest is available:
 
 ```bash
 cd frontend
-npm test  # runs vitest once and then exits
+npm install  # installs dependencies including devDependencies
+npm test     # runs vitest once and then exits
 ```
+
+All development tools such as Vitest are listed in `frontend/package.json` under
+`devDependencies`.
 
 ## Configuration
 
