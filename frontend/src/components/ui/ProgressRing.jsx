@@ -8,7 +8,6 @@ export default function ProgressRing({
   unit = "",
   className = "",
   title = "",
-  valueClassName = "text-[2rem]",
 }) {
   const percent = Math.max(0, Math.min(1, value / max)) * 100;
   const data = [{ name: "progress", value: percent }];
@@ -49,7 +48,7 @@ export default function ProgressRing({
         </RadialBarChart>
       </ResponsiveContainer>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className={"font-bold leading-none " + valueClassName}>{value}</span>
+        <span className="text-[2rem] font-bold leading-none">{value}</span>
         {unit && (
           <span className="text-xs text-muted-foreground">{unit}</span>
         )}

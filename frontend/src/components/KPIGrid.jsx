@@ -78,19 +78,13 @@ export default function KPIGrid() {
         <div className="col-span-3 text-center text-sm font-normal text-destructive">{error}</div>
       )}
       {!loading && !error &&
-        items.map((item, idx) => (
+        items.map((item) => (
 
           <Card key={item.label} className="animate-in fade-in h-40">
 
             <CardContent className="flex flex-col items-center justify-center gap-2 h-full">
               {item.icon && <item.icon className="h-6 w-6" />}
-              <ProgressRing
-                value={item.value}
-                max={item.goal}
-                unit={item.unit}
-                size={80}
-                valueClassName={idx === 0 ? "text-xl" : undefined}
-              />
+              <ProgressRing value={item.value} max={item.goal} unit={item.unit} size={80} />
               <div className="text-sm font-medium text-muted-foreground text-center">{item.label}</div>
             </CardContent>
           </Card>
