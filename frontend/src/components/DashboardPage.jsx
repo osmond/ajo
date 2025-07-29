@@ -31,7 +31,7 @@ export default function DashboardPage() {
           <TabsContent value="map" className="space-y-6">
             <React.Suspense
               fallback={
-                <div className="h-64 flex items-center justify-center text-sm text-muted-foreground">
+                <div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">
                   Loading map...
                 </div>
               }
@@ -42,7 +42,7 @@ export default function DashboardPage() {
           <TabsContent value="analysis" className="space-y-6">
             <React.Suspense
               fallback={
-                <div className="h-64 flex items-center justify-center text-sm text-muted-foreground">
+                <div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">
                   Loading analysis...
                 </div>
               }

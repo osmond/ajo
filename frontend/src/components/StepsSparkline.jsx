@@ -19,7 +19,7 @@ function StepTooltip({ active, payload, label }) {
   const value = payload[0].value;
   const date = label.split("T")[0];
   return (
-    <div className="rounded bg-background p-2 text-sm shadow">
+    <div className="rounded bg-background p-2 text-sm font-normal shadow">
       <div>{date}</div>
       <div className="flex items-center gap-1">
         <span>🚶</span>
@@ -50,7 +50,7 @@ export default function StepsSparkline() {
       <div className="h-40">
         {loading && <Skeleton className="h-full w-full" />}
         {error && (
-          <div className="flex h-full items-center justify-center text-sm text-destructive">
+          <div className="flex h-full items-center justify-center text-sm font-normal text-destructive">
             {error}
           </div>
         )}

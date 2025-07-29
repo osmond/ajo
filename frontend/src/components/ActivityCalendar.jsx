@@ -18,7 +18,7 @@ export default function ActivityCalendar({ onSelect }) {
     return <Skeleton className="h-40 w-full" />;
   }
   if (error) {
-    return <div className="text-sm text-destructive">{error}</div>;
+    return <div className="text-sm font-normal text-destructive">{error}</div>;
   }
 
   const activityDates = Object.keys(days).sort();
@@ -44,7 +44,7 @@ export default function ActivityCalendar({ onSelect }) {
   }
 
   return (
-    <div className="grid grid-cols-7 gap-1 text-sm">
+    <div className="grid grid-cols-7 gap-1 text-sm font-normal">
       {cells.map((date, idx) => {
         if (!date) return <div key={"empty-" + idx}></div>;
         const acts = days[date];

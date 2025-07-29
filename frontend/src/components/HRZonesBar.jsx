@@ -16,7 +16,7 @@ function ZoneTooltip({ active, payload }) {
   if (!active || !payload?.length) return null;
   const { zone, value } = payload[0].payload;
   return (
-    <div className="rounded bg-background p-2 text-sm shadow">
+    <div className="rounded bg-background p-2 text-sm font-normal shadow">
       <div>{zone}</div>
       <div className="flex items-center gap-1">
         <span>❤️</span>
@@ -63,7 +63,7 @@ export default function HRZonesBar() {
       <div className="h-40">
         {loading && <Skeleton className="h-full w-full" />}
         {error && (
-          <div className="flex h-full items-center justify-center text-sm text-destructive">
+          <div className="flex h-full items-center justify-center text-sm font-normal text-destructive">
             {error}
           </div>
         )}

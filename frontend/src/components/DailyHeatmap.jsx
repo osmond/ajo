@@ -18,10 +18,10 @@ export default function DailyHeatmap() {
     return <Skeleton className="h-20 w-full" />;
   }
   if (error) {
-    return <div className="text-sm text-destructive">{error}</div>;
+    return <div className="text-sm font-normal text-destructive">{error}</div>;
   }
   if (!data.length) {
-    return <div className="text-sm text-muted-foreground">No data</div>;
+    return <div className="text-sm font-normal text-muted-foreground">No data</div>;
   }
   const max = Math.max(...data.map((d) => d.distance));
   return (

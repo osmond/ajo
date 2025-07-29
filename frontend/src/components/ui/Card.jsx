@@ -18,7 +18,11 @@ export function CardHeader({ className = "", children }) {
 }
 
 export function CardTitle({ className = "", children }) {
-  return <h3 className={"text-2xl font-semibold leading-none tracking-tight " + className}>{children}</h3>;
+  return (
+    <h3 className={"text-xl font-semibold leading-snug " + className}>
+      {children}
+    </h3>
+  );
 }
 
 export function CardContent({ className = "", children }) {

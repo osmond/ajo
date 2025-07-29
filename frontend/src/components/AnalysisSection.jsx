@@ -9,7 +9,7 @@ function AnalysisTooltip({ active, payload }) {
   if (!active || !payload?.length) return null;
   const { temperature, avgPace } = payload[0].payload;
   return (
-    <div className="rounded bg-background p-2 text-sm shadow">
+    <div className="rounded bg-background p-2 text-sm font-normal shadow">
       <div className="flex items-center gap-1">
         <span>🌡️</span>
         <span>{temperature}°C</span>
@@ -40,7 +40,7 @@ export default function AnalysisSection() {
         <div className="h-64">
           {loading && <Skeleton className="h-full w-full" />}
           {error && (
-            <div className="flex h-full items-center justify-center text-sm text-destructive">{error}</div>
+            <div className="flex h-full items-center justify-center text-sm font-normal text-destructive">{error}</div>
           )}
           {!loading && !error && (
             <ResponsiveContainer width="100%" height="100%">

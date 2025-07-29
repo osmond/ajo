@@ -59,7 +59,7 @@ export default function KPIGrid() {
           </Card>
         ))}
       {error && (
-        <div className="col-span-3 text-center text-sm text-destructive">{error}</div>
+        <div className="col-span-3 text-center text-sm font-normal text-destructive">{error}</div>
       )}
       {!loading && !error &&
         items.map((item) => (

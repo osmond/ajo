@@ -64,7 +64,7 @@ export default function TimeOfDay() {
       <div className="h-64">
         {loading && <Skeleton className="h-full w-full" />}
         {error && (
-          <div className="flex h-full items-center justify-center text-sm text-destructive">{error}</div>
+          <div className="flex h-full items-center justify-center text-sm font-normal text-destructive">{error}</div>
         )}
         {!loading && !error && <Scatter data={data} options={options} />}
       </div>
