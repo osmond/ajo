@@ -49,7 +49,11 @@ export default function AnalysisSection() {
                 <XAxis dataKey="temperature" name="Temp" unit="°C" />
                 <YAxis dataKey="avgPace" name="Pace" unit="min/km" />
                 <Tooltip content={<AnalysisTooltip />} />
-                <Scatter data={data} fill="hsl(var(--primary))" />
+                <Scatter
+                  data={data}
+                  fill="hsl(var(--primary))"
+                  isAnimationActive={false}
+                />
               </ScatterChart>
             </ResponsiveContainer>
           )}
