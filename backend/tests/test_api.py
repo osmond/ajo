@@ -112,6 +112,11 @@ def test_routes_filtering():
     assert len(data) == 20
 
 
+def test_routes_invalid_start_date():
+    resp = client.get('/routes?startDate=bad-date')
+    assert resp.status_code == 400
+
+
 def test_daily_totals_endpoint():
     resp = client.get('/daily-totals')
     assert resp.status_code == 200
