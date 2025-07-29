@@ -117,3 +117,9 @@ hours and daily totals using the API helpers. The header now offers a date range
 selector, quick filter buttons and export/share actions while the metrics and
 sparklines sit in the card content below.
 
+## Run Summary Card
+
+`frontend/src/components/SummaryCard.jsx` presents overall run statistics. It
+now includes a mini map for the most recent run and a small distance sparkline
+to visualize trends.
+
