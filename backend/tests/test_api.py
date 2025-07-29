@@ -183,3 +183,43 @@ def test_weather_cached(monkeypatch):
     assert result1 == expected
     assert result2 == expected
     assert len(calls) == 1
+
+
+def test_weather_cache_expiry(monkeypatch):
+    """Expired cache entries should be discarded."""
+    from app import weather
+
+    weather._CACHE.clear()
+    # expire immediately
+    monkeypatch.setattr(weather, "_CACHE_TTL", 0)
+
+    calls = []
+
+    def fake_get(url, params=None, timeout=5):
+        calls.append(1)
+
+        class Resp:
+            def raise_for_status(self):
+                pass
+
+            def json(self):
+                return {
+                    "hourly": {
+                        "time": [params["start_date"] + "T12:00"],
+                        "temperature_2m": [15],
+                        "precipitation": [0.0],
+                        "windspeed_10m": [3.0],
+                        "relativehumidity_2m": [50],
+                    }
+                }
+
+        return Resp()
+
+    monkeypatch.setattr(weather.requests, "get", fake_get)
+
+    lat, lon, ts = 1.0, 2.0, "2022-01-02T12:00:00"
+    weather.get_weather(lat, lon, ts)
+    weather.get_weather(lat, lon, ts)
+
+    assert len(calls) == 2
+    assert len(weather._CACHE) == 1
