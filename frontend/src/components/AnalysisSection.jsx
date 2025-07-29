@@ -4,6 +4,7 @@ import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Responsive
 import { fetchAnalysis } from "../api";
 import Skeleton from "./ui/Skeleton";
 import TimeOfDay from "./TimeOfDay";
+import DemoCharts from "./DemoCharts/DemoCharts";
 
 function AnalysisTooltip({ active, payload }) {
   if (!active || !payload?.length) return null;
@@ -35,7 +36,8 @@ export default function AnalysisSection() {
   }, []);
 
   return (
-    <div className="grid gap-10 sm:grid-cols-2">
+    <div className="space-y-10">
+      <div className="grid gap-10 sm:grid-cols-2">
       <ChartCard title="Pace vs Temperature">
         <div className="h-64">
           {loading && <Skeleton className="h-full w-full" />}
@@ -59,7 +61,9 @@ export default function AnalysisSection() {
           )}
         </div>
       </ChartCard>
-      <TimeOfDay />
+        <TimeOfDay />
+      </div>
+      <DemoCharts />
     </div>
   );
 }
