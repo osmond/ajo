@@ -5,6 +5,7 @@ import StepsSparkline from "./StepsSparkline";
 import HRZonesBar from "./HRZonesBar";
 import CumulativeTimeChart from "./CumulativeTimeChart";
 import CumulativeChart from "./CumulativeChart";
+import WeatherChart from "./WeatherChart";
 const MapSection = React.lazy(() => import("./MapSection"));
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
 
@@ -44,6 +45,7 @@ export default function DashboardPage() {
           </React.Suspense>
           <CumulativeChart />
           <KPIGrid />
+          <WeatherChart />
         </CardContent>
       </Card>
     </div>
