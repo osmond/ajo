@@ -3,7 +3,11 @@ import ChartCard from "./ChartCard";
 import ActivityCalendar from "./ActivityCalendar";
 import CalendarHeatmap from "./CalendarHeatmap";
 import { Card, CardContent } from "./ui/Card";
-import { fetchActivityTrack, fetchRoutes } from "../api";
+import {
+  fetchActivityTrack,
+  fetchActivitiesByDate,
+  fetchRoutes,
+} from "../api";
 import ElevationChart from "./ElevationChart";
 const LazyMap = React.lazy(() => import("./LeafletMap"));
 const LazyHeatmap = React.lazy(() => import("./RouteHeatmap"));
@@ -33,6 +37,20 @@ export default function MapSection() {
       .catch(() => setError("Failed to load map"))
       .finally(() => setLoading(false));
   }, []);
+
+  React.useEffect(() => {
+    fetchActivitiesByDate()
+      .then((data) => {
+        const dates = Object.keys(data).sort();
+        const latest = dates[dates.length - 1];
+        if (latest && data[latest]?.length) {
+          loadTrack(data[latest][0]);
+        }
+      })
+      .catch(() => {
+        /* ignore initial load errors */
+      });
+  }, [loadTrack]);
 
   React.useEffect(() => {
     setLoadingRoutes(true);
