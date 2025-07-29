@@ -3,6 +3,35 @@ import datetime
 import random
 
 
+def generate_dummy_activities(days: int = 100):
+    """Return a list of dummy activities around Madison, WI."""
+    activities = []
+    base_lat, base_lon = 43.0731, -89.4012
+    for i in range(1, days + 1):
+        act_type = "RUN" if i % 2 else "BIKE"
+        dist_km = random.uniform(3, 12)
+        duration = int(dist_km * random.uniform(5.5, 7.0) * 60)
+        start = datetime.datetime.now() - datetime.timedelta(days=i)
+        start = start.replace(
+            hour=random.randint(0, 23),
+            minute=random.randint(0, 59),
+            second=random.randint(0, 59),
+            microsecond=0,
+        )
+        activities.append(
+            {
+                "activityId": f"act_{i}",
+                "activityType": {"typeKey": act_type},
+                "startTimeLocal": start.isoformat(),
+                "startLat": base_lat + random.uniform(-0.02, 0.02),
+                "startLon": base_lon + random.uniform(-0.02, 0.02),
+                "distance": round(dist_km * 1000),
+                "duration": duration,
+            }
+        )
+    return activities
+
+
 class GarminClient:
     """Placeholder Garmin API client."""
 
@@ -39,25 +68,7 @@ class GarminClient:
         return points
 
     def __init_dummy_activities(self):
-        activities = []
-        # Center the dummy data around Madison, WI
-        base_lat, base_lon = 43.0731, -89.4012
-        for i in range(1, 101):
-            lat = base_lat + random.uniform(-0.02, 0.02)
-            lon = base_lon + random.uniform(-0.02, 0.02)
-            act_type = "RUN" if i % 2 else "BIKE"
-            activities.append(
-                {
-                    "activityId": f"act_{i}",
-                    "activityType": {"typeKey": act_type},
-                    "startTimeLocal": (
-                        datetime.datetime.now() - datetime.timedelta(days=i)
-                    ).isoformat(),
-                    "startLat": lat,
-                    "startLon": lon,
-                }
-            )
-        return activities
+        return generate_dummy_activities()
 
     @property
     def dummy_activities(self):
