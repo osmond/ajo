@@ -4,6 +4,7 @@ import KPIGrid from "./components/KPIGrid";
 import TrendsSection from "./components/TrendsSection";
 import DailyHeatmap from "./components/DailyHeatmap";
 import RunHeatmap from "./components/RunHeatmap";
+import CumulativeChart from "./components/CumulativeChart";
 import SummaryCard from "./components/SummaryCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/Tabs";
 const MapSection = React.lazy(() => import("./components/MapSection"));
@@ -20,6 +21,7 @@ export default function App() {
             <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
             <TabsTrigger value="map">Map</TabsTrigger>
             <TabsTrigger value="analysis">Analysis</TabsTrigger>
+            <TabsTrigger value="mileage">Mileage</TabsTrigger>
           </TabsList>
           <TabsContent value="dashboard" className="space-y-6">
             <KPIGrid />
@@ -48,6 +50,9 @@ export default function App() {
             >
               <AnalysisSection />
             </React.Suspense>
+          </TabsContent>
+          <TabsContent value="mileage" className="space-y-6">
+            <CumulativeChart />
           </TabsContent>
         </Tabs>
       </main>
