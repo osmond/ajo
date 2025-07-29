@@ -3,7 +3,7 @@ import ChartCard from "./ChartCard";
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { fetchAnalysis } from "../api";
 import Skeleton from "./ui/Skeleton";
-import TimeOfDay from "./TimeOfDay";
+import CumulativeTimeChart from "./CumulativeTimeChart";
 import DemoCharts from "./DemoCharts/DemoCharts";
 
 function AnalysisTooltip({ active, payload }) {
@@ -61,7 +61,7 @@ export default function AnalysisSection() {
           )}
         </div>
       </ChartCard>
-        <TimeOfDay />
+        <CumulativeTimeChart />
       </div>
       <DemoCharts />
     </div>

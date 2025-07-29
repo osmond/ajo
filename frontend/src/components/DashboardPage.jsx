@@ -5,7 +5,7 @@ import { Card, CardContent } from "./ui/Card";
 import KPIGrid from "./KPIGrid";
 import StepsSparkline from "./StepsSparkline";
 import HRZonesBar from "./HRZonesBar";
-import TimeOfDay from "./TimeOfDay";
+import CumulativeTimeChart from "./CumulativeTimeChart";
 import CumulativeChart from "./CumulativeChart";
 import ChartCard from "./ChartCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/Tabs";
@@ -31,7 +31,7 @@ export default function DashboardPage() {
             <div className="grid gap-6 sm:grid-cols-2">
               <StepsSparkline />
               <HRZonesBar />
-              <TimeOfDay />
+              <CumulativeTimeChart />
               <CumulativeChart />
             </div>
 
