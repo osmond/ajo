@@ -120,6 +120,16 @@ def test_daily_totals_endpoint():
     assert data and 'date' in data[0] and 'distance' in data[0] and 'duration' in data[0]
 
 
+def test_runs_endpoint():
+    resp = client.get('/runs')
+    assert resp.status_code == 200
+    data = resp.json()
+    assert isinstance(data, list)
+    assert data
+    first = data[0]
+    assert 'date' in first and 'distance' in first and 'duration' in first and 'elevationGain' in first
+
+
 def test_analysis_endpoint():
     resp = client.get('/analysis')
     assert resp.status_code == 200
