@@ -226,11 +226,17 @@ async def all_routes(
             ]
 
     if startDate or endDate:
-        start = datetime.date.fromisoformat(startDate) if startDate else None
-        end = datetime.date.fromisoformat(endDate) if endDate else None
+        try:
+            start = datetime.date.fromisoformat(startDate) if startDate else None
+            end = datetime.date.fromisoformat(endDate) if endDate else None
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid date")
 
         def in_range(act):
-            d = datetime.date.fromisoformat(act["startTimeLocal"].split("T")[0])
+            try:
+                d = datetime.date.fromisoformat(act["startTimeLocal"].split("T")[0])
+            except ValueError:
+                raise HTTPException(status_code=400, detail="Invalid date")
             if start and d < start:
                 return False
             if end and d > end:
