@@ -3,7 +3,6 @@ import WeeklySummaryCard from "./WeeklySummaryCard";
 import SummaryCard from "./SummaryCard";
 import KPIGrid from "./KPIGrid";
 import TrendsSection from "./TrendsSection";
-import DailyHeatmap from "./DailyHeatmap";
 import RunHeatmap from "./RunHeatmap";
 import CumulativeChart from "./CumulativeChart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/Tabs";
@@ -25,7 +24,6 @@ export default function DashboardPage() {
           <TabsContent value="dashboard" className="space-y-6">
             <KPIGrid />
             <TrendsSection />
-            <DailyHeatmap />
             <RunHeatmap />
           </TabsContent>
           <TabsContent value="map" className="space-y-6">
