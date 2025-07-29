@@ -5,15 +5,21 @@ import requests
 
 API_URL = "https://api.open-meteo.com/v1/forecast"
 
-# Simple in-memory cache of fetched weather data keyed by
-# ``(lat, lon, date_iso)``. Each entry stores a tuple of
-# ``(timestamp, data)`` so that stale values can be discarded.
+# Simple in-memory caches of fetched weather data keyed by
+# ``(lat, lon, date_iso)``. ``_CACHE`` stores successful lookups
+# while ``_FAIL_CACHE`` remembers failed attempts. Each entry
+# stores a tuple of ``(timestamp, data)`` so that stale values can
+# be discarded.
 _CACHE: Dict[Tuple[float, float, str], Tuple[float, dict]] = {}
+_FAIL_CACHE: Dict[Tuple[float, float, str], Tuple[float, dict]] = {}
 
 # Entries older than this many seconds are ignored. The value is
 # intentionally small to keep the cache from growing unbounded when
 # the server runs for a long time.
 _CACHE_TTL = 60 * 60  # one hour
+# Failure entries are kept for a much shorter time to avoid
+# repeatedly querying the API when it is down.
+_FAIL_TTL = 5 * 60  # five minutes
 
 
 def get_weather(lat: float, lon: float, timestamp: str) -> dict:
@@ -37,6 +43,12 @@ def get_weather(lat: float, lon: float, timestamp: str) -> dict:
         else:
             # remove stale entry
             del _CACHE[cache_key]
+    if cache_key in _FAIL_CACHE:
+        fail_ts, fail_data = _FAIL_CACHE[cache_key]
+        if now - fail_ts < _FAIL_TTL:
+            return fail_data
+        else:
+            del _FAIL_CACHE[cache_key]
 
     params = {
         "latitude": lat,
@@ -73,7 +85,10 @@ def get_weather(lat: float, lon: float, timestamp: str) -> dict:
                 }
                 break
     except Exception:
-        pass
+        _FAIL_CACHE[cache_key] = (now, result)
+        return result
 
     _CACHE[cache_key] = (now, result)
+    if cache_key in _FAIL_CACHE:
+        del _FAIL_CACHE[cache_key]
     return result
