@@ -6,10 +6,12 @@ __pycache__/
 .env
 
 # === Node & Vite ===
+# ignore top‑level dependencies
 node_modules/
-frontend/node_modules/
-frontend/dist/
-.vite/
+# ignore frontend dependencies & build output
+/frontend/node_modules/
+/frontend/dist/
+/.vite/
 
 # === Logs ===
 npm-debug.log*
