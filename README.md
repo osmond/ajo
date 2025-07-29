@@ -63,7 +63,10 @@ Add the `VITE_BACKEND_URL` environment variable in the Vercel dashboard so the
 frontend knows where to reach your backend. Vercel will run `npm run build` and
 serve the generated static files from `frontend/dist`.
 
-The backend can be hosted separately on any platform that supports FastAPI.
+The backend can be hosted separately on any platform that supports FastAPI. For
+one‑repo deployments you may also place a FastAPI app inside the `api/` folder
+and include a `vercel.json` file that rewrites paths such as `/steps` or
+`/activities` to that serverless function.
 
 ## Frontend Features
 

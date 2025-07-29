@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "functions": {
+    "api/**/*.py": { "runtime": "python3.11" }
+  },
+  "rewrites": [
+    { "source": "/activities", "destination": "/api/index.py" },
+    { "source": "/activities/by-date", "destination": "/api/index.py" },
+    { "source": "/activities/:id", "destination": "/api/index.py" },
+    { "source": "/activities/:id/track", "destination": "/api/index.py" },
+    { "source": "/steps", "destination": "/api/index.py" },
+    { "source": "/heartrate", "destination": "/api/index.py" },
+    { "source": "/vo2max", "destination": "/api/index.py" },
+    { "source": "/sleep", "destination": "/api/index.py" },
+    { "source": "/map", "destination": "/api/index.py" },
+    { "source": "/routes", "destination": "/api/index.py" },
+    { "source": "/runs", "destination": "/api/index.py" },
+    { "source": "/daily-totals", "destination": "/api/index.py" },
+    { "source": "/analysis", "destination": "/api/index.py" }
+  ]
+}
