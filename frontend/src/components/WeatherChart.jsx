@@ -29,10 +29,11 @@ export default function WeatherChart() {
               tickLine={false}
               axisLine={false}
               tick={({ x, y, payload }) => {
-                const Icon = weatherData.find(d => d.condition === payload.value).icon;
+                const entry = weatherData.find(d => d.condition === payload.value);
+                const Icon = entry ? entry.icon : null;
                 return (
                   <g transform={`translate(${x - 90},${y - 8})`}>
-                    <Icon size={16} stroke="#64748B" />
+                    {Icon && <Icon size={16} stroke="#64748B" />}
                     <text x={24} y={12} fill="#334155" fontSize={12}>
                       {payload.value}
                     </text>

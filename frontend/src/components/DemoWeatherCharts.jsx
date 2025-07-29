@@ -36,19 +36,23 @@ export default function DemoWeatherCharts() {
                 width={100}
                 tickLine={false}
                 axisLine={false}
-                tick={({ x, y, payload }) => (
-                  <text
-                    x={x - 8}
-                    y={y + 4}
-                    textAnchor="end"
-                    fontSize={12}
-                    fill="#334155"
-                  >
-                    {payload.value}
-                    <tspan fill="#64748B">  {temperatureData.find(d => d.label === payload.value).range}</tspan>
-                  </text>
-                )}
-              />
+                  tick={({ x, y, payload }) => {
+                    const entry = temperatureData.find(d => d.label === payload.value);
+                    const range = entry ? entry.range : "";
+                    return (
+                      <text
+                        x={x - 8}
+                        y={y + 4}
+                        textAnchor="end"
+                        fontSize={12}
+                        fill="#334155"
+                      >
+                        {payload.value}
+                        <tspan fill="#64748B">  {range}</tspan>
+                      </text>
+                    );
+                  }}
+                />
               <Tooltip
                 formatter={(val) => [`${val} runs`, ""]}
                 cursor={{ fill: "rgba(56, 189, 248, 0.1)" }}
@@ -84,18 +88,21 @@ export default function DemoWeatherCharts() {
                 width={120}
                 tickLine={false}
                 axisLine={false}
-                tick={({ x, y, payload }) => {
-                  const Icon = weatherData.find(d => d.condition === payload.value).icon;
-                  return (
-                    <g transform={`translate(${x - 40},${y - 10})`}>
-                      <Icon size={16} fill="none" stroke="#334155" />
-                      <text x={24} y={16} fontSize={12} fill="#334155">
-                        {payload.value}
-                      </text>
-                    </g>
-                  );
-                }}
-              />
+                  tick={({ x, y, payload }) => {
+                    const entry = weatherData.find(d => d.condition === payload.value);
+                    const Icon = entry ? entry.icon : null;
+                    return (
+                      <g transform={`translate(${x - 40},${y - 10})`}>
+                        {Icon && (
+                          <Icon size={16} fill="none" stroke="#334155" />
+                        )}
+                        <text x={24} y={16} fontSize={12} fill="#334155">
+                          {payload.value}
+                        </text>
+                      </g>
+                    );
+                  }}
+                />
               <Tooltip
                 formatter={(val) => [`${val} runs`, ""]}
                 cursor={{ fill: "rgba(56, 189, 248, 0.1)" }}
