@@ -2,9 +2,12 @@ import React from "react";
 import WeeklySummaryCard from "./WeeklySummaryCard";
 import SummaryCard from "./SummaryCard";
 import KPIGrid from "./KPIGrid";
-import TrendsSection from "./TrendsSection";
+import StepsSparkline from "./StepsSparkline";
+import HRZonesBar from "./HRZonesBar";
+import TimeOfDay from "./TimeOfDay";
 import RunHeatmap from "./RunHeatmap";
 import CumulativeChart from "./CumulativeChart";
+import ChartCard from "./ChartCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/Tabs";
 const MapSection = React.lazy(() => import("./MapSection"));
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
@@ -23,8 +26,15 @@ export default function DashboardPage() {
           </TabsList>
           <TabsContent value="dashboard" className="space-y-6">
             <KPIGrid />
-            <TrendsSection />
-            <RunHeatmap />
+            <div className="grid gap-6 sm:grid-cols-2">
+              <StepsSparkline />
+              <HRZonesBar />
+              <TimeOfDay />
+              <CumulativeChart />
+            </div>
+            <ChartCard title="Run Heatmap">
+              <RunHeatmap />
+            </ChartCard>
           </TabsContent>
           <TabsContent value="map" className="space-y-6">
             <React.Suspense

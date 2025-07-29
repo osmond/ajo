@@ -61,19 +61,16 @@ export default function KPIGrid() {
   }, []);
 
   return (
-    <div className="grid gap-10 sm:grid-cols-3 auto-rows-fr">
+    <div className="grid gap-6 sm:grid-cols-3 auto-rows-fr">
       {loading &&
         Array.from({ length: 3 }).map((_, i) => (
 
           <Card key={i} className="animate-in fade-in animate-pulse h-40">
 
-            <CardHeader className="items-center">
-              <CardTitle className="text-center">
-                <Skeleton className="h-6 w-24" />
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="flex items-center justify-center h-32">
+            <CardContent className="flex flex-col items-center justify-center gap-2 h-full">
+              <Skeleton className="h-6 w-6" />
               <Skeleton className="h-20 w-20 rounded-full" />
+              <Skeleton className="h-4 w-20" />
             </CardContent>
           </Card>
         ))}
@@ -85,14 +82,10 @@ export default function KPIGrid() {
 
           <Card key={item.label} className="animate-in fade-in h-40">
 
-            <CardHeader className="items-center">
-              <CardTitle className="flex items-center gap-2 text-center">
-                {item.icon && <item.icon />}
-                {item.label}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="flex items-center justify-center h-32">
+            <CardContent className="flex flex-col items-center justify-center gap-2 h-full">
+              {item.icon && <item.icon className="h-6 w-6" />}
               <ProgressRing value={item.value} max={item.goal} unit={item.unit} size={80} />
+              <div className="text-sm font-medium text-center">{item.label}</div>
             </CardContent>
           </Card>
         ))}
