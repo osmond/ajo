@@ -79,7 +79,19 @@ def test_map_endpoint():
     _check_metric_list('/map')
 
 
-def test_activity_track():
+def test_activity_track(monkeypatch):
+    from app import weather
+
+    def fake_weather(lat, lon, ts):
+        return {
+            "temperature": 22,
+            "precipitation": 0.0,
+            "windspeed": 3.2,
+            "humidity": 55,
+        }
+
+    monkeypatch.setattr(weather, "get_weather", fake_weather)
+
     list_resp = client.get('/activities')
     aid = list_resp.json()[0]['activityId']
     resp = client.get(f'/activities/{aid}/track')
