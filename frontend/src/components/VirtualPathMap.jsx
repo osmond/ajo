@@ -1,6 +1,7 @@
 import React from "react";
 import { MapContainer, TileLayer, Polyline, Marker, Popup } from "react-leaflet";
 import { fetchDailyTotals } from "../api";
+import { useCartoTileURL, cartoAttribution } from "@/hooks/useCartoTiles";
 import { haversineDistance, interpolatePoint } from "../lib/geo";
 import "leaflet/dist/leaflet.css";
 
@@ -63,13 +64,15 @@ export default function VirtualPathMap() {
 
   const center = route[0];
 
+  const tileUrl = useCartoTileURL();
+
   if (loading) return <div className="h-64">Loading...</div>;
   if (error) return <div className="h-64 text-destructive">{error}</div>;
 
   return (
     <div className="h-64">
       <MapContainer center={[center.lat, center.lon]} zoom={4} style={{ height: "100%", width: "100%" }}>
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <TileLayer url={tileUrl} attribution={cartoAttribution} />
         <Polyline positions={route.map(p => [p.lat, p.lon])} pathOptions={{ color: '#ccc', dashArray: '4' }} />
         {traveled.length > 0 && (
           <Polyline positions={[[route[0].lat, route[0].lon], ...traveled.map(p => [p.lat, p.lon])]} pathOptions={{ color: 'hsl(var(--primary))' }} />

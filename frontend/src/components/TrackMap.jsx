@@ -1,6 +1,7 @@
 import React from "react";
 import { MapContainer, TileLayer, Polyline, CircleMarker, Tooltip, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { useCartoTileURL, cartoAttribution } from "@/hooks/useCartoTiles";
 
 function MapUpdater({ center }) {
   const map = useMap();
@@ -68,12 +69,11 @@ export default function TrackMap({ points, center }) {
 
   const mapCenter = center || defaultCenter;
 
+  const tileUrl = useCartoTileURL();
+
   return (
     <MapContainer center={mapCenter} zoom={13} style={{ height: "100%", width: "100%" }}>
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution="&copy; OpenStreetMap contributors"
-      />
+      <TileLayer url={tileUrl} attribution={cartoAttribution} />
       <MapUpdater center={mapCenter} />
       {segments}
       {markers}
