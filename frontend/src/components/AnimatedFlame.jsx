@@ -6,9 +6,9 @@ export default function AnimatedFlame({ streak = 0 }) {
 
   return (
     <div className="flex items-center gap-2">
-      {/* Simple flame icon with animated outline */}
+      {/* Simple flame icon without pulsing animation */}
       <Flame
-        className="w-6 h-6 animate-flame"
+        className="w-6 h-6"
         strokeWidth={2}
         color="#f97316"
         fill={fill}
