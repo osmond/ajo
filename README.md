@@ -32,9 +32,17 @@ All development tools such as Vitest are listed in `frontend/package.json` under
 
 ## Configuration
 
-The frontend reads `VITE_BACKEND_URL` from an `.env` file. When this value is
-empty or set to `mock`, the app uses the built‑in mock API. Set it to a real
-backend URL if you want to fetch data from a server.
+The frontend reads `VITE_BACKEND_URL` from an `.env` file. A sample is provided
+at `frontend/.env.example`:
+
+```bash
+VITE_BACKEND_URL=mock
+```
+
+Copy this file to `.env` if you want to run the demo with the bundled mock API.
+When the variable is empty or set to `mock`, the app loads data from the mock
+implementation. Set it to a real backend URL if you need to fetch data from a
+server.
 
 ## Frontend Features
 
