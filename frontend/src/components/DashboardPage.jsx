@@ -5,7 +5,9 @@ import WeatherChart from "./WeatherChart";
 import TemperatureChart from "./TemperatureChart";
 import StatesVisited from "./StatesVisited";
 import WeeklySummaryCard from "./WeeklySummaryCard";
-import MileageRings from "./MileageRings";
+
+import StreakFlame from "./StreakFlame";
+
 const MapSection = React.lazy(() => import("./MapSection"));
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
 
@@ -15,7 +17,9 @@ export default function DashboardPage() {
 
       <h2 className="text-2xl font-bold mb-2">Activity Overview</h2>
 
-      <WeeklySummaryCard />
+      <WeeklySummaryCard>
+        <StreakFlame />
+      </WeeklySummaryCard>
 
       <MileageRings />
 
