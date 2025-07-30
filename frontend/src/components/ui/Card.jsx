@@ -1,12 +1,13 @@
 import React from "react";
 
-export function Card({ className = "", children }) {
+export function Card({ className = "", children, ...props }) {
   return (
     <div
       className={
         "rounded-2xl bg-card text-card-foreground shadow-sm transition-shadow transition-transform hover:-translate-y-0.5 hover:shadow-md focus-within:shadow-md " +
         className
       }
+      {...props}
     >
       {children}
     </div>
