@@ -1,7 +1,6 @@
 import React from "react";
 import { Card, CardContent } from "./ui/Card";
 import KPIGrid from "./KPIGrid";
-import StepsSparkline from "./StepsSparkline";
 import WeatherChart from "./WeatherChart";
 import TemperatureChart from "./TemperatureChart";
 import StatesVisited from "./StatesVisited";
@@ -34,9 +33,6 @@ export default function DashboardPage() {
       <StatesVisited />
       <Card className="animate-in fade-in">
         <CardContent className="space-y-6">
-          <div className="grid gap-6 sm:grid-cols-2">
-            <StepsSparkline />
-          </div>
           <React.Suspense
             fallback={
               <div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">
