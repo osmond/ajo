@@ -24,3 +24,8 @@ it('toggles sort direction on repeated click', async () => {
   await userEvent.click(header); // asc
   expect(firstRow(container)).toHaveTextContent('Delaware');
 });
+
+it('shows cities when selected', () => {
+  render(<StatesTable selected="CA" />);
+  expect(screen.getByText('Los Angeles')).toBeInTheDocument();
+});
