@@ -4,24 +4,16 @@ import MapSection from '../MapSection';
 
 afterEach(() => vi.restoreAllMocks());
 
+
 vi.mock('../ActivityCalendar', () => ({ default: () => <div data-testid="calendar" /> }));
 vi.mock('../CalendarHeatmap', () => ({ default: () => <div data-testid="heatmap" /> }));
 vi.mock('../LeafletMap', () => ({ default: () => <div data-testid="leaflet" /> }));
 vi.mock('../ElevationChart', () => ({ default: () => <div data-testid="elev" /> }));
 
-it('loads the most recent activity on mount', async () => {
+
+it('fetches routes on mount', async () => {
   global.fetch = vi.fn((url) => {
-    if (url === '/activities/by-date') {
-      return Promise.resolve({
-        ok: true,
-        json: () =>
-          Promise.resolve({
-            '2023-01-01': [{ activityId: 'a1', lat: 0, lon: 0 }],
-            '2023-01-02': [{ activityId: 'a2', lat: 0, lon: 0 }],
-          }),
-      });
-    }
-    if (url === '/activities/a2/track') {
+    if (url.startsWith('/routes')) {
       return Promise.resolve({
         ok: true,
         json: () => Promise.resolve([{ lat: 0, lon: 0 }]),
@@ -31,7 +23,6 @@ it('loads the most recent activity on mount', async () => {
   });
 
   render(<MapSection />);
-  await waitFor(() => expect(screen.getByTestId('leaflet')).toBeInTheDocument());
-  expect(global.fetch).toHaveBeenCalledWith('/activities/by-date');
-  expect(global.fetch).toHaveBeenCalledWith('/activities/a2/track');
+  await waitFor(() => expect(screen.getByTestId('routeheat')).toBeInTheDocument());
+  expect(global.fetch).toHaveBeenCalledWith('/routes');
 });
