@@ -57,25 +57,38 @@ export default function WeeklyRingsDashboard({
     >
       <style>{`
         @keyframes draw-ring {
-          to { stroke-dashoffset: 0; }
+          to {
+            stroke-dasharray: var(--dasharray);
+            stroke-dashoffset: var(--dashoffset);
+          }
+        }
+        .animate-draw-ring {
+          animation: draw-ring 1s ease forwards;
         }
       `}</style>
-      {rings.map((ring) => (
-        <circle
-          key={ring.weekStart}
-          cx={cx}
-          cy={cy}
-          r={ring.r}
-          fill="none"
-          stroke="hsl(var(--primary))"
-          strokeWidth={strokeWidth}
-          strokeDasharray={ring.circ}
-          strokeDashoffset={ring.circ * (1 - ring.pct)}
-          transform={`rotate(-90 ${cx} ${cy})`}
-          style={{ animation: "draw-ring 1s ease forwards" }}
-          data-week={ring.weekStart}
-        />
-      ))}
+      {rings.map((ring) => {
+        const d = `M ${cx} ${cy} m 0 -${ring.r} a ${ring.r} ${ring.r} 0 1 1 0 ${
+          ring.r * 2
+        } a ${ring.r} ${ring.r} 0 1 1 0 -${ring.r * 2}`;
+        return (
+          <path
+            key={ring.weekStart}
+            d={d}
+            fill="none"
+            stroke="hsl(var(--primary))"
+            strokeWidth={strokeWidth}
+            strokeDasharray="0"
+            strokeDashoffset="0"
+            className="animate-draw-ring"
+            style={{
+              '--dasharray': ring.circ,
+              '--dashoffset': ring.circ * (1 - ring.pct),
+            }}
+            transform={`rotate(-90 ${cx} ${cy})`}
+            data-week={ring.weekStart}
+          />
+        );
+      })}
     </svg>
   );
 }

@@ -14,7 +14,7 @@ function makeTotals(days, dist) {
   return totals;
 }
 
-test('renders one circle per week', async () => {
+test('renders one path per week', async () => {
   global.fetch = vi.fn().mockResolvedValue({
     ok: true,
     json: () => Promise.resolve(makeTotals(14, 5000)),
@@ -22,12 +22,12 @@ test('renders one circle per week', async () => {
 
   const { container } = render(<WeeklyRingsDashboard weeksToShow={3} goalKm={40} />);
   await screen.findByTestId('weekly-rings');
-  const circles = container.querySelectorAll('circle');
+  const paths = container.querySelectorAll('path');
   const expected = groupByWeek(makeTotals(14, 5000)).length;
-  expect(circles.length).toBe(expected);
+  expect(paths.length).toBe(expected);
 });
 
-test('circles include animation style', async () => {
+test('paths include animation classes and initial dash values', async () => {
   global.fetch = vi.fn().mockResolvedValue({
     ok: true,
     json: () => Promise.resolve(makeTotals(7, 5000)),
@@ -35,7 +35,11 @@ test('circles include animation style', async () => {
 
   const { container } = render(<WeeklyRingsDashboard weeksToShow={1} goalKm={40} />);
   await screen.findByTestId('weekly-rings');
-  const circle = container.querySelector('circle');
-  expect(circle.getAttribute('stroke-dasharray')).toBeTruthy();
-  expect(circle.style.animation).toContain('draw-ring');
+  const paths = container.querySelectorAll('path');
+  paths.forEach((p) => {
+    expect(p.getAttribute('stroke-dasharray')).toBe('0');
+    expect(p.getAttribute('stroke-dashoffset')).toBe('0');
+    const classes = Array.from(p.classList).join(' ');
+    expect(classes).toMatch(/animate/);
+  });
 });
