@@ -66,7 +66,7 @@ export default function WeatherImpactBubbleChart({ start, end } = {}) {
         {!loading && !error && data.length > 0 && (
           <ResponsiveContainer width="100%" height="100%">
             <ScatterChart margin={{ top: 5, right: 20, bottom: 20, left: 0 }}>
-              <CartesianGrid stroke="#E5E7EB" />
+              <CartesianGrid stroke="hsl(var(--border))" />
               <XAxis type="number" dataKey="temperature" unit="°C" />
               <YAxis type="number" dataKey="avgHeartRate" unit="bpm" />
               <ZAxis type="number" dataKey="distanceKm" range={[30, 200]} />

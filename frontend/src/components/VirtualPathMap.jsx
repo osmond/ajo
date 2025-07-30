@@ -73,7 +73,10 @@ export default function VirtualPathMap() {
     <div className="h-64">
       <MapContainer center={[center.lat, center.lon]} zoom={4} style={{ height: "100%", width: "100%" }}>
         <TileLayer url={tileUrl} attribution={cartoAttribution} />
-        <Polyline positions={route.map(p => [p.lat, p.lon])} pathOptions={{ color: '#ccc', dashArray: '4' }} />
+        <Polyline
+          positions={route.map((p) => [p.lat, p.lon])}
+          pathOptions={{ color: 'hsl(var(--border))', dashArray: '4' }}
+        />
         {traveled.length > 0 && (
           <Polyline positions={[[route[0].lat, route[0].lon], ...traveled.map(p => [p.lat, p.lon])]} pathOptions={{ color: 'hsl(var(--primary))' }} />
         )}
