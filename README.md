@@ -35,6 +35,14 @@ environment.
    cp .env.example .env  # contains VITE_BACKEND_URL
    npm run dev
    ```
+### Install Dependencies
+
+Before running the tests, install the Python and Node packages:
+
+```bash
+pip install -r api/requirements.txt
+cd frontend && npm install
+```
 
 ## Running Frontend Tests
 
