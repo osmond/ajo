@@ -6,14 +6,24 @@ export default function ModeToggle() {
   const [isDark, setIsDark] = React.useState(false);
 
   React.useEffect(() => {
-    setIsDark(document.documentElement.classList.contains("dark"));
+    const dark = document.documentElement.classList.contains("dark");
+    setIsDark(dark);
+    updateFavicon(dark);
   }, []);
+
+  function updateFavicon(dark) {
+    const favicon = document.getElementById("favicon");
+    if (favicon) {
+      favicon.href = dark ? "/favicon-dark.svg" : "/favicon-light.svg";
+    }
+  }
 
   function toggle() {
     const root = document.documentElement;
     const newDark = !root.classList.contains("dark");
     root.classList.toggle("dark", newDark);
     localStorage.theme = newDark ? "dark" : "light";
+    updateFavicon(newDark);
     setIsDark(newDark);
   }
 
