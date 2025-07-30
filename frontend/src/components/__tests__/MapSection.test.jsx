@@ -13,6 +13,7 @@ vi.mock('../ElevationChart', () => ({ default: () => <div data-testid="elev" /> 
 vi.mock('../Route3D', () => ({ default: () => <div data-testid="route3d" /> }));
 
 vi.mock('../RouteGallery', () => ({ default: () => <div data-testid="gallery" /> }));
+vi.mock('../TimelineMap', () => ({ default: () => <div data-testid="timeline" /> }));
 
 
 it('fetches activity data on mount', async () => {
