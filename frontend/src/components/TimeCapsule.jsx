@@ -28,11 +28,26 @@ export default function TimeCapsule() {
     return groups;
   }, [data]);
 
-  const keys = Object.keys(months).sort().reverse();
+  const keys = Object.keys(months).sort();
 
   function toggle(key) {
     setOpen((prev) => (prev === key ? null : key));
   }
+
+  const openData = React.useMemo(() => {
+    if (!open || !months[open]) return null;
+    const [y, m] = open.split("-");
+    const monthName = new Date(`${open}-01`).toLocaleString("default", {
+      month: "long",
+    });
+    const entries = months[open];
+    const total = entries.reduce((s, d) => s + d.distance, 0);
+    const chartData = entries.map((d) => ({
+      day: d.date.split("-")[2],
+      km: +(d.distance / 1000).toFixed(2),
+    }));
+    return { y, monthName, total, chartData, entries };
+  }, [open, months]);
 
   if (loading) return <Skeleton className="h-32 w-full" />;
   if (error)
@@ -46,50 +61,52 @@ export default function TimeCapsule() {
         <CardTitle>Time Capsule</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-wrap gap-2">
-          {keys.map((key) => {
-            const [y, m] = key.split("-");
-            const monthName = new Date(`${key}-01`).toLocaleString("default", {
-              month: "short",
-            });
-            const total = months[key].reduce((s, d) => s + d.distance, 0);
-            const chartData = months[key].map((d) => ({
-              day: d.date.split("-")[2],
-              km: +(d.distance / 1000).toFixed(2),
-            }));
-            return (
-              <Card key={key} className="w-32 cursor-pointer" onClick={() => toggle(key)}>
-                <CardHeader className="p-2 pb-0">
-                  <CardTitle className="text-lg font-semibold">
-                    {monthName} {y}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-2 pt-1">
-                  <div className="mb-1 text-accent font-semibold">
-                    {(total / 1000).toFixed(1)} km
-                  </div>
-                  <div className="h-8 w-full">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
-                        <Bar dataKey="km" fill="hsl(var(--accent))" radius={[2,2,0,0]} />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                  {open === key && (
-                    <div className="mt-2 space-y-1 text-xs">
-                      {months[key].map((d) => (
-                        <div key={d.date} className="flex justify-between">
-                          <span>{d.date.split("-")[2]}</span>
-                          <span>{(d.distance / 1000).toFixed(1)} km</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            );
-          })}
+        <div className="overflow-x-auto">
+          <div className="relative flex items-end gap-6 py-4 pl-4">
+            <div className="absolute top-1/2 left-4 right-4 h-px bg-border" />
+            {keys.map((key) => {
+              const monthName = new Date(`${key}-01`).toLocaleString("default", {
+                month: "short",
+              });
+              return (
+                <button
+                  key={key}
+                  onClick={() => toggle(key)}
+                  className="relative z-10 flex flex-col items-center text-xs whitespace-nowrap focus:outline-none"
+                >
+                  <span
+                    className={`h-3 w-3 rounded-full border ${
+                      open === key ? "bg-accent border-accent" : "bg-background"
+                    }`}
+                  />
+                  <span className="mt-1">{monthName}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
+        {openData && (
+          <div className="mt-4">
+            <div className="mb-2 text-sm font-semibold">
+              {openData.monthName} {openData.y} - {(openData.total / 1000).toFixed(1)} km
+            </div>
+            <div className="h-16 mb-2 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={openData.chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+                  <Bar dataKey="km" fill="hsl(var(--accent))" radius={[2, 2, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="space-y-1 text-xs">
+              {openData.entries.map((d) => (
+                <div key={d.date} className="flex justify-between">
+                  <span>{d.date.split("-")[2]}</span>
+                  <span>{(d.distance / 1000).toFixed(1)} km</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
