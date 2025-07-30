@@ -60,13 +60,13 @@ it('renders trend indicators with arrows', async () => {
   const { steps, sleep, totals } = makeData();
 
   global.fetch = vi.fn((url) => {
-    if (url === '/steps') {
+    if (url.endsWith('/steps')) {
       return Promise.resolve({ ok: true, json: () => Promise.resolve(steps) });
     }
-    if (url === '/sleep') {
+    if (url.endsWith('/sleep')) {
       return Promise.resolve({ ok: true, json: () => Promise.resolve(sleep) });
     }
-    if (url === '/daily-totals') {
+    if (url.endsWith('/daily-totals')) {
       return Promise.resolve({ ok: true, json: () => Promise.resolve(totals) });
     }
     return Promise.resolve({ ok: true, json: () => Promise.resolve([]) });
@@ -99,13 +99,13 @@ it('shows N/A when previous totals are zero', async () => {
   const { steps, sleep, totals } = makeData();
 
   global.fetch = vi.fn((url) => {
-    if (url === '/steps') {
+    if (url.endsWith('/steps')) {
       return Promise.resolve({ ok: true, json: () => Promise.resolve(steps) });
     }
-    if (url === '/sleep') {
+    if (url.endsWith('/sleep')) {
       return Promise.resolve({ ok: true, json: () => Promise.resolve(sleep) });
     }
-    if (url === '/daily-totals') {
+    if (url.endsWith('/daily-totals')) {
       return Promise.resolve({ ok: true, json: () => Promise.resolve(totals) });
     }
     return Promise.resolve({ ok: true, json: () => Promise.resolve([]) });

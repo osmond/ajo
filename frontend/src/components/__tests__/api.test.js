@@ -23,7 +23,8 @@ test('fetchActivities adds query string with leading ? when params provided', as
   });
 
   await fetchActivities({ type: 'run' });
-  expect(global.fetch).toHaveBeenCalledWith('/activities?type=run');
+  const base = import.meta.env.VITE_BACKEND_URL;
+  expect(global.fetch).toHaveBeenCalledWith(`${base}/activities?type=run`);
 });
 
 test('fetchAnalysis adds query string when params provided', async () => {
@@ -33,7 +34,8 @@ test('fetchAnalysis adds query string when params provided', async () => {
   });
 
   await fetchAnalysis({ start: '2023-01-01', end: '2023-02-01' });
+  const baseUrl = import.meta.env.VITE_BACKEND_URL;
   expect(global.fetch).toHaveBeenCalledWith(
-    '/analysis?start=2023-01-01&end=2023-02-01'
+    `${baseUrl}/analysis?start=2023-01-01&end=2023-02-01`
   );
 });

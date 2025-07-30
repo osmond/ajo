@@ -40,7 +40,8 @@ it('renders rings grouped by week', async () => {
   render(<MileageRings goalKm={40} weeksToShow={1} />);
   const ring = await screen.findByTitle(/Week of/);
   expect(ring).toBeInTheDocument();
-  expect(global.fetch).toHaveBeenCalledWith('/daily-totals');
+  const base = import.meta.env.VITE_BACKEND_URL;
+  expect(global.fetch).toHaveBeenCalledWith(`${base}/daily-totals`);
 });
 
 it('shows check icon when goal met', async () => {

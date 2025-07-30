@@ -2,55 +2,19 @@ testing vercel
 
 # Garmin Activity Dashboard
 
-This project contains a minimal React frontend and FastAPI backend used to mock
-Garmin activity data. The frontend uses Vite and Tailwind CSS while the backend
-serves dummy endpoints. All example GPS data is centered around **Madison, Wisconsin**.
+This project contains a minimal React frontend that displays activity data on
+charts and maps. All example GPS tracks are centered around **Madison,
+Wisconsin** and are generated in the browser.
 
-The repository includes two FastAPI entry points:
-
-- **`/backend`** – the full app used when developing locally with Uvicorn
-- **`/api`** – a lightweight wrapper for Vercel serverless deployment
-
-Both point to the same code in `backend/app`. Local development runs the app in
-`backend/app/main.py`, while Vercel imports that module through `api/index.py`.
-
-We use **Python&nbsp;3** on the backend and a Node/Vite stack on the frontend.
-On macOS with Homebrew‑managed Python you cannot install packages system‑wide
-with plain `pip3`, so all backend dependencies are installed inside a virtual
-environment.
-
-## Local Development
-
-1. **Backend (FastAPI)**
-   ```bash
-   # 1. create & enter your venv
-   cd backend
-   python3 -m venv .venv
-   source .venv/bin/activate          # (or `. .venv/bin/activate`)
-
-   # 2. upgrade pip & install deps
-   pip install --upgrade pip
-   pip install -r ../api/requirements.txt
-
-   # 3. make sure uvicorn is installed
-   #    (uvicorn is in ../api/requirements.txt, so pip install -r should have put it in .venv)
-
-   # 4. run the server
-   uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-   ```
-2. **Frontend**
-   ```bash
-   cd frontend
-   npm install
-   cp .env.example .env  # contains VITE_BACKEND_URL
-   npm run dev
-   ```
+The app previously included a FastAPI backend but now ships with a mock API
+implemented in `frontend/src/mockApi.js`. If `VITE_BACKEND_URL` is empty or set
+to `"mock"`, the API helpers return data from this mock implementation instead
+of fetching from a server.
 ### Install Dependencies
 
-Before running the tests, install the Python and Node packages:
+Before running the tests, install the Node packages:
 
 ```bash
-pip install -r api/requirements.txt
 cd frontend && npm install
 ```
 
@@ -70,71 +34,10 @@ All development tools such as Vitest are listed in `frontend/package.json` under
 
 ## Configuration
 
-The frontend expects `VITE_BACKEND_URL` to point at the FastAPI server.
-The provided `frontend/.env.example` file sets this to
-`http://localhost:8000` for local development.
+The frontend reads `VITE_BACKEND_URL` from an `.env` file. When this value is
+empty or set to `mock`, the app uses the built‑in mock API. Set it to a real
+backend URL if you want to fetch data from a server.
 
-## Deploying to Vercel
-
-This repository is organised as a small monorepo:
-
-- `/frontend` – React + Vite frontend
-- `/backend` – full FastAPI app for local development
-- `/api` – minimal entry point for Vercel serverless deployment
-
-### 1. Vercel Project Settings
-Set the project root to `./` and build the frontend with:
-
-```bash
-cd frontend && npm install && npm run build
-```
-
-The output directory is `frontend/dist`.
-
-### 2. Environment Variables
-Add the following variable in the Vercel dashboard:
-
-```ini
-VITE_BACKEND_URL=/api
-```
-
-### 3. `vercel.json`
-API routes are configured through `vercel.json` and run on Python&nbsp;3.11:
-
-```json
-{
-  "version": 2,
-  "functions": {
-    "api/**/*.py": { "runtime": "python3.11" }
-  },
-  "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/index.py" }
-  ]
-}
-```
-
-### 4. Local Development
-Run the backend and frontend separately:
-
-```bash
-cd backend
-uvicorn app.main:app --reload --port 8000
-```
-
-and
-
-```bash
-cd frontend
-npm run dev
-```
-
-`frontend/.env.example` already sets:
-
-```ini
-VITE_BACKEND_URL=http://localhost:8000
-```
-
-When deployed, all API requests go through `/api`.
 ## Frontend Features
 
 The map section now displays a heatmap of all recorded routes. Filter by
