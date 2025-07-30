@@ -6,6 +6,7 @@ import KPIGrid from "./KPIGrid";
 import FitnessScoreDial from "./FitnessScoreDial";
 import TemperatureChart from "./TemperatureChart";
 import WeatherChart from "./WeatherChart";
+import WeeklyRingsDashboard from "./WeeklyRingsDashboard";
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
 
 export default function DashboardTabs() {
@@ -25,6 +26,9 @@ export default function DashboardTabs() {
         </div>
         <KPIGrid />
         <FitnessScoreDial />
+        <div className="flex justify-center">
+          <WeeklyRingsDashboard />
+        </div>
       </TabsContent>
       <TabsContent value="trends" className="space-y-10">
         <React.Suspense fallback={<div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">Loading analysis...</div>}>
