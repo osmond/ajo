@@ -42,6 +42,8 @@ test('renders scatter bubbles based on analysis data and passes dates', async ()
   await waitFor(() => {
     const symbols = container.querySelectorAll('path.recharts-symbols');
     expect(symbols.length).toBeGreaterThan(0);
+    // color should not be the default primary color
+    expect(symbols[0].getAttribute('fill')).not.toBe('hsl(var(--primary))');
   });
   expect(global.fetch).toHaveBeenCalledWith(
     `/analysis?start=${start}&end=${end}`
