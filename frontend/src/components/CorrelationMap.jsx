@@ -54,7 +54,7 @@ export default function CorrelationMap() {
       .finally(() => setLoading(false));
   }, []);
 
-  const renderDualLine = (dkey1, dkey2, y1Props, y2Props, dataset) => {
+  function DualLineChart({ dkey1, dkey2, y1Props, y2Props, dataset }) {
     const grad1 = React.useId();
     const grad2 = React.useId();
     return (
@@ -98,7 +98,7 @@ export default function CorrelationMap() {
         </AreaChart>
       </ResponsiveContainer>
     );
-  };
+  }
 
   if (loading) {
     return (
@@ -120,17 +120,35 @@ export default function CorrelationMap() {
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       <ChartCard title="Steps vs Sleep">
         <div className="h-64">
-          {renderDualLine('steps', 'sleep', { unit: '' }, { unit: 'h' }, data.stepsSleep)}
+          <DualLineChart
+            dkey1="steps"
+            dkey2="sleep"
+            y1Props={{ unit: '' }}
+            y2Props={{ unit: 'h' }}
+            dataset={data.stepsSleep}
+          />
         </div>
       </ChartCard>
       <ChartCard title="HR vs Temperature">
         <div className="h-64">
-          {renderDualLine('hr', 'temp', { unit: 'bpm' }, { unit: '°C' }, data.hrTemp)}
+          <DualLineChart
+            dkey1="hr"
+            dkey2="temp"
+            y1Props={{ unit: 'bpm' }}
+            y2Props={{ unit: '°C' }}
+            dataset={data.hrTemp}
+          />
         </div>
       </ChartCard>
       <ChartCard title="Distance vs Temperature">
         <div className="h-64">
-          {renderDualLine('distance', 'temp', { unit: 'km' }, { unit: '°C' }, data.distWeather)}
+          <DualLineChart
+            dkey1="distance"
+            dkey2="temp"
+            y1Props={{ unit: 'km' }}
+            y2Props={{ unit: '°C' }}
+            dataset={data.distWeather}
+          />
         </div>
       </ChartCard>
     </div>
