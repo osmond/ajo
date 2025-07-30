@@ -7,6 +7,7 @@ import StatesVisited from "./StatesVisited";
 import WeeklySummaryCard from "./WeeklySummaryCard";
 
 import StreakFlame from "./StreakFlame";
+import MileageRings from "./MileageRings";
 
 const MapSection = React.lazy(() => import("./MapSection"));
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
