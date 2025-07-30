@@ -79,7 +79,11 @@ export default function PaceDistributionChart() {
               width={60}
               tick={{ fill: "var(--foreground)", fontSize: 12 }}
             />
-            <ReferenceLine x={0} stroke="#64748B" strokeDasharray="3 3" />
+            <ReferenceLine
+              x={0}
+              stroke="hsl(var(--muted-foreground))"
+              strokeDasharray="3 3"
+            />
             <ReferenceLine
               x={0}
               label={{
