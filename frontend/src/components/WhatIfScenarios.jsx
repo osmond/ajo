@@ -7,6 +7,7 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+  LabelList,
 } from 'recharts';
 import { Card, CardHeader, CardTitle, CardContent } from './ui/Card';
 import { Slider } from './ui/Slider';
@@ -140,9 +141,29 @@ export default function WhatIfScenarios() {
               <XAxis dataKey="day" stroke="hsl(var(--muted-foreground))" />
               <YAxis unit="min/km" stroke="hsl(var(--muted-foreground))" />
               <Tooltip formatter={(v) => [`${v} min/km`, 'pace']} />
-              <Line type="monotone" dataKey="pace" stroke="hsl(var(--primary))" dot={false} />
+              <Line type="monotone" dataKey="pace" stroke="hsl(var(--primary))" dot={false}>
+                <LabelList dataKey="pace" position="top" formatter={(v) => v.toFixed(2)} />
+              </Line>
             </LineChart>
           </ResponsiveContainer>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm" aria-label="pace table">
+            <thead>
+              <tr className="text-muted-foreground">
+                <th className="px-2 py-1 text-left">Day</th>
+                <th className="px-2 py-1 text-right">Pace</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((d) => (
+                <tr key={d.day}>
+                  <td className="px-2 py-0.5">{d.day}</td>
+                  <td className="px-2 py-0.5 text-right">{d.pace} min/km</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
         <p className="text-sm text-muted-foreground">Predicted pace over the next 7 days (min/km)</p>
       </CardContent>
