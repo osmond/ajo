@@ -112,11 +112,15 @@ def test_runs_endpoint():
 
 
 def test_analysis_endpoint():
-    resp = client.get('/analysis')
+    from app.main import dummy_activities
+
+    date = dummy_activities[0]['startTimeLocal'].split('T')[0]
+    resp = client.get(f'/analysis?start={date}&end={date}')
     assert resp.status_code == 200
     data = resp.json()
     assert isinstance(data, list)
     assert data
+    assert len(data) == 1
     first = data[0]
     assert 'avgPace' in first and 'temperature' in first
     assert 'distance' in first and 'avgHeartRate' in first

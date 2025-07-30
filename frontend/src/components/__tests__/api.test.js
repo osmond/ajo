@@ -1,4 +1,4 @@
-import { fetchRuns, fetchActivities } from '../../api';
+import { fetchRuns, fetchActivities, fetchAnalysis } from '../../api';
 import { vi } from 'vitest';
 
 afterEach(() => vi.restoreAllMocks());
@@ -24,4 +24,16 @@ test('fetchActivities adds query string with leading ? when params provided', as
 
   await fetchActivities({ type: 'run' });
   expect(global.fetch).toHaveBeenCalledWith('/activities?type=run');
+});
+
+test('fetchAnalysis adds query string when params provided', async () => {
+  global.fetch = vi.fn().mockResolvedValue({
+    ok: true,
+    json: () => Promise.resolve([]),
+  });
+
+  await fetchAnalysis({ start: '2023-01-01', end: '2023-02-01' });
+  expect(global.fetch).toHaveBeenCalledWith(
+    '/analysis?start=2023-01-01&end=2023-02-01'
+  );
 });
