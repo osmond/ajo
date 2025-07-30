@@ -70,16 +70,8 @@ and include a `vercel.json` file that rewrites paths such as `/steps` or
 
 ## Frontend Features
 
-The map section lets you replay a selected route with an animated polyline.
-Use the metric dropdown above the map to color the track by heart rate or
-speed.
-
-`ActivityCalendar` renders a simple month view where dates with activities are
-clickable. Hook into the `onSelect` prop to load a track:
-
-```jsx
-<ActivityCalendar onSelect={(act) => console.log(act)} />
-```
+The map section now displays a heatmap of all recorded routes. Filter by
+activity type or date range to explore your workouts.
 
 The "Mileage" tab visualizes your cumulative distance per month in a line chart.
 
