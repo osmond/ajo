@@ -30,6 +30,12 @@ export default function TimeCapsule() {
 
   const keys = Object.keys(months).sort();
 
+  React.useEffect(() => {
+    if (open === null && keys.length) {
+      setOpen(keys[keys.length - 1]);
+    }
+  }, [keys, open]);
+
   function toggle(key) {
     setOpen((prev) => (prev === key ? null : key));
   }
