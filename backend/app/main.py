@@ -263,11 +263,37 @@ async def daily_totals():
 
 
 @app.get("/analysis")
-async def analysis():
-    """Return activity pace/HR vs temperature data."""
+async def analysis(start: str | None = None, end: str | None = None):
+    """Return activity pace/HR vs temperature data.
+
+    Optionally restricts activities to the given ISO ``start`` and ``end`` dates.
+    """
     acts = (
         garmin_client.get_activities() if garmin_client.has_credentials else dummy_activities
     )
+
+    start_dt = end_dt = None
+    if start:
+        try:
+            start_dt = datetime.datetime.fromisoformat(start).date()
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid start date")
+    if end:
+        try:
+            end_dt = datetime.datetime.fromisoformat(end).date()
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid end date")
+
+    if start_dt or end_dt:
+        filtered = []
+        for act in acts:
+            ts_date = datetime.datetime.fromisoformat(act["startTimeLocal"]).date()
+            if start_dt and ts_date < start_dt:
+                continue
+            if end_dt and ts_date > end_dt:
+                continue
+            filtered.append(act)
+        acts = filtered
     results = []
     for act in acts:
         if garmin_client.has_credentials:

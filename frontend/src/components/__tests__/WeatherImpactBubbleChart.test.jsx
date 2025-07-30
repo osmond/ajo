@@ -25,7 +25,7 @@ beforeAll(() => {
   });
 });
 
-test('renders scatter bubbles based on analysis data', async () => {
+test('renders scatter bubbles based on analysis data and passes dates', async () => {
   global.fetch = vi.fn().mockResolvedValue({
     ok: true,
     json: () =>
@@ -34,9 +34,16 @@ test('renders scatter bubbles based on analysis data', async () => {
       ]),
   });
 
-  const { container } = render(<WeatherImpactBubbleChart />);
+  const start = '2023-01-01';
+  const end = '2023-01-31';
+  const { container } = render(
+    <WeatherImpactBubbleChart start={start} end={end} />
+  );
   await waitFor(() => {
     const symbols = container.querySelectorAll('path.recharts-symbols');
     expect(symbols.length).toBeGreaterThan(0);
   });
+  expect(global.fetch).toHaveBeenCalledWith(
+    `/analysis?start=${start}&end=${end}`
+  );
 });

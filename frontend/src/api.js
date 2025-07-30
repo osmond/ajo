@@ -20,7 +20,10 @@ export const fetchActivityTrack = (id) => apiGet(`/activities/${id}/track`);
 export const fetchActivitiesByDate = () => apiGet('/activities/by-date');
 export const fetchDailyTotals = () => apiGet('/daily-totals');
 export const fetchRuns = () => apiGet('/runs');
-export const fetchAnalysis = () => apiGet('/analysis');
+export const fetchAnalysis = (params = {}) => {
+  const qs = new URLSearchParams(params).toString();
+  return apiGet(`/analysis${qs ? `?${qs}` : ''}`);
+};
 export const fetchActivities = (params = {}) => {
   const qs = new URLSearchParams(params).toString();
   return apiGet(`/activities${qs ? `?${qs}` : ''}`);

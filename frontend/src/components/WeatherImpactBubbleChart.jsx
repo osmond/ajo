@@ -13,13 +13,16 @@ import {
 } from "recharts";
 import { fetchAnalysis } from "../api";
 
-export default function WeatherImpactBubbleChart() {
+export default function WeatherImpactBubbleChart({ start, end } = {}) {
   const [data, setData] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
-    fetchAnalysis()
+    const params = {};
+    if (start) params.start = start;
+    if (end) params.end = end;
+    fetchAnalysis(params)
       .then((rows) => {
         const pts = rows.map((r) => ({
           temperature: r.temperature,
@@ -30,7 +33,7 @@ export default function WeatherImpactBubbleChart() {
       })
       .catch(() => setError("Failed to load"))
       .finally(() => setLoading(false));
-  }, []);
+  }, [start, end]);
 
   const renderTooltip = (val, name) => {
     if (name === "distanceKm") return [`${val.toFixed(1)} km`, "Distance"];
