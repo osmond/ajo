@@ -1,3 +1,5 @@
+testing vercel
+
 # Garmin Activity Dashboard
 
 This project contains a minimal React frontend and FastAPI backend used to mock
