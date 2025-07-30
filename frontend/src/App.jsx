@@ -2,6 +2,7 @@ import React from "react";
 import DashboardPage from "@/components/DashboardPage";
 import AllChartsPage from "@/components/AllChartsPage";
 import AllMapsPage from "@/components/AllMapsPage";
+import AllComponentsPage from "@/components/AllComponentsPage";
 import ModeToggle from "@/components/ModeToggle";
 
 export default function App() {
@@ -24,6 +25,12 @@ export default function App() {
             >
               View All Maps
             </button>
+            <button
+              className="text-sm underline"
+              onClick={() => setPage("components")}
+            >
+              View Components
+            </button>
           </div>
         ) : (
           <button
@@ -40,8 +47,10 @@ export default function App() {
           <DashboardPage />
         ) : page === "charts" ? (
           <AllChartsPage />
-        ) : (
+        ) : page === "maps" ? (
           <AllMapsPage />
+        ) : (
+          <AllComponentsPage />
         )}
       </main>
     </div>
