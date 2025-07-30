@@ -21,6 +21,7 @@ export default function WeeklyRingsDashboard({
   weeksToShow = 4,
   size = 200,
   strokeWidth = 10,
+  label = "Weekly Mileage",
 }) {
   const [weeks, setWeeks] = React.useState([]);
   const [error, setError] = React.useState(null);
@@ -49,12 +50,13 @@ export default function WeeklyRingsDashboard({
   });
 
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox={`0 0 ${size} ${size}`}
-      data-testid="weekly-rings"
-    >
+    <figure className="flex flex-col items-center">
+      <svg
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+        data-testid="weekly-rings"
+      >
       <style>{`
         @keyframes draw-ring {
           to {
@@ -66,29 +68,31 @@ export default function WeeklyRingsDashboard({
           animation: draw-ring 1s ease forwards;
         }
       `}</style>
-      {rings.map((ring) => {
-        const d = `M ${cx} ${cy} m 0 -${ring.r} a ${ring.r} ${ring.r} 0 1 1 0 ${
-          ring.r * 2
-        } a ${ring.r} ${ring.r} 0 1 1 0 -${ring.r * 2}`;
-        return (
-          <path
-            key={ring.weekStart}
-            d={d}
-            fill="none"
-            stroke="hsl(var(--primary))"
-            strokeWidth={strokeWidth}
-            strokeDasharray="0"
-            strokeDashoffset="0"
-            className="animate-draw-ring"
-            style={{
-              '--dasharray': ring.circ,
-              '--dashoffset': ring.circ * (1 - ring.pct),
-            }}
-            transform={`rotate(-90 ${cx} ${cy})`}
-            data-week={ring.weekStart}
-          />
-        );
-      })}
-    </svg>
+        {rings.map((ring) => {
+          const d = `M ${cx} ${cy} m 0 -${ring.r} a ${ring.r} ${ring.r} 0 1 1 0 ${
+            ring.r * 2
+          } a ${ring.r} ${ring.r} 0 1 1 0 -${ring.r * 2}`;
+          return (
+            <path
+              key={ring.weekStart}
+              d={d}
+              fill="none"
+              stroke="hsl(var(--primary))"
+              strokeWidth={strokeWidth}
+              strokeDasharray="0"
+              strokeDashoffset="0"
+              className="animate-draw-ring"
+              style={{
+                '--dasharray': ring.circ,
+                '--dashoffset': ring.circ * (1 - ring.pct),
+              }}
+              transform={`rotate(-90 ${cx} ${cy})`}
+              data-week={ring.weekStart}
+            />
+          );
+        })}
+      </svg>
+      <figcaption className="mt-2 text-sm text-muted-foreground">{label}</figcaption>
+    </figure>
   );
 }
