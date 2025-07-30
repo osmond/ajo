@@ -10,7 +10,11 @@ import {
   Tooltip,
   CartesianGrid,
   ResponsiveContainer,
+  Cell,
 } from "recharts";
+import { scaleSequential } from "d3-scale";
+import { interpolateCool } from "d3-scale-chromatic";
+import { extent } from "d3-array";
 import { fetchAnalysis } from "../api";
 
 export default function WeatherImpactBubbleChart({ start, end } = {}) {
@@ -34,6 +38,11 @@ export default function WeatherImpactBubbleChart({ start, end } = {}) {
       .catch(() => setError("Failed to load"))
       .finally(() => setLoading(false));
   }, [start, end]);
+
+  const colorScale = React.useMemo(() => {
+    if (data.length === 0) return () => "hsl(var(--primary))";
+    return scaleSequential(interpolateCool).domain(extent(data, (d) => d.temperature));
+  }, [data]);
 
   const renderTooltip = (val, name) => {
     if (name === "distanceKm") return [`${val.toFixed(1)} km`, "Distance"];
@@ -62,7 +71,11 @@ export default function WeatherImpactBubbleChart({ start, end } = {}) {
               <YAxis type="number" dataKey="avgHeartRate" unit="bpm" />
               <ZAxis type="number" dataKey="distanceKm" range={[30, 200]} />
               <Tooltip formatter={renderTooltip} />
-              <Scatter data={data} fill="hsl(var(--primary))" />
+              <Scatter data={data}>
+                {data.map((pt, idx) => (
+                  <Cell key={`cell-${idx}`} fill={colorScale(pt.temperature)} />
+                ))}
+              </Scatter>
             </ScatterChart>
           </ResponsiveContainer>
         )}
