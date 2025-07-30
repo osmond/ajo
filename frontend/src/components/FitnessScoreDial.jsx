@@ -19,9 +19,9 @@ function Dial({ score, size = 120 }) {
   const cy = size / 2;
   const r = size / 2 - 10;
   const zones = [
-    { start: -90, end: -90 + 144, className: "stroke-red-500" },
-    { start: -90 + 144, end: -90 + 252, className: "stroke-yellow-500" },
-    { start: -90 + 252, end: 270, className: "stroke-green-500" },
+    { start: -90, end: -90 + 144, color: "hsl(var(--destructive))" },
+    { start: -90 + 144, end: -90 + 252, color: "hsl(var(--accent))" },
+    { start: -90 + 252, end: 270, color: "hsl(var(--primary))" },
   ];
   const needleAngle = -90 + (score / 100) * 360;
   const needle = polarToCartesian(cx, cy, r - 8, needleAngle);
@@ -32,8 +32,9 @@ function Dial({ score, size = 120 }) {
         <path
           key={i}
           d={describeArc(cx, cy, r, z.start, z.end)}
-          className={z.className}
+          stroke={z.color}
           strokeWidth={10}
+          strokeLinecap="round"
           fill="none"
         />
       ))}
