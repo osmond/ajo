@@ -3,15 +3,13 @@ import { Card, CardContent } from "./ui/Card";
 import KPIGrid from "./KPIGrid";
 import WeatherChart from "./WeatherChart";
 import TemperatureChart from "./TemperatureChart";
-import StatesVisited from "./StatesVisited";
-import WeeklySummaryCard from "./WeeklySummaryCard";
 
-import StreakFlame from "./StreakFlame";
-import MileageRings from "./MileageRings";
+  import StatesVisited from "./StatesVisited";
+  import WeeklySummaryCard from "./WeeklySummaryCard";
+  const MapSection = React.lazy(() => import("./MapSection"));
+  const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
+  const VirtualPathMap = React.lazy(() => import("./VirtualPathMap"));
 
-const MapSection = React.lazy(() => import("./MapSection"));
-const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
-import TimeCapsule from "./TimeCapsule";
 
 export default function DashboardPage() {
   return (
@@ -52,6 +50,15 @@ export default function DashboardPage() {
             <MapSection />
           </React.Suspense>
           <KPIGrid />
+          <React.Suspense
+            fallback={
+              <div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">
+                Loading virtual map...
+              </div>
+            }
+          >
+            <VirtualPathMap />
+          </React.Suspense>
         </CardContent>
       </Card>
       <TimeCapsule />
