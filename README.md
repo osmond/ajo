@@ -89,7 +89,7 @@ A dedicated page visualizes recent mileage with animated progress rings. Each ci
 
 Open `http://localhost:5173/rings` after starting the dev server to see this dashboard. It uses the same `VITE_BACKEND_URL` setting as the rest of the app and needs no extra setup.
 
-
+hi
 ## Deployment
 The project is configured for Vercel with the project root set to `frontend/`. The build command is `npm run build` and the output is generated in the `dist` directory.
 
