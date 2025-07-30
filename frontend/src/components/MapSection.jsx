@@ -17,6 +17,7 @@ import ElevationChart from "./ElevationChart";
 const LazyMap = React.lazy(() => import("./LeafletMap"));
 
 const LazyRoute3D = React.lazy(() => import("./Route3D"));
+const LazyRouteGlobe = React.lazy(() => import("./RouteGlobe"));
 
 const RouteGallery = React.lazy(() => import("./RouteGallery"));
 
@@ -30,6 +31,7 @@ export default function MapSection() {
   const [metric, setMetric] = React.useState("heartRate");
   const [showWeather, setShowWeather] = React.useState(false);
   const [hoverIdx, setHoverIdx] = React.useState(null);
+  const [viewMode, setViewMode] = React.useState("3d");
 
   const loadTrack = React.useCallback((act) => {
     setError(null);
@@ -85,8 +87,23 @@ export default function MapSection() {
             </div>
           }
         >
-          <LazyRoute3D points={points} />
+          {viewMode === "globe" ? (
+            <LazyRouteGlobe points={points} />
+          ) : (
+            <LazyRoute3D points={points} />
+          )}
         </React.Suspense>
+        <div className="mt-1 flex justify-end">
+          <Select value={viewMode} onValueChange={setViewMode}>
+            <SelectTrigger className="w-28 text-xs">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="3d">3D Track</SelectItem>
+              <SelectItem value="globe">Globe</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
       <ElevationChart points={points} activeIndex={hoverIdx} />
 

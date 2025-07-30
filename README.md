@@ -47,6 +47,12 @@ The Activity Calendar displays a mini heatmap with one square per day. Days with
 runs or recorded steps are colored by their total distance so busier days appear
 darker.
 
+The 3D route viewer now includes a globe option. Use the dropdown above the
+viewer to switch between the traditional 3D track and a rotating earth view.
+
+All of the map-based views are grouped under a new **Maps** tab, bringing the
+route viewer, timeline and virtual path tracker together in one place.
+
 ## Tailwind Theme Setup
 
 The `src/main.jsx` entry point imports `@/index.css` which includes `tailwindcss-shadcn-ui/style.css` so shadcn/ui component styles are loaded. The interface uses icons from the **Lucide** set via the `lucide-react` package.
