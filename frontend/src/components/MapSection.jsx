@@ -3,6 +3,13 @@ import ChartCard from "./ChartCard";
 import ActivityCalendar from "./ActivityCalendar";
 import { Card, CardContent } from "./ui/Card";
 import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "./ui/select";
+import {
   fetchActivityTrack,
   fetchActivitiesByDate,
   fetchRoutes,
@@ -18,7 +25,7 @@ export default function MapSection() {
   const [routes, setRoutes] = React.useState([]);
   const [loadingRoutes, setLoadingRoutes] = React.useState(true);
   const [errorRoutes, setErrorRoutes] = React.useState(null);
-  const [activityType, setActivityType] = React.useState("");
+  const [activityType, setActivityType] = React.useState("all");
   const [startDate, setStartDate] = React.useState("");
   const [endDate, setEndDate] = React.useState("");
   const [metric, setMetric] = React.useState("heartRate");
@@ -54,7 +61,11 @@ export default function MapSection() {
   React.useEffect(() => {
     setLoadingRoutes(true);
     setErrorRoutes(null);
-    fetchRoutes({ activityType, startDate, endDate })
+    fetchRoutes({
+      activityType: activityType === "all" ? "" : activityType,
+      startDate,
+      endDate,
+    })
       .then(setRoutes)
       .catch(() => setErrorRoutes("Failed to load routes"))
       .finally(() => setLoadingRoutes(false));
@@ -66,14 +77,15 @@ export default function MapSection() {
         <div className="flex flex-col gap-4 sm:flex-row">
           <div className="sm:w-1/4 flex flex-col gap-2">
             <ActivityCalendar onSelect={loadTrack} />
-          <select
-            className="rounded-md p-1 text-sm"
-            value={metric}
-            onChange={(e) => setMetric(e.target.value)}
-          >
-            <option value="heartRate">Heart Rate</option>
-            <option value="speed">Speed</option>
-          </select>
+          <Select value={metric} onValueChange={setMetric}>
+            <SelectTrigger className="text-sm">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="heartRate">Heart Rate</SelectItem>
+              <SelectItem value="speed">Speed</SelectItem>
+            </SelectContent>
+          </Select>
           <label className="flex items-center gap-1 text-sm">
             <input
               type="checkbox"
@@ -120,15 +132,16 @@ export default function MapSection() {
       )}
       <ChartCard title="Route Heatmap">
         <div className="mb-2 flex flex-col gap-2 sm:flex-row">
-          <select
-            className="rounded-md p-1 text-sm"
-            value={activityType}
-            onChange={(e) => setActivityType(e.target.value)}
-          >
-            <option value="">All Types</option>
-            <option value="run">Run</option>
-            <option value="bike">Bike</option>
-          </select>
+          <Select value={activityType} onValueChange={setActivityType}>
+            <SelectTrigger className="text-sm">
+              <SelectValue placeholder="All Types" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Types</SelectItem>
+              <SelectItem value="run">Run</SelectItem>
+              <SelectItem value="bike">Bike</SelectItem>
+            </SelectContent>
+          </Select>
           <input
             type="date"
             className="rounded-md p-1 text-sm"

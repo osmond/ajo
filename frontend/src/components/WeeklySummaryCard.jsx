@@ -9,6 +9,13 @@ import {
 } from "recharts";
 import { Download, Share2, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import ProgressRing from "./ui/ProgressRing";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "./ui/select";
 
 const STEP_GOAL = 10000;
 const DISTANCE_GOAL_KM = 20;
@@ -162,15 +169,16 @@ export default function WeeklySummaryCard({ children }) {
     <Card className="mb-4 animate-in fade-in">
       <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-2">
-          <select
-            className="rounded-md p-1 text-sm"
-            value={range}
-            onChange={(e) => setRange(e.target.value)}
-          >
-            <option value="7">Last 7 days</option>
-            <option value="month">This month</option>
-            <option value="custom">Custom range</option>
-          </select>
+          <Select value={range} onValueChange={setRange}>
+            <SelectTrigger className="text-sm">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="7">Last 7 days</SelectItem>
+              <SelectItem value="month">This month</SelectItem>
+              <SelectItem value="custom">Custom range</SelectItem>
+            </SelectContent>
+          </Select>
           {range === "custom" && (
             <>
               <input
