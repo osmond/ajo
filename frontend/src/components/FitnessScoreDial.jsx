@@ -2,6 +2,14 @@ import React from "react";
 import { fetchSteps, fetchHeartrate, fetchSleep } from "../api";
 import Skeleton from "./ui/Skeleton";
 
+// Angle and color definitions for the dial zones. These are reused for the
+// legend so the colors stay in sync.
+const ZONES = [
+  { label: "Poor", start: -90, end: -90 + 144, color: "hsl(var(--destructive))" },
+  { label: "Average", start: -90 + 144, end: -90 + 252, color: "hsl(var(--accent))" },
+  { label: "Great", start: -90 + 252, end: 270, color: "hsl(var(--primary))" },
+];
+
 function polarToCartesian(cx, cy, r, deg) {
   const rad = ((deg - 90) * Math.PI) / 180;
   return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
@@ -18,11 +26,9 @@ function Dial({ score, size = 120 }) {
   const cx = size / 2;
   const cy = size / 2;
   const r = size / 2 - 10;
-  const zones = [
-    { start: -90, end: -90 + 144, color: "hsl(var(--destructive))" },
-    { start: -90 + 144, end: -90 + 252, color: "hsl(var(--accent))" },
-    { start: -90 + 252, end: 270, color: "hsl(var(--primary))" },
-  ];
+  // ZONES provides the arc angles and colors. Only the geometry data is
+  // needed here for rendering the segments.
+  const zones = ZONES.map(({ start, end, color }) => ({ start, end, color }));
   const needleAngle = -90 + (score / 100) * 360;
   const needle = polarToCartesian(cx, cy, r - 8, needleAngle);
 
@@ -109,8 +115,17 @@ export default function FitnessScoreDial() {
     );
   }
   return (
-    <div className="flex justify-center items-center h-40">
+    <div className="flex flex-col items-center justify-center h-40 gap-2">
+      <div className="text-sm font-medium text-muted-foreground">Fitness Score</div>
       <Dial score={score} />
+      <div className="flex items-center gap-4 text-sm mt-1" data-testid="score-legend">
+        {ZONES.map((z) => (
+          <div key={z.label} className="flex items-center gap-1">
+            <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: z.color }}></span>
+            <span>{z.label}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
