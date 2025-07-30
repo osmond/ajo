@@ -12,6 +12,7 @@ import { Card, CardHeader, CardTitle, CardContent } from './ui/Card';
 import { Slider } from './ui/Slider';
 import { Button } from './ui/Button';
 import RunnerIcon from './RunnerIcon';
+import { Avatar, AvatarFallback } from './ui/avatar';
 
 export function makeData(sleep, temp, humidity = 50, elevation = 0) {
   const base =
@@ -126,7 +127,11 @@ export default function WhatIfScenarios() {
             animate={{ x: '100%' }}
             transition={{ duration: pace, ease: 'linear', repeat: Infinity, repeatType: 'loop' }}
           >
-            <RunnerIcon className="h-6 w-6" />
+            <Avatar className="h-6 w-6">
+              <AvatarFallback>
+                <RunnerIcon className="h-6 w-6" />
+              </AvatarFallback>
+            </Avatar>
           </motion.div>
         </div>
         <div className="h-48">
