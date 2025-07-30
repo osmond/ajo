@@ -95,17 +95,3 @@
   }
 }
 
-@layer components {
-  .streak-active {
-    filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.8));
-    animation: flame-pulse 1.5s infinite;
-  }
-  .streak-active:hover {
-    filter: drop-shadow(0 0 8px rgba(249, 115, 22, 1));
-  }
-}
-
-@keyframes flame-pulse {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.8)); }
-  50% { filter: drop-shadow(0 0 8px rgba(249, 115, 22, 1)); }
-}
