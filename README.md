@@ -71,3 +71,13 @@ now sits above the card on the dashboard. The card header itself offers a date
 range selector, quick filter buttons and export/share actions while the metrics
 and sparklines sit in the card content below.
 
+## Deployment
+The project is configured for Vercel with the project root set to `frontend/`. The build command is `npm run build` and the output is generated in the `dist` directory.
+
+### Development
+Start the dev server from the frontend folder:
+
+```bash
+cd frontend && npm run dev
+```
+
