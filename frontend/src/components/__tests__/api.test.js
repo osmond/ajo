@@ -50,3 +50,14 @@ test('whitespace in VITE_BACKEND_URL is trimmed for mock mode', async () => {
   expect(Array.isArray(result)).toBe(true);
   import.meta.env.VITE_BACKEND_URL = 'test';
 });
+
+test('quotes in VITE_BACKEND_URL are stripped for mock mode', async () => {
+  import.meta.env.VITE_BACKEND_URL = '"mock"';
+  vi.resetModules();
+  const { fetchSteps } = await import('../../api');
+  global.fetch = vi.fn();
+  const result = await fetchSteps();
+  expect(global.fetch).not.toHaveBeenCalled();
+  expect(Array.isArray(result)).toBe(true);
+  import.meta.env.VITE_BACKEND_URL = 'test';
+});
