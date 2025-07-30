@@ -1,6 +1,6 @@
 import React from "react";
 import { parseISO, startOfWeek, format } from "date-fns";
-import { fetchDailyTotals } from "../api";
+import { fetchActivities } from "../api";
 
 export function groupByWeek(totals) {
   const weeks = {};
@@ -16,6 +16,37 @@ export function groupByWeek(totals) {
     .map(([weekStart, dist]) => ({ weekStart, distanceKm: dist / 1000 }));
 }
 
+export function groupByWeekByType(activities) {
+  const weeks = {};
+  for (const act of activities) {
+    const date = act.startTimeLocal.split('T')[0];
+    const weekStart = format(
+      startOfWeek(parseISO(date), { weekStartsOn: 1 }),
+      'yyyy-MM-dd'
+    );
+    const distKm = (act.distance ?? 0) / 1000;
+    const entry = (weeks[weekStart] ||= { runKm: 0, bikeKm: 0 });
+    const type = act.activityType?.typeKey?.toUpperCase();
+    if (type === 'RUN') entry.runKm += distKm;
+    else entry.bikeKm += distKm;
+  }
+  return Object.entries(weeks)
+    .sort(([a], [b]) => (a < b ? -1 : 1))
+    .map(([weekStart, vals]) => ({ weekStart, ...vals }));
+}
+
+function polarToCartesian(cx, cy, r, deg) {
+  const rad = ((deg - 90) * Math.PI) / 180;
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+
+function describeArc(cx, cy, r, startAngle, endAngle) {
+  const start = polarToCartesian(cx, cy, r, endAngle);
+  const end = polarToCartesian(cx, cy, r, startAngle);
+  const large = endAngle - startAngle <= 180 ? 0 : 1;
+  return `M ${start.x} ${start.y} A ${r} ${r} 0 ${large} 0 ${end.x} ${end.y}`;
+}
+
 export default function WeeklyRingsDashboard({
   goalKm = 40,
   weeksToShow = 4,
@@ -27,9 +58,9 @@ export default function WeeklyRingsDashboard({
   const [error, setError] = React.useState(null);
 
   React.useEffect(() => {
-    fetchDailyTotals()
-      .then((rows) => {
-        setWeeks(groupByWeek(rows).slice(-weeksToShow));
+    fetchActivities({ limit: 1000 })
+      .then((acts) => {
+        setWeeks(groupByWeekByType(acts).slice(-weeksToShow));
       })
       .catch(() => setError("Failed to load"));
   }, [weeksToShow]);
@@ -44,9 +75,12 @@ export default function WeeklyRingsDashboard({
   const baseRadius = size / 2 - strokeWidth / 2;
   const rings = [...weeks].reverse().map((w, idx) => {
     const r = baseRadius - idx * (strokeWidth + gap);
-    const pct = Math.max(0, Math.min(1, w.distanceKm / goalKm));
+    const runPct = Math.max(0, Math.min(1, w.runKm / goalKm));
+    const bikePct = Math.max(0, Math.min(1, w.bikeKm / goalKm));
     const circ = 2 * Math.PI * r;
-    return { ...w, r, pct, circ };
+    const runEnd = -90 + runPct * 360;
+    const bikeEnd = runEnd + bikePct * 360;
+    return { ...w, r, runPct, bikePct, runEnd, bikeEnd, circ };
   });
 
   return (
@@ -69,26 +103,37 @@ export default function WeeklyRingsDashboard({
         }
       `}</style>
         {rings.map((ring) => {
-          const d = `M ${cx} ${cy} m 0 -${ring.r} a ${ring.r} ${ring.r} 0 1 1 0 ${
-            ring.r * 2
-          } a ${ring.r} ${ring.r} 0 1 1 0 -${ring.r * 2}`;
+          const runPath = describeArc(cx, cy, ring.r, -90, ring.runEnd);
+          const bikePath = describeArc(cx, cy, ring.r, ring.runEnd, ring.bikeEnd);
+          const runLen = ring.circ * ring.runPct;
+          const bikeLen = ring.circ * ring.bikePct;
           return (
-            <path
-              key={ring.weekStart}
-              d={d}
-              fill="none"
-              stroke="hsl(var(--primary))"
-              strokeWidth={strokeWidth}
-              strokeDasharray="0"
-              strokeDashoffset="0"
-              className="animate-draw-ring"
-              style={{
-                '--dasharray': ring.circ,
-                '--dashoffset': ring.circ * (1 - ring.pct),
-              }}
-              transform={`rotate(-90 ${cx} ${cy})`}
-              data-week={ring.weekStart}
-            />
+            <g key={ring.weekStart} data-week={ring.weekStart}>
+              {ring.runPct > 0 && (
+                <path
+                  d={runPath}
+                  fill="none"
+                  stroke="hsl(var(--chart-1))"
+                  strokeWidth={strokeWidth}
+                  strokeDasharray="0"
+                  strokeDashoffset="0"
+                  className="animate-draw-ring"
+                  style={{ '--dasharray': runLen, '--dashoffset': 0 }}
+                />
+              )}
+              {ring.bikePct > 0 && (
+                <path
+                  d={bikePath}
+                  fill="none"
+                  stroke="hsl(var(--chart-2))"
+                  strokeWidth={strokeWidth}
+                  strokeDasharray="0"
+                  strokeDashoffset="0"
+                  className="animate-draw-ring"
+                  style={{ '--dasharray': bikeLen, '--dashoffset': 0 }}
+                />
+              )}
+            </g>
           );
         })}
       </svg>

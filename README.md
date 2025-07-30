@@ -71,7 +71,7 @@ now sits above the card on the dashboard. The card header itself offers a date
 range selector, quick filter buttons and export/share actions while the metrics
 and sparklines sit in the card content below.
 ## Weekly Rings Dashboard
-A dedicated page visualizes recent mileage with animated progress rings. Each circle represents a week and draws clockwise from zero to show the distance completed.
+A dedicated page visualizes recent mileage with animated progress rings. Each circle now splits running and cycling distance into color-coded arcs so you can quickly compare bike and run mileage for the week.
 
 Open `http://localhost:5173/rings` after starting the dev server to see this dashboard. It uses the same `VITE_BACKEND_URL` setting as the rest of the app and needs no extra setup.
 
