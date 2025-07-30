@@ -18,7 +18,7 @@ export default function ProgressRing({
     <div
       className={"relative " + className}
       style={{ width: size, height: size }}
-      title={title}
+      aria-label={title}
     >
       <ResponsiveContainer width="100%" height="100%">
         <RadialBarChart

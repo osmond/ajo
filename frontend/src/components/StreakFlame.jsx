@@ -27,7 +27,7 @@ export default function StreakFlame({ count }) {
   }, [count]);
 
   const flame = (
-    <div title={`${days} day streak`}>
+    <div aria-label={`${days} day streak`}>
       <AnimatedFlame streak={days} />
     </div>
   );

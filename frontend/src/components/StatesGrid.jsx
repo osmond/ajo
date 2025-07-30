@@ -22,7 +22,7 @@ export default function StatesGrid({ onSelect, selected }) {
               style={{ gridColumn: s.col, gridRow: s.row }}
               onClick={() => onSelect?.(s.abbr)}
               className={`w-8 h-8 flex items-center justify-center text-xs font-semibold rounded-sm cursor-pointer ${visitedClass} ${selectedClass}`}
-              title={`${s.name}${s.visited ? ` – ${s.days} days, ${s.miles} mi` : ""}`}
+              aria-label={`${s.name}${s.visited ? ` – ${s.days} days, ${s.miles} mi` : ""}`}
             >
               {s.abbr}
             </div>

@@ -38,7 +38,7 @@ it('renders rings grouped by week', async () => {
   });
 
   render(<MileageRings goalKm={40} weeksToShow={1} />);
-  const ring = await screen.findByTitle(/Week of/);
+  const ring = await screen.findByLabelText(/Week of/);
   expect(ring).toBeInTheDocument();
   const base = import.meta.env.VITE_BACKEND_URL;
   expect(global.fetch).toHaveBeenCalledWith(`${base}/daily-totals`);
@@ -51,7 +51,7 @@ it('shows check icon when goal met', async () => {
   });
 
   const { container } = render(<MileageRings goalKm={50} weeksToShow={1} />);
-  await screen.findByTitle(/Week of/);
+  await screen.findByLabelText(/Week of/);
   const icon = container.querySelector('svg.lucide-check');
   expect(icon).toBeInTheDocument();
 });
