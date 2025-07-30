@@ -259,13 +259,6 @@ export default function WeeklySummaryCard({ children }) {
           <div className="flex items-end gap-4">
             <div className="h-8 w-20">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={filteredSteps} margin={{ top: 2, bottom: 2 }}>
-                  <Line type="monotone" dataKey="value" stroke="hsl(var(--primary))" fill="none" dot={false} />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="h-8 w-20">
-              <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={filteredSleep} margin={{ top: 2, bottom: 2 }}>
                   <Line type="monotone" dataKey="value" stroke="hsl(var(--primary))" fill="none" dot={false} />
                 </LineChart>
