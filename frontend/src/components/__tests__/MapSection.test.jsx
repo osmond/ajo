@@ -7,7 +7,6 @@ afterEach(() => vi.restoreAllMocks());
 vi.mock('../ActivityCalendar', () => ({ default: () => <div data-testid="calendar" /> }));
 vi.mock('../CalendarHeatmap', () => ({ default: () => <div data-testid="heatmap" /> }));
 vi.mock('../LeafletMap', () => ({ default: () => <div data-testid="leaflet" /> }));
-vi.mock('../RouteHeatmap', () => ({ default: () => <div data-testid="routeheat" /> }));
 vi.mock('../ElevationChart', () => ({ default: () => <div data-testid="elev" /> }));
 
 it('loads the most recent activity on mount', async () => {
@@ -27,9 +26,6 @@ it('loads the most recent activity on mount', async () => {
         ok: true,
         json: () => Promise.resolve([{ lat: 0, lon: 0 }]),
       });
-    }
-    if (url.startsWith('/routes')) {
-      return Promise.resolve({ ok: true, json: () => Promise.resolve([]) });
     }
     return Promise.resolve({ ok: true, json: () => Promise.resolve([]) });
   });

@@ -18,15 +18,6 @@ export const fetchVo2max = () => apiGet('/vo2max');
 export const fetchMap = () => apiGet('/map');
 export const fetchActivityTrack = (id) => apiGet(`/activities/${id}/track`);
 export const fetchActivitiesByDate = () => apiGet('/activities/by-date');
-export const fetchRoutes = (params = {}) => {
-  const query = new URLSearchParams(
-    Object.fromEntries(
-      Object.entries(params).filter(([, v]) => v !== undefined && v !== '')
-    )
-  ).toString();
-  const qs = query ? `?${query}` : '';
-  return apiGet(`/routes${qs}`);
-};
 export const fetchDailyTotals = () => apiGet('/daily-totals');
 export const fetchRuns = () => apiGet('/runs');
 export const fetchAnalysis = () => apiGet('/analysis');
