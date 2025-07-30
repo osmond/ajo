@@ -58,9 +58,12 @@ export default function StatesTable({ selected }) {
         {s.abbr === selected && (
           <TableRow className="bg-muted/50">
             <TableCell colSpan={3} className="p-2 pl-8">
-              <ul className="list-disc pl-4">
+              <ul className="space-y-1">
                 {getCities(s.abbr).map((c) => (
-                  <li key={c}>{c}</li>
+                  <li key={c} className="flex items-center gap-1">
+                    <span>›</span>
+                    <span>{c}</span>
+                  </li>
                 ))}
               </ul>
             </TableCell>
