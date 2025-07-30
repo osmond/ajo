@@ -1,6 +1,7 @@
 import React from "react";
 import { MapContainer, TileLayer, Polyline, CircleMarker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import { useCartoTileURL, cartoAttribution } from "@/hooks/useCartoTiles";
 
 export default function LeafletMap({
   points,
@@ -55,12 +56,11 @@ export default function LeafletMap({
     />
   ));
 
+  const tileUrl = useCartoTileURL();
+
   return (
     <MapContainer center={center} zoom={13} style={{ height: "100%", width: "100%" }}>
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution="&copy; OpenStreetMap contributors"
-      />
+      <TileLayer url={tileUrl} attribution={cartoAttribution} />
       {showWeather && (
         <TileLayer
           url="https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=439d4b804bc8187953eb36d2a8c26a02"
