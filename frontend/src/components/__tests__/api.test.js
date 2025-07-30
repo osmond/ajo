@@ -39,3 +39,14 @@ test('fetchAnalysis adds query string when params provided', async () => {
     `${baseUrl}/analysis?start=2023-01-01&end=2023-02-01`
   );
 });
+
+test('whitespace in VITE_BACKEND_URL is trimmed for mock mode', async () => {
+  import.meta.env.VITE_BACKEND_URL = 'mock \n';
+  vi.resetModules();
+  const { fetchSteps } = await import('../../api');
+  global.fetch = vi.fn();
+  const result = await fetchSteps();
+  expect(global.fetch).not.toHaveBeenCalled();
+  expect(Array.isArray(result)).toBe(true);
+  import.meta.env.VITE_BACKEND_URL = 'test';
+});
