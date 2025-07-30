@@ -138,6 +138,16 @@ export default function WeeklyRingsDashboard({
         })}
       </svg>
       <figcaption className="mt-2 text-sm text-muted-foreground">{label}</figcaption>
+      <div className="mt-1 flex items-center gap-4 text-sm" data-testid="rings-legend">
+        <div className="flex items-center gap-1">
+          <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: 'hsl(var(--chart-1))' }} />
+          <span>Run</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="w-3 h-3 rounded-sm" style={{ backgroundColor: 'hsl(var(--chart-2))' }} />
+          <span>Bike</span>
+        </div>
+      </div>
     </figure>
   );
 }

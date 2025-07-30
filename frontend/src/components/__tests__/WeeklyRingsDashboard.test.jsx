@@ -52,3 +52,15 @@ test('paths include animation classes and initial dash values', async () => {
     expect(classes).toMatch(/animate/);
   });
 });
+
+test('renders legend labels', async () => {
+  global.fetch = vi.fn().mockResolvedValue({
+    ok: true,
+    json: () => Promise.resolve(makeActivities(7, 5000)),
+  });
+
+  render(<WeeklyRingsDashboard weeksToShow={1} goalKm={40} />);
+  await screen.findByTestId('rings-legend');
+  expect(screen.getByText('Run')).toBeInTheDocument();
+  expect(screen.getByText('Bike')).toBeInTheDocument();
+});
