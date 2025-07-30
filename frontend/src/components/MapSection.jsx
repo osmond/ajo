@@ -20,6 +20,8 @@ const LazyRoute3D = React.lazy(() => import("./Route3D"));
 
 const RouteGallery = React.lazy(() => import("./RouteGallery"));
 
+const LazyTimelineMap = React.lazy(() => import("./TimelineMap"));
+
 
 export default function MapSection() {
   const [points, setPoints] = React.useState([]);
@@ -129,6 +131,16 @@ export default function MapSection() {
         }
       >
         <RouteGallery />
+      </React.Suspense>
+
+      <React.Suspense
+        fallback={
+          <div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">
+            Loading timeline...
+          </div>
+        }
+      >
+        <LazyTimelineMap />
       </React.Suspense>
 
     </div>
