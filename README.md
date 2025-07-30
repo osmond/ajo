@@ -1,5 +1,3 @@
-testing vercel
-
 # Garmin Activity Dashboard
 
 This project contains a minimal React frontend that displays activity data on
@@ -65,21 +63,7 @@ module.exports = {
 };
 ```
 
-## Runs Endpoint
-
-The backend exposes `GET /runs` to summarize run activities. Each item in the
-returned JSON array includes:
-
-- `date` – the local start date in `YYYY-MM-DD` format
-- `distance` – total distance in meters
-- `duration` – run duration in seconds
-- `elevationGain` – ascent in meters
-
-These values are generated from Garmin data when credentials are provided or
-from dummy tracks otherwise.
-
 ## Summary Card
-
 The Summary Card shown at the top of the app is implemented in
 `frontend/src/components/WeeklySummaryCard.jsx`. It fetches step counts, sleep
 hours and daily totals using the API helpers. A small "Activity Overview" heading
