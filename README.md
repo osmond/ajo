@@ -65,6 +65,11 @@ the **Build Command** as `cd frontend && npm install && npm run build`. Add the
 knows where to reach your backend. Vercel will execute this command and serve
 the generated static files from `frontend/dist`.
 
+Ensure your local Vercel CLI is up to date before deploying. Run
+`npm i -g vercel` to install the latest version. Older CLI releases cannot
+parse modern runtime identifiers and will fail with a
+`Function Runtimes must have a valid version` error.
+
 This repository now includes the FastAPI backend under `api/index.py`. Deploy
 it as a serverless function by adding a `vercel.json` file that rewrites
 requests to `/api/*` to that function:
