@@ -39,7 +39,7 @@ export default function StreakFlame({ count }) {
   return (
     <div className="flex items-center" title={`${days} day streak`}>
       <Flame className={`lucide-flame ${levels[idx]} ${days ? 'animate-pulse' : ''}`} />
-      <span className="ml-1 text-xs font-medium">{days}</span>
+      <span className={`ml-1 text-xs font-medium ${levels[idx]}`}>{days}</span>
     </div>
   );
 }
