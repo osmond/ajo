@@ -1,0 +1,7 @@
+digraph ActivityFlow {
+  Morning -> Afternoon [label="1"];
+  Afternoon -> Evening [label="1"];
+  Evening -> Night [label="1"];
+  Night -> Morning [label="1"];
+  Weekday -> Weekday [label="4"];
+}
