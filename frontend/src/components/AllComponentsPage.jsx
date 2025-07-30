@@ -1,18 +1,34 @@
 import React from "react";
 
-const componentPaths = Object.keys(
-  import.meta.glob("./**/*.{jsx,tsx}")
-).filter((p) => !p.includes("__tests__"));
+const modules = import.meta.glob("./**/*.{jsx,tsx}", { eager: true });
 
 export default function AllComponentsPage() {
-  const names = React.useMemo(() => componentPaths.sort(), []);
+  const components = React.useMemo(
+    () =>
+      Object.entries(modules)
+        .filter(
+          ([path, mod]) =>
+            !path.includes("__tests__") && typeof mod.default === "function"
+        )
+        .sort((a, b) => a[0].localeCompare(b[0])),
+    []
+  );
+
   return (
-    <div className="p-6 space-y-4">
+    <div className="p-6 space-y-6">
       <h2 className="text-lg font-semibold">Component Files</h2>
-      <ul className="list-disc ml-6 space-y-1">
-        {names.map((name) => (
-          <li key={name}>{name.replace(/^\.\//, "")}</li>
-        ))}
+      <ul className="space-y-8">
+        {components.map(([path, mod]) => {
+          const Component = mod.default;
+          return (
+            <li key={path} className="space-y-2">
+              <div className="font-mono">{path.replace(/^\.\//, "")}</div>
+              <div className="border rounded p-4">
+                <Component />
+              </div>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
