@@ -4,6 +4,14 @@ This project contains a minimal React frontend and FastAPI backend used to mock
 Garmin activity data. The frontend uses Vite and Tailwind CSS while the backend
 serves dummy endpoints. All example GPS data is centered around **Madison, Wisconsin**.
 
+The repository includes two FastAPI entry points:
+
+- **`/backend`** – the full app used when developing locally with Uvicorn
+- **`/api`** – a lightweight wrapper for Vercel serverless deployment
+
+Both point to the same code in `backend/app`. Local development runs the app in
+`backend/app/main.py`, while Vercel imports that module through `api/index.py`.
+
 We use **Python&nbsp;3** on the backend and a Node/Vite stack on the frontend.
 On macOS with Homebrew‑managed Python you cannot install packages system‑wide
 with plain `pip3`, so all backend dependencies are installed inside a virtual
@@ -66,47 +74,65 @@ The provided `frontend/.env.example` file sets this to
 
 ## Deploying to Vercel
 
-Create a new project in Vercel and set the **root directory** to `./` so the
-`api` folder and `vercel.json` file are included in the deployment. Configure
-the **Build Command** as `cd frontend && npm install && npm run build`. Add the
-`VITE_BACKEND_URL` environment variable in the Vercel dashboard so the frontend
-knows where to reach your backend. Vercel will execute this command and serve
-the generated static files from `frontend/dist`.
+This repository is organised as a small monorepo:
 
-Ensure your local Vercel CLI is up to date before deploying. Run
-`npm i -g vercel` to install the latest version. Older CLI releases cannot
-parse modern runtime identifiers and will fail with a
-`Function Runtimes must have a valid version` error.
+- `/frontend` – React + Vite frontend
+- `/backend` – full FastAPI app for local development
+- `/api` – minimal entry point for Vercel serverless deployment
 
-The backend runs on the `vercel-python@3.9` runtime. The repository's
-`vercel.json` already sets this for all `api/**/*.py` files:
+### 1. Vercel Project Settings
+Set the project root to `./` and build the frontend with:
+
+```bash
+cd frontend && npm install && npm run build
+```
+
+The output directory is `frontend/dist`.
+
+### 2. Environment Variables
+Add the following variable in the Vercel dashboard:
+
+```ini
+VITE_BACKEND_URL=/api
+```
+
+### 3. `vercel.json`
+API routes are configured through `vercel.json` and run on Python&nbsp;3.11:
 
 ```json
 {
+  "version": 2,
   "functions": {
-    "api/**/*.py": {
-      "runtime": "vercel-python@3.9"
-    }
-  }
+    "api/**/*.py": { "runtime": "python3.11" }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.py" }
+  ]
 }
 ```
 
-Specifying `python3.11` directly will not work with Vercel's deployment
-system and will trigger the runtime version error above.
+### 4. Local Development
+Run the backend and frontend separately:
 
-This repository now includes the FastAPI backend under `api/index.py`. Deploy
-it as a serverless function by adding a `vercel.json` file that rewrites
-requests to `/api/*` to that function:
-
-```json
-{
-  "rewrites": [{ "source": "/api/(.*)", "destination": "/api/index.py" }]
-}
+```bash
+cd backend
+uvicorn app.main:app --reload --port 8000
 ```
 
-Set `VITE_BACKEND_URL` to `/api` when deploying so the frontend calls the
-serverless endpoints.
+and
 
+```bash
+cd frontend
+npm run dev
+```
+
+`frontend/.env.example` already sets:
+
+```ini
+VITE_BACKEND_URL=http://localhost:8000
+```
+
+When deployed, all API requests go through `/api`.
 ## Frontend Features
 
 The map section now displays a heatmap of all recorded routes. Filter by
