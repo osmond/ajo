@@ -39,21 +39,21 @@ export default function TemperatureChart() {
                     y={y + 4}
                     textAnchor="end"
                     fontSize={12}
-                    fill="#334155"
+                    fill="hsl(var(--primary))"
                   >
                     {payload.value}
-                    <tspan fill="#64748B">  {range}</tspan>
+                    <tspan fill="hsl(var(--primary))">  {range}</tspan>
                   </text>
                 );
               }}
             />
             <Tooltip
               formatter={val => [`${val} runs`, ""]}
-              cursor={{ fill: "rgba(156, 163, 175, 0.1)" }}
+              cursor={{ fill: "hsl(var(--primary) / 0.1)" }}
             />
             <Bar
               dataKey="count"
-              fill="#111827"
+              fill="hsl(var(--primary))"
               barSize={20}
               radius={[4, 4, 4, 4]}
             />

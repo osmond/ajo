@@ -32,8 +32,8 @@ export default function WeatherChart() {
                 const Icon = entry ? entry.icon : null;
                 return (
                   <g transform={`translate(${x - 90},${y - 8})`}>
-                    {Icon && <Icon size={16} stroke="#64748B" />}
-                    <text x={24} y={12} fill="#334155" fontSize={12}>
+                    {Icon && <Icon size={16} stroke="hsl(var(--primary))" />}
+                    <text x={24} y={12} fill="hsl(var(--primary))" fontSize={12}>
                       {payload.value}
                     </text>
                   </g>
@@ -42,9 +42,9 @@ export default function WeatherChart() {
             />
             <Tooltip
               formatter={value => [`${value} runs`]}
-              cursor={{ fill: "rgba(156, 163, 175, 0.1)" }}
+              cursor={{ fill: "hsl(var(--primary) / 0.1)" }}
             />
-            <Bar dataKey="count" fill="#CBD5E1" barSize={20} radius={[4, 4, 4, 4]} />
+            <Bar dataKey="count" fill="hsl(var(--primary))" barSize={20} radius={[4, 4, 4, 4]} />
           </BarChart>
         </ResponsiveContainer>
       </CardContent>

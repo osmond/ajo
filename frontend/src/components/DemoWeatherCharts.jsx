@@ -42,21 +42,21 @@ export default function DemoWeatherCharts() {
                         y={y + 4}
                         textAnchor="end"
                         fontSize={12}
-                        fill="#334155"
+                        fill="hsl(var(--primary))"
                       >
                         {payload.value}
-                        <tspan fill="#64748B">  {range}</tspan>
+                        <tspan fill="hsl(var(--primary))">  {range}</tspan>
                       </text>
                     );
                   }}
                 />
               <Tooltip
                 formatter={(val) => [`${val} runs`, ""]}
-                cursor={{ fill: "rgba(56, 189, 248, 0.1)" }}
+                cursor={{ fill: "hsl(var(--primary) / 0.1)" }}
               />
               <Bar
                 dataKey="count"
-                fill="#94A3B8"
+                fill="hsl(var(--primary))"
                 barSize={20}
                 radius={[4, 4, 4, 4]}
               />
@@ -90,9 +90,9 @@ export default function DemoWeatherCharts() {
                     return (
                       <g transform={`translate(${x - 40},${y - 10})`}>
                         {Icon && (
-                          <Icon size={16} fill="none" stroke="#334155" />
+                          <Icon size={16} fill="none" stroke="hsl(var(--primary))" />
                         )}
-                        <text x={24} y={16} fontSize={12} fill="#334155">
+                        <text x={24} y={16} fontSize={12} fill="hsl(var(--primary))">
                           {payload.value}
                         </text>
                       </g>
@@ -101,11 +101,11 @@ export default function DemoWeatherCharts() {
                 />
               <Tooltip
                 formatter={(val) => [`${val} runs`, ""]}
-                cursor={{ fill: "rgba(56, 189, 248, 0.1)" }}
+                cursor={{ fill: "hsl(var(--primary) / 0.1)" }}
               />
               <Bar
                 dataKey="count"
-                fill="#CBD5E1"
+                fill="hsl(var(--primary))"
                 barSize={20}
                 radius={[4, 4, 4, 4]}
               />

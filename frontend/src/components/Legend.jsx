@@ -10,7 +10,7 @@ export default function Legend() {
         <span>Not visited ({notVisited})</span>
       </div>
       <div className="flex items-center gap-1">
-        <span className="w-4 h-4 bg-foreground rounded-sm"></span>
+        <span className="w-4 h-4 bg-primary rounded-sm"></span>
         <span>Visited ({visited})</span>
       </div>
     </div>
