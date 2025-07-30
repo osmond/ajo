@@ -6,7 +6,6 @@ import WeatherChart from "./WeatherChart";
 import TemperatureChart from "./TemperatureChart";
 import StatesVisited from "./StatesVisited";
 import WeeklySummaryCard from "./WeeklySummaryCard";
-import SummaryCard from "./SummaryCard";
 const MapSection = React.lazy(() => import("./MapSection"));
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
 
@@ -32,11 +31,7 @@ export default function DashboardPage() {
         <TemperatureChart />
         <WeatherChart />
       </div>
-
       <StatesVisited />
-
-      <SummaryCard />
-
       <Card className="animate-in fade-in">
         <CardContent className="space-y-6">
           <div className="grid gap-6 sm:grid-cols-2">
