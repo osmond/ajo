@@ -11,6 +11,7 @@ vi.mock('../LeafletMap', () => ({ default: () => <div data-testid="leaflet" /> }
 vi.mock('../ElevationChart', () => ({ default: () => <div data-testid="elev" /> }));
 
 vi.mock('../Route3D', () => ({ default: () => <div data-testid="route3d" /> }));
+vi.mock('../RouteGlobe', () => ({ default: () => <div data-testid="route-globe" /> }));
 
 vi.mock('../RouteGallery', () => ({ default: () => <div data-testid="gallery" /> }));
 vi.mock('../TimelineMap', () => ({ default: () => <div data-testid="timeline" /> }));
