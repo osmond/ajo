@@ -1,6 +1,7 @@
 import React from "react";
 import DashboardPage from "@/components/DashboardPage";
 import AllChartsPage from "@/components/AllChartsPage";
+import AllMapsPage from "@/components/AllMapsPage";
 import ModeToggle from "@/components/ModeToggle";
 
 export default function App() {
@@ -10,12 +11,20 @@ export default function App() {
     <div className="min-h-screen bg-background text-foreground">
       <div className="p-4 flex justify-between">
         {page === "dashboard" ? (
-          <button
-            className="text-sm underline"
-            onClick={() => setPage("charts")}
-          >
-            View All Charts
-          </button>
+          <div className="space-x-2">
+            <button
+              className="text-sm underline"
+              onClick={() => setPage("charts")}
+            >
+              View All Charts
+            </button>
+            <button
+              className="text-sm underline"
+              onClick={() => setPage("maps")}
+            >
+              View All Maps
+            </button>
+          </div>
         ) : (
           <button
             className="text-sm underline"
@@ -27,7 +36,13 @@ export default function App() {
         <ModeToggle />
       </div>
       <main className="mx-auto max-w-[1200px]">
-        {page === "dashboard" ? <DashboardPage /> : <AllChartsPage />}
+        {page === "dashboard" ? (
+          <DashboardPage />
+        ) : page === "charts" ? (
+          <AllChartsPage />
+        ) : (
+          <AllMapsPage />
+        )}
       </main>
     </div>
   );
