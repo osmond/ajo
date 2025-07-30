@@ -15,7 +15,7 @@ it('renders squares with tooltip text', async () => {
   });
 
   render(<CalendarHeatmap />);
-  const square = await screen.findByTitle(/2023-01-01/);
-  expect(square.getAttribute('title')).toMatch('2023-01-01');
-  expect(await screen.findAllByTitle(/2023-01-0[12]/)).toHaveLength(2);
+  const squares = await screen.findAllByTestId('heatmap-square');
+  expect(squares).toHaveLength(2);
+  expect(squares[0]).toHaveAttribute('aria-label', expect.stringContaining('2023-01-01'));
 });

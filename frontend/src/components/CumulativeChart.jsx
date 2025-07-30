@@ -58,7 +58,7 @@ export default function CumulativeChart() {
           cy={cy}
           r={3}
           fill="hsl(var(--primary))"
-          title={`${payload.month}: ${payload.cumulative.toFixed(1)} km`}
+          aria-label={`${payload.month}: ${payload.cumulative.toFixed(1)} km`}
         />
       </TooltipWrapper>
     );

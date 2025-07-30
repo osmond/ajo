@@ -37,7 +37,7 @@ it('renders cumulative mileage points', async () => {
   });
 
   render(<CumulativeChart />);
-  const dots = await screen.findAllByTitle(/2023-(01|02)/);
-  const titles = dots.map((d) => d.getAttribute('title'));
-  expect(titles).toEqual(['2023-01: 3.0 km', '2023-02: 6.0 km']);
+  const dots = await screen.findAllByLabelText(/2023-(01|02)/);
+  const labels = dots.map((d) => d.getAttribute('aria-label'));
+  expect(labels).toEqual(['2023-01: 3.0 km', '2023-02: 6.0 km']);
 });

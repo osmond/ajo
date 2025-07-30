@@ -40,7 +40,8 @@ export default function CalendarHeatmap() {
           <Tooltip key={d.date} text={title}>
             <div
               className={`h-4 w-4 rounded transition-transform hover:scale-110 focus:scale-110 heatmap-scale-${idx}`}
-              title={title}
+              aria-label={title}
+              data-testid="heatmap-square"
             />
           </Tooltip>
         );

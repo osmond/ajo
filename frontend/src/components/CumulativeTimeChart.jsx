@@ -58,7 +58,7 @@ export default function CumulativeTimeChart() {
           cy={cy}
           r={3}
           fill="hsl(var(--primary))"
-          title={`${payload.month}: ${payload.cumulative.toFixed(1)} h`}
+          aria-label={`${payload.month}: ${payload.cumulative.toFixed(1)} h`}
         />
       </TooltipWrapper>
     );
