@@ -1,3 +1,4 @@
+import React from "react";
 import { states } from "@/data/states";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/Card";
 import StatesGrid from "./StatesGrid";
@@ -6,6 +7,7 @@ import StatesTable from "./StatesTable";
 
 export default function StatesVisited() {
   const visitedCount = states.filter((s) => s.visited).length;
+  const [selected, setSelected] = React.useState(null);
   return (
     <Card className="animate-in fade-in">
       <CardHeader className="text-center">
@@ -16,11 +18,11 @@ export default function StatesVisited() {
       </CardHeader>
       <CardContent className="lg:flex lg:gap-8">
         <div className="flex-shrink-0">
-          <StatesGrid />
+          <StatesGrid onSelect={setSelected} selected={selected} />
           <Legend />
         </div>
         <div className="flex-1 mt-6 lg:mt-0">
-          <StatesTable />
+          <StatesTable selected={selected} />
         </div>
       </CardContent>
     </Card>
