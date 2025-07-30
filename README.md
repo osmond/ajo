@@ -78,6 +78,22 @@ Ensure your local Vercel CLI is up to date before deploying. Run
 parse modern runtime identifiers and will fail with a
 `Function Runtimes must have a valid version` error.
 
+The backend runs on the `vercel-python@3.9` runtime. The repository's
+`vercel.json` already sets this for all `api/**/*.py` files:
+
+```json
+{
+  "functions": {
+    "api/**/*.py": {
+      "runtime": "vercel-python@3.9"
+    }
+  }
+}
+```
+
+Specifying `python3.11` directly will not work with Vercel's deployment
+system and will trigger the runtime version error above.
+
 This repository now includes the FastAPI backend under `api/index.py`. Deploy
 it as a serverless function by adding a `vercel.json` file that rewrites
 requests to `/api/*` to that function:
