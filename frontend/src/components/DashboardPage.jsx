@@ -3,19 +3,32 @@ import { Card, CardContent } from "./ui/Card";
 import KPIGrid from "./KPIGrid";
 import WeatherChart from "./WeatherChart";
 import TemperatureChart from "./TemperatureChart";
+
 import StatesVisited from "./StatesVisited";
 import WeeklySummaryCard from "./WeeklySummaryCard";
 import FitnessScoreDial from "./FitnessScoreDial";
 const MapSection = React.lazy(() => import("./MapSection"));
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
 
+
+  import StatesVisited from "./StatesVisited";
+  import WeeklySummaryCard from "./WeeklySummaryCard";
+  const MapSection = React.lazy(() => import("./MapSection"));
+  const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
+  const VirtualPathMap = React.lazy(() => import("./VirtualPathMap"));
+
+
 export default function DashboardPage() {
   return (
     <div className="space-y-6 p-6">
 
-      <h2 className="text-sm font-medium text-muted-foreground mb-2">Activity Overview</h2>
+      <h2 className="text-2xl font-bold mb-2">Activity Overview</h2>
 
-      <WeeklySummaryCard />
+      <WeeklySummaryCard>
+        <StreakFlame />
+      </WeeklySummaryCard>
+
+      <MileageRings />
 
       <React.Suspense
         fallback={
@@ -44,9 +57,22 @@ export default function DashboardPage() {
             <MapSection />
           </React.Suspense>
           <KPIGrid />
+
           <FitnessScoreDial />
+
+          <React.Suspense
+            fallback={
+              <div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">
+                Loading virtual map...
+              </div>
+            }
+          >
+            <VirtualPathMap />
+          </React.Suspense>
+
         </CardContent>
       </Card>
+      <TimeCapsule />
     </div>
   );
 }
