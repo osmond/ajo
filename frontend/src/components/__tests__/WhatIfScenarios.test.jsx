@@ -61,3 +61,9 @@ test('additional sliders render', () => {
   expect(screen.getByLabelText('Humidity')).toBeInTheDocument();
   expect(screen.getByLabelText('Elevation')).toBeInTheDocument();
 });
+
+test('runner avatar and trail are displayed', () => {
+  render(<WhatIfScenarios />);
+  expect(screen.getByTestId('runner')).toBeInTheDocument();
+  expect(screen.getByTestId('trail')).toBeInTheDocument();
+});

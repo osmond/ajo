@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import {
   ResponsiveContainer,
   LineChart,
@@ -10,6 +11,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from './ui/Card';
 import { Slider } from './ui/Slider';
 import { Button } from './ui/Button';
+import RunnerIcon from './RunnerIcon';
 
 export function makeData(sleep, temp, humidity = 50, elevation = 0) {
   const base =
@@ -35,6 +37,7 @@ export default function WhatIfScenarios() {
     () => makeData(sleep, temp, humidity, elevation),
     [sleep, temp, humidity, elevation]
   );
+  const pace = data[0]?.pace ?? 6;
 
   return (
     <Card className="animate-in fade-in">
@@ -105,6 +108,27 @@ export default function WhatIfScenarios() {
         >
           Reset
         </Button>
+        <div className="relative h-10 overflow-hidden rounded bg-secondary">
+          <motion.div
+            data-testid="trail"
+            className="absolute left-0 top-1/2 h-1 bg-primary"
+            style={{ transform: 'translateY(-50%)' }}
+            key={`trail-${pace}`}
+            initial={{ width: '0%' }}
+            animate={{ width: '100%' }}
+            transition={{ duration: pace, ease: 'linear', repeat: Infinity, repeatType: 'loop' }}
+          />
+          <motion.div
+            data-testid="runner"
+            className="absolute left-0 top-1/2 -translate-y-1/2"
+            key={`runner-${pace}`}
+            initial={{ x: '0%' }}
+            animate={{ x: '100%' }}
+            transition={{ duration: pace, ease: 'linear', repeat: Infinity, repeatType: 'loop' }}
+          >
+            <RunnerIcon className="h-6 w-6" />
+          </motion.div>
+        </div>
         <div className="h-48">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
