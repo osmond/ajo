@@ -7,12 +7,6 @@ import FitnessScoreDial from "./FitnessScoreDial";
 import TemperatureChart from "./TemperatureChart";
 import WeatherChart from "./WeatherChart";
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
-const MapSection = React.lazy(() => import("./MapSection"));
-import StatesVisited from "./StatesVisited";
-const VirtualPathMap = React.lazy(() => import("./VirtualPathMap"));
-import CumulativeChart from "./CumulativeChart";
-import CumulativeTimeChart from "./CumulativeTimeChart";
-import TimelineMap from "./TimelineMap";
 
 export default function DashboardTabs() {
   return (
@@ -20,8 +14,6 @@ export default function DashboardTabs() {
       <TabsList className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <TabsTrigger value="overview">Overview</TabsTrigger>
         <TabsTrigger value="trends">Trends</TabsTrigger>
-        <TabsTrigger value="routes">Routes & Geography</TabsTrigger>
-        <TabsTrigger value="capsule">Time Capsule</TabsTrigger>
       </TabsList>
       <TabsContent value="overview" className="space-y-6">
         <WeeklySummaryCard>
@@ -38,20 +30,6 @@ export default function DashboardTabs() {
         <React.Suspense fallback={<div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">Loading analysis...</div>}>
           <AnalysisSection />
         </React.Suspense>
-      </TabsContent>
-      <TabsContent value="routes" className="space-y-6">
-        <React.Suspense fallback={<div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">Loading map...</div>}>
-          <MapSection />
-        </React.Suspense>
-        <StatesVisited />
-      </TabsContent>
-      <TabsContent value="capsule" className="space-y-6">
-        <CumulativeChart />
-        <CumulativeTimeChart />
-        <React.Suspense fallback={<div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">Loading route...</div>}>
-          <VirtualPathMap />
-        </React.Suspense>
-        <TimelineMap />
       </TabsContent>
     </Tabs>
   );
