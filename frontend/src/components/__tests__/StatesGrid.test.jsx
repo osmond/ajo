@@ -2,10 +2,10 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import StatesGrid from '../StatesGrid';
 
-test('shows cities when state clicked', async () => {
-  render(<StatesGrid />);
+test('calls onSelect when state clicked', async () => {
+  const onSelect = vi.fn();
+  render(<StatesGrid onSelect={onSelect} />);
   const cell = screen.getByText('CA');
   await userEvent.click(cell);
-  expect(screen.getByText('California')).toBeInTheDocument();
-  expect(screen.getByText('Los Angeles')).toBeInTheDocument();
+  expect(onSelect).toHaveBeenCalledWith('CA');
 });

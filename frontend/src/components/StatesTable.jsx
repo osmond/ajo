@@ -1,4 +1,5 @@
 import { states } from "@/data/states";
+import { getCities } from "@/data/stateCities";
 import {
   Table,
   TableHeader,
@@ -9,7 +10,7 @@ import {
 } from "./ui/Table";
 import React from "react";
 
-export default function StatesTable() {
+export default function StatesTable({ selected }) {
   const [sortField, setSortField] = React.useState("miles");
   const [sortDir, setSortDir] = React.useState("desc");
 
@@ -45,11 +46,30 @@ export default function StatesTable() {
 
   const renderRows = (list) =>
     list.map((s) => (
-      <TableRow key={s.abbr} className="group">
-        <TableCell className="cursor-pointer">› {s.name}</TableCell>
-        <TableCell className="tabular-nums">{s.days}</TableCell>
-        <TableCell className="tabular-nums">{s.miles.toFixed(1)}</TableCell>
-      </TableRow>
+      <React.Fragment key={s.abbr}>
+        <TableRow
+          className="group"
+          data-state={s.abbr === selected ? "selected" : undefined}
+        >
+          <TableCell className="cursor-pointer">› {s.name}</TableCell>
+          <TableCell className="tabular-nums">{s.days}</TableCell>
+          <TableCell className="tabular-nums">{s.miles.toFixed(1)}</TableCell>
+        </TableRow>
+        {s.abbr === selected && (
+          <TableRow className="bg-muted/50">
+            <TableCell colSpan={3} className="p-2 pl-8">
+              <ul className="space-y-1">
+                {getCities(s.abbr).map((c) => (
+                  <li key={c} className="flex items-center gap-1">
+                    <span>›</span>
+                    <span>{c}</span>
+                  </li>
+                ))}
+              </ul>
+            </TableCell>
+          </TableRow>
+        )}
+      </React.Fragment>
     ));
 
   const renderTable = (list) => (
