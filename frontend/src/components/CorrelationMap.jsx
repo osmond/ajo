@@ -1,7 +1,15 @@
 import React from 'react';
 import ChartCard from './ChartCard';
 import Skeleton from './ui/Skeleton';
-import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  CartesianGrid,
+  ResponsiveContainer,
+} from 'recharts';
 import { fetchSteps, fetchSleep, fetchAnalysis, fetchRuns } from '../api';
 
 function mergeStepsSleep(steps, sleep) {
@@ -46,19 +54,51 @@ export default function CorrelationMap() {
       .finally(() => setLoading(false));
   }, []);
 
-  const renderDualLine = (dkey1, dkey2, y1Props, y2Props, dataset) => (
-    <ResponsiveContainer width="100%" height="100%">
-      <LineChart data={dataset} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-        <CartesianGrid stroke="#E5E7EB" strokeWidth={1} horizontal={false} />
-        <XAxis dataKey="date" />
-        <YAxis yAxisId="left" {...y1Props} />
-        <YAxis yAxisId="right" orientation="right" {...y2Props} />
-        <Tooltip />
-        <Line yAxisId="left" type="monotone" dataKey={dkey1} stroke="hsl(var(--primary))" dot={false} isAnimationActive={false} />
-        <Line yAxisId="right" type="monotone" dataKey={dkey2} stroke="hsl(var(--accent))" dot={false} isAnimationActive={false} />
-      </LineChart>
-    </ResponsiveContainer>
-  );
+  const renderDualLine = (dkey1, dkey2, y1Props, y2Props, dataset) => {
+    const grad1 = React.useId();
+    const grad2 = React.useId();
+    return (
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={dataset} margin={{ top: 10, right: 20, bottom: 5, left: 0 }}>
+          <defs>
+            <linearGradient id={grad1} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="hsl(var(--primary)/0.7)" />
+              <stop offset="100%" stopColor="hsl(var(--primary)/0.2)" />
+            </linearGradient>
+            <linearGradient id={grad2} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="hsl(var(--accent)/0.7)" />
+              <stop offset="100%" stopColor="hsl(var(--accent)/0.2)" />
+            </linearGradient>
+          </defs>
+          <CartesianGrid stroke="hsl(var(--border))" strokeDasharray="3 3" horizontal={false} />
+          <XAxis dataKey="date" stroke="hsl(var(--muted-foreground))" />
+          <YAxis yAxisId="left" stroke="hsl(var(--muted-foreground))" {...y1Props} />
+          <YAxis yAxisId="right" orientation="right" stroke="hsl(var(--muted-foreground))" {...y2Props} />
+          <Tooltip
+            contentStyle={{ backgroundColor: 'hsl(var(--background))', borderColor: 'hsl(var(--border))', fontSize: '0.75rem' }}
+          />
+          <Area
+            yAxisId="left"
+            type="monotone"
+            dataKey={dkey1}
+            stroke="hsl(var(--primary))"
+            fill={`url(#${grad1})`}
+            dot={false}
+            isAnimationActive={false}
+          />
+          <Area
+            yAxisId="right"
+            type="monotone"
+            dataKey={dkey2}
+            stroke="hsl(var(--accent))"
+            fill={`url(#${grad2})`}
+            dot={false}
+            isAnimationActive={false}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    );
+  };
 
   if (loading) {
     return (
