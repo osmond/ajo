@@ -5,6 +5,7 @@ import WeatherChart from "./WeatherChart";
 import TemperatureChart from "./TemperatureChart";
 import StatesVisited from "./StatesVisited";
 import WeeklySummaryCard from "./WeeklySummaryCard";
+import FitnessScoreDial from "./FitnessScoreDial";
 const MapSection = React.lazy(() => import("./MapSection"));
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
 
@@ -43,6 +44,7 @@ export default function DashboardPage() {
             <MapSection />
           </React.Suspense>
           <KPIGrid />
+          <FitnessScoreDial />
         </CardContent>
       </Card>
     </div>
