@@ -12,7 +12,7 @@ import StatesVisited from "./StatesVisited";
 const VirtualPathMap = React.lazy(() => import("./VirtualPathMap"));
 import CumulativeChart from "./CumulativeChart";
 import CumulativeTimeChart from "./CumulativeTimeChart";
-import TimeCapsule from "./TimeCapsule";
+import TimelineMap from "./TimelineMap";
 
 export default function DashboardTabs() {
   return (
@@ -51,7 +51,7 @@ export default function DashboardTabs() {
         <React.Suspense fallback={<div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">Loading route...</div>}>
           <VirtualPathMap />
         </React.Suspense>
-        <TimeCapsule />
+        <TimelineMap />
       </TabsContent>
     </Tabs>
   );
