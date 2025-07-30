@@ -121,8 +121,3 @@ now sits above the card on the dashboard. The card header itself offers a date
 range selector, quick filter buttons and export/share actions while the metrics
 and sparklines sit in the card content below.
 
-## Run Summary Card
-
-`frontend/src/components/SummaryCard.jsx` presents overall run statistics. It
-now includes a mini map for the most recent run and a small filled distance
-sparkline to visualize trends.
