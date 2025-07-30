@@ -7,9 +7,10 @@ import {
 } from 'recharts';
 import { modeData, timeData, mileageData } from './data';
 
-const COLORS = ['#555', '#DDD'];
-const TIME_COLOR = '#AEC6CF';
-const MILEAGE_COLOR = '#FFB347';
+// Use theme-based colors so the charts adapt to light and dark modes
+const COLORS = ['hsl(var(--primary))', 'hsl(var(--muted-foreground))'];
+const TIME_COLOR = 'hsl(var(--primary))';
+const MILEAGE_COLOR = 'hsl(var(--accent))';
 
 export default function DemoCharts() {
   return (
@@ -53,9 +54,9 @@ export default function DemoCharts() {
           <div style={{ width: '100%', height: 250 }}>
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={timeData}>
-                <PolarGrid stroke="#444" />
-                <PolarAngleAxis dataKey="time" stroke="#AAA" />
-                <PolarRadiusAxis angle={30} domain={[0, 30]} tick={{ fill: '#AAA' }} />
+                <PolarGrid stroke="hsl(var(--border))" />
+                <PolarAngleAxis dataKey="time" stroke="hsl(var(--muted-foreground))" />
+                <PolarRadiusAxis angle={30} domain={[0, 30]} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
                 <Radar name="activity" dataKey="pct" stroke={TIME_COLOR} fill={TIME_COLOR} fillOpacity={0.6} />
               </RadarChart>
             </ResponsiveContainer>
@@ -69,8 +70,8 @@ export default function DemoCharts() {
           <div style={{ width: '100%', height: 250 }}>
             <ResponsiveContainer width="100%" height="100%">
               <RadarChart data={mileageData}>
-                <PolarGrid stroke="#444" />
-                <PolarAngleAxis dataKey="day" stroke="#AAA" />
+                <PolarGrid stroke="hsl(var(--border))" />
+                <PolarAngleAxis dataKey="day" stroke="hsl(var(--muted-foreground))" />
                 <PolarRadiusAxis angle={30} domain={[0, 6]} tick={false} />
                 <Radar name="mileage" dataKey="mi" stroke={MILEAGE_COLOR} fill={MILEAGE_COLOR} fillOpacity={0.6} />
                 <Tooltip formatter={(val) => [`${val} mi`, ""]} />
