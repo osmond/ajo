@@ -1,6 +1,7 @@
 import * as mockApi from './mockApi';
 
-const BASE_URL = (import.meta.env.VITE_BACKEND_URL || '').trim();
+const RAW_URL = (import.meta.env.VITE_BACKEND_URL || '').trim();
+const BASE_URL = RAW_URL.replace(/^['"]|['"]$/g, '');
 const USE_MOCK = !BASE_URL || BASE_URL === 'mock';
 
 async function apiGet(path) {
