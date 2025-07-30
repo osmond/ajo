@@ -1,5 +1,5 @@
 import React from 'react';
-import { Flame } from 'lucide-react';
+import AnimatedFlame from './AnimatedFlame';
 import { fetchDailyTotals } from '../api';
 
 export function computeStreak(totals = []) {
@@ -25,23 +25,9 @@ export default function StreakFlame({ count }) {
       .catch(() => setDays(0));
   }, [count]);
 
-  const levels = [
-    'text-muted-foreground',
-    'text-orange-400',
-    'text-orange-500',
-    'text-red-600',
-  ];
-  let idx = 0;
-  if (days >= 14) idx = 3;
-  else if (days >= 7) idx = 2;
-  else if (days >= 3) idx = 1;
-
-  const activeClass = days ? 'streak-active' : '';
-
   return (
-    <div className="flex items-center" title={`${days} day streak`}>
-      <Flame className={`lucide-flame ${levels[idx]} ${activeClass}`} />
-      <span className={`ml-1 text-xs font-medium ${levels[idx]}`}>{days}</span>
+    <div title={`${days} day streak`}>
+      <AnimatedFlame streak={days} />
     </div>
   );
 }
