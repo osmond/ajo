@@ -61,40 +61,66 @@ export default function DemoCharts() {
 
       <div className="grid md:grid-cols-2 gap-12">
         {/* 2) Activity by Time */}
-        <div className="text-center">
-        <h2 className="text-lg font-semibold">Workout Activity by Time</h2>
-        <p className="text-sm text-muted-foreground">
-          Andy spends a lot of time doing this. Radial distance shows the
-          percentage of workouts that begin in each three-hour slot.
-        </p>
-          <div style={{ width: '100%', height: 250 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <RadarChart data={timeData}>
-                <PolarGrid stroke="hsl(var(--border))" />
-                <PolarAngleAxis dataKey="time" stroke="hsl(var(--muted-foreground))" />
-                <PolarRadiusAxis angle={30} domain={[0, 30]} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
-                <Radar name="activity" dataKey="pct" stroke={TIME_COLOR} fill={TIME_COLOR} fillOpacity={0.6} />
-              </RadarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+        <Card className="text-center animate-in fade-in">
+          <CardHeader>
+            <CardTitle>Workout Activity by Time</CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Andy spends a lot of time doing this. Radial distance shows the
+              percentage of workouts that begin in each three-hour slot.
+            </p>
+          </CardHeader>
+          <CardContent>
+            <div style={{ width: '100%', height: 250 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <RadarChart data={timeData}>
+                  <PolarGrid stroke="hsl(var(--border))" />
+                  <PolarAngleAxis dataKey="time" stroke="hsl(var(--muted-foreground))" />
+                  <PolarRadiusAxis
+                    angle={30}
+                    domain={[0, 30]}
+                    tick={{ fill: 'hsl(var(--muted-foreground))' }}
+                  />
+                  <Radar
+                    name="activity"
+                    dataKey="pct"
+                    stroke={TIME_COLOR}
+                    fill={TIME_COLOR}
+                    fillOpacity={0.6}
+                  />
+                </RadarChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* 3) Mileage by Day */}
-        <div className="text-center">
-          <h2 className="text-lg font-semibold">Average Daily Mileage by Day</h2>
-          <p className="text-sm text-muted-foreground">Andy probaly runs more on the weekend</p>
-          <div style={{ width: '100%', height: 250 }}>
-            <ResponsiveContainer width="100%" height="100%">
-              <RadarChart data={mileageData}>
-                <PolarGrid stroke="hsl(var(--border))" />
-                <PolarAngleAxis dataKey="day" stroke="hsl(var(--muted-foreground))" />
-                <PolarRadiusAxis angle={30} domain={[0, 6]} tick={false} />
-                <Radar name="mileage" dataKey="mi" stroke={MILEAGE_COLOR} fill={MILEAGE_COLOR} fillOpacity={0.6} />
-                <Tooltip formatter={(val) => [`${val} mi`, ""]} />
-              </RadarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+        <Card className="text-center animate-in fade-in">
+          <CardHeader>
+            <CardTitle>Average Daily Mileage by Day</CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Andy probaly runs more on the weekend
+            </p>
+          </CardHeader>
+          <CardContent>
+            <div style={{ width: '100%', height: 250 }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <RadarChart data={mileageData}>
+                  <PolarGrid stroke="hsl(var(--border))" />
+                  <PolarAngleAxis dataKey="day" stroke="hsl(var(--muted-foreground))" />
+                  <PolarRadiusAxis angle={30} domain={[0, 6]} tick={false} />
+                  <Radar
+                    name="mileage"
+                    dataKey="mi"
+                    stroke={MILEAGE_COLOR}
+                    fill={MILEAGE_COLOR}
+                    fillOpacity={0.6}
+                  />
+                  <Tooltip formatter={(val) => [`${val} mi`, ""]} />
+                </RadarChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
