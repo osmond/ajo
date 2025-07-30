@@ -2,6 +2,7 @@ import React from "react";
 import { fetchDailyTotals } from "../api";
 import Skeleton from "./ui/Skeleton";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/Card";
+import { ResponsiveContainer, BarChart, Bar } from "recharts";
 
 export default function TimeCapsule() {
   const [data, setData] = React.useState([]);
@@ -52,30 +53,40 @@ export default function TimeCapsule() {
               month: "short",
             });
             const total = months[key].reduce((s, d) => s + d.distance, 0);
+            const chartData = months[key].map((d) => ({
+              day: d.date.split("-")[2],
+              km: +(d.distance / 1000).toFixed(2),
+            }));
             return (
-              <div key={key} className="w-28">
-                <button
-                  onClick={() => toggle(key)}
-                  className="w-full rounded-md bg-muted p-2 text-left shadow transition-transform hover:-translate-y-0.5 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-ring"
-                >
-                  <div className="font-medium">
+              <Card key={key} className="w-32 cursor-pointer" onClick={() => toggle(key)}>
+                <CardHeader className="p-2 pb-0">
+                  <CardTitle className="text-lg font-semibold">
                     {monthName} {y}
-                  </div>
-                  <div className="text-xs text-muted-foreground">
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-2 pt-1">
+                  <div className="mb-1 text-accent font-semibold">
                     {(total / 1000).toFixed(1)} km
                   </div>
-                </button>
-                {open === key && (
-                  <div className="mt-1 space-y-1 rounded-md bg-muted/50 p-2 text-xs">
-                    {months[key].map((d) => (
-                      <div key={d.date} className="flex justify-between">
-                        <span>{d.date.split("-")[2]}</span>
-                        <span>{(d.distance / 1000).toFixed(1)} km</span>
-                      </div>
-                    ))}
+                  <div className="h-8 w-full">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <BarChart data={chartData} margin={{ top: 0, right: 0, left: 0, bottom: 0 }}>
+                        <Bar dataKey="km" fill="hsl(var(--accent))" radius={[2,2,0,0]} />
+                      </BarChart>
+                    </ResponsiveContainer>
                   </div>
-                )}
-              </div>
+                  {open === key && (
+                    <div className="mt-2 space-y-1 text-xs">
+                      {months[key].map((d) => (
+                        <div key={d.date} className="flex justify-between">
+                          <span>{d.date.split("-")[2]}</span>
+                          <span>{(d.distance / 1000).toFixed(1)} km</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
             );
           })}
         </div>
