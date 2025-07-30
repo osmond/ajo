@@ -63,10 +63,18 @@ Add the `VITE_BACKEND_URL` environment variable in the Vercel dashboard so the
 frontend knows where to reach your backend. Vercel will run `npm run build` and
 serve the generated static files from `frontend/dist`.
 
-The backend can be hosted separately on any platform that supports FastAPI. For
-monorepo deployments you may place a FastAPI app inside the `api/` folder and
-create a `vercel.json` file that rewrites `/api/*` requests to that serverless
-function.
+This repository now includes the FastAPI backend under `api/index.py`. Deploy
+it as a serverless function by adding a `vercel.json` file that rewrites
+requests to `/api/*` to that function:
+
+```json
+{
+  "rewrites": [{ "source": "/api/(.*)", "destination": "/api/index.py" }]
+}
+```
+
+Set `VITE_BACKEND_URL` to `/api` when deploying so the frontend calls the
+serverless endpoints.
 
 ## Frontend Features
 
