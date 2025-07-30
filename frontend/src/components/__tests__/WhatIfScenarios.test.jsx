@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import WhatIfScenarios, { makeData } from '../WhatIfScenarios';
 import { vi } from 'vitest';
 
@@ -26,7 +27,7 @@ beforeAll(() => {
 });
 
 test('makeData produces 7 days of pace data', () => {
-  const data = makeData(8, 25);
+  const data = makeData(8, 25, 50, 0);
   expect(data).toHaveLength(7);
   // first day pace slightly lower due to deterministic offset
   expect(data[0].pace).toBeCloseTo(5.97);
@@ -35,7 +36,28 @@ test('makeData produces 7 days of pace data', () => {
 test('sliders update displayed values', () => {
   const { container } = render(<WhatIfScenarios />);
   const sleepSlider = screen.getByTestId('sleep-slider');
-  fireEvent.change(sleepSlider, { target: { value: '9' } });
-  expect(screen.getByText(/Sleep: 9/)).toBeInTheDocument();
+  for (let i = 0; i < 4; i++) {
+    fireEvent.keyDown(sleepSlider, { key: 'ArrowUp' });
+  }
+  const thumb = sleepSlider.querySelector('[role="slider"]');
+  expect(thumb).toHaveAttribute('aria-valuenow', '9');
   expect(container.querySelector('svg')).toBeTruthy();
+});
+
+test('reset button restores defaults', async () => {
+  render(<WhatIfScenarios />);
+  const sleepSlider = screen.getByTestId('sleep-slider');
+  for (let i = 0; i < 4; i++) {
+    fireEvent.keyDown(sleepSlider, { key: 'ArrowUp' });
+  }
+  const thumb = sleepSlider.querySelector('[role="slider"]');
+  expect(thumb).toHaveAttribute('aria-valuenow', '9');
+  await userEvent.click(screen.getByRole('button', { name: /reset/i }));
+  expect(thumb).toHaveAttribute('aria-valuenow', '7');
+});
+
+test('additional sliders render', () => {
+  render(<WhatIfScenarios />);
+  expect(screen.getByLabelText('Humidity')).toBeInTheDocument();
+  expect(screen.getByLabelText('Elevation')).toBeInTheDocument();
 });
