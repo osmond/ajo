@@ -9,6 +9,7 @@ vi.mock('../ActivityCalendar', () => ({ default: () => <div data-testid="calenda
 vi.mock('../CalendarHeatmap', () => ({ default: () => <div data-testid="heatmap" /> }));
 vi.mock('../LeafletMap', () => ({ default: () => <div data-testid="leaflet" /> }));
 vi.mock('../ElevationChart', () => ({ default: () => <div data-testid="elev" /> }));
+vi.mock('../RouteGallery', () => ({ default: () => <div data-testid="gallery" /> }));
 
 
 it('fetches activity data on mount', async () => {
