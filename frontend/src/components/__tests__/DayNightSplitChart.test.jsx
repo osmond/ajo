@@ -31,6 +31,16 @@ test('computeDayNightMiles sums miles by time of day', () => {
   expect(night).toBeCloseTo(1);
 });
 
+test('computeDayNightMiles respects custom boundaries', () => {
+  const acts = [
+    { startTimeLocal: '2023-01-01T05:00:00', distance: 1609.34 },
+    { startTimeLocal: '2023-01-01T07:00:00', distance: 1609.34 },
+  ];
+  const { day, night } = computeDayNightMiles(acts, 7, 19);
+  expect(day).toBeCloseTo(1);
+  expect(night).toBeCloseTo(1);
+});
+
 test('renders total miles label', async () => {
   const acts = [
     { startTimeLocal: '2023-01-01T10:00:00', distance: 1600 },

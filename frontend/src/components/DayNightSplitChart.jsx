@@ -3,14 +3,19 @@ import { PieChart, Pie, Tooltip, Cell, Label, ResponsiveContainer } from "rechar
 import { fetchActivities } from "../api";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/Card";
 import Skeleton from "./ui/Skeleton";
+import DayNightLegend from "./DayNightLegend";
 
-export function computeDayNightMiles(activities = []) {
+export function computeDayNightMiles(
+  activities = [],
+  dayStart = 6,
+  dayEnd = 18
+) {
   let day = 0;
   let night = 0;
   for (const act of activities) {
     const hour = new Date(act.startTimeLocal).getHours();
     const miles = act.distance / 1609.34;
-    if (hour >= 6 && hour < 18) {
+    if (hour >= dayStart && hour < dayEnd) {
       day += miles;
     } else {
       night += miles;
@@ -21,7 +26,7 @@ export function computeDayNightMiles(activities = []) {
 
 const COLORS = ["hsl(var(--accent))", "hsl(var(--primary))", "hsl(var(--muted-foreground))"];
 
-export default function DayNightSplitChart() {
+export default function DayNightSplitChart({ dayStart = 6, dayEnd = 18 } = {}) {
   const [data, setData] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState(null);
@@ -29,13 +34,13 @@ export default function DayNightSplitChart() {
   React.useEffect(() => {
     fetchActivities()
       .then((acts) => {
-        const { day, night } = computeDayNightMiles(acts);
+        const { day, night } = computeDayNightMiles(acts, dayStart, dayEnd);
         const total = day + night;
         setData({ day, night, total });
       })
       .catch(() => setError("Failed to load"))
       .finally(() => setLoading(false));
-  }, []);
+  }, [dayStart, dayEnd]);
 
   const chartData = data
     ? [
@@ -51,16 +56,18 @@ export default function DayNightSplitChart() {
       <CardHeader>
         <CardTitle>Day/Night Activity Split</CardTitle>
       </CardHeader>
-      <CardContent className="h-56">
-        {loading && <Skeleton className="h-full w-full" />}
+      <CardContent>
+        {loading && <Skeleton className="h-56 w-full" />}
         {error && (
-          <div className="flex h-full items-center justify-center text-sm font-normal text-destructive">
+          <div className="flex h-56 items-center justify-center text-sm font-normal text-destructive">
             {error}
           </div>
         )}
         {!loading && !error && data && (
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
+          <>
+            <div className="h-56">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
               {/* Day inner ring */}
               <Pie
                 data={chartData.slice(0, 2)}
@@ -91,10 +98,28 @@ export default function DayNightSplitChart() {
                 <Cell fill={COLORS[2]} />
               </Pie>
               <Tooltip
-                formatter={(v, name) => [`${v.toFixed(1)} mi`, name === 'day' ? 'Day' : name === 'night' ? 'Night' : '']}
+                formatter={(v, name) => {
+                  if (name === 'day') {
+                    const pct = ((v / data.total) * 100).toFixed(0);
+                    return [`${v.toFixed(1)} mi (${pct}%)`, 'Day'];
+                  }
+                  if (name === 'night') {
+                    const pct = ((v / data.total) * 100).toFixed(0);
+                    return [`${v.toFixed(1)} mi (${pct}%)`, 'Night'];
+                  }
+                  return null;
+                }}
               />
             </PieChart>
           </ResponsiveContainer>
+            </div>
+            <DayNightLegend
+              dayMiles={data.day}
+              nightMiles={data.night}
+              totalMiles={data.total}
+              colors={[COLORS[0], COLORS[1]]}
+            />
+          </>
         )}
       </CardContent>
     </Card>
