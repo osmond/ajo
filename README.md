@@ -75,6 +75,10 @@ activity type or date range to explore your workouts.
 
 The "Mileage" tab visualizes your cumulative distance per month in a line chart.
 
+The Activity Calendar displays a mini heatmap with one square per day. Days with
+runs or recorded steps are colored by their total distance so busier days appear
+darker.
+
 ## Tailwind Theme Setup
 
 The `src/main.jsx` entry point imports `@/index.css` which includes `tailwindcss-shadcn-ui/style.css` so shadcn/ui component styles are loaded. The interface uses icons from the **Lucide** set via the `lucide-react` package.
