@@ -130,7 +130,7 @@ export default function WhatIfScenarios() {
           >
             <Avatar className="h-6 w-6">
               <AvatarFallback>
-                <RunnerIcon className="h-6 w-6" />
+                <RunnerIcon className="h-6 w-6" aria-label="Runner" />
               </AvatarFallback>
             </Avatar>
           </motion.div>
