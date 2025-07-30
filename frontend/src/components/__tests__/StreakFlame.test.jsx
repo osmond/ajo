@@ -15,10 +15,9 @@ it('computeStreak counts consecutive days', () => {
   expect(computeStreak(totals)).toBe(2);
 });
 
-it('renders animated flame with glow', () => {
+it('renders animated flame with dynamic fill', () => {
   const { container } = render(<StreakFlame count={8} />);
   const svg = container.querySelector('svg.lucide-flame');
-  const glow = container.querySelector('span.animate-glow');
   expect(svg.classList.contains('animate-flame')).toBe(true);
-  expect(glow).not.toBeNull();
+  expect(svg.getAttribute('fill')).toMatch(/rgba\(/);
 });
