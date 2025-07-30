@@ -1,6 +1,7 @@
 import React from 'react';
 import AnimatedFlame from './AnimatedFlame';
 import { fetchDailyTotals } from '../api';
+import Tooltip from './ui/tooltip';
 
 export function computeStreak(totals = []) {
   const dates = new Set(totals.map((t) => t.date));
@@ -25,9 +26,10 @@ export default function StreakFlame({ count }) {
       .catch(() => setDays(0));
   }, [count]);
 
-  return (
+  const flame = (
     <div title={`${days} day streak`}>
       <AnimatedFlame streak={days} />
     </div>
   );
+  return <Tooltip text={`${days} day streak`}>{flame}</Tooltip>;
 }

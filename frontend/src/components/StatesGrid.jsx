@@ -1,4 +1,5 @@
 import { states } from "@/data/states";
+import Tooltip from "./ui/tooltip";
 
 /**
  * Display grid of state abbreviations. Clicking a state
@@ -13,15 +14,19 @@ export default function StatesGrid({ onSelect, selected }) {
           : "bg-muted text-muted-foreground";
         const selectedClass = selected === s.abbr ? "ring-2 ring-primary" : "";
         return (
-          <div
+          <Tooltip
             key={s.abbr}
-            style={{ gridColumn: s.col, gridRow: s.row }}
-            onClick={() => onSelect?.(s.abbr)}
-            className={`w-8 h-8 flex items-center justify-center text-xs font-semibold rounded-sm cursor-pointer ${visitedClass} ${selectedClass}`}
-            title={`${s.name}${s.visited ? ` – ${s.days} days, ${s.miles} mi` : ""}`}
+            text={`${s.name}${s.visited ? ` – ${s.days} days, ${s.miles} mi` : ""}`}
           >
-            {s.abbr}
-          </div>
+            <div
+              style={{ gridColumn: s.col, gridRow: s.row }}
+              onClick={() => onSelect?.(s.abbr)}
+              className={`w-8 h-8 flex items-center justify-center text-xs font-semibold rounded-sm cursor-pointer ${visitedClass} ${selectedClass}`}
+              title={`${s.name}${s.visited ? ` – ${s.days} days, ${s.miles} mi` : ""}`}
+            >
+              {s.abbr}
+            </div>
+          </Tooltip>
         );
       })}
     </div>
