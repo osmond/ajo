@@ -7,7 +7,6 @@ import DayNightSplitChart from "./DayNightSplitChart";
 import CorrelationMap from "./CorrelationMap";
 
 import WhatIfScenarios from "./WhatIfScenarios";
-import ActivityFlowSankeyChart from "./ActivityFlowSankeyChart";
 
 
 
@@ -19,7 +18,6 @@ export default function AnalysisSection() {
 
       <WeatherImpactBubbleChart />
 
-      <ActivityFlowSankeyChart />
 
       <CorrelationMap />
 
