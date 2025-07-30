@@ -15,6 +15,7 @@ import {
 } from "../api";
 import ElevationChart from "./ElevationChart";
 const LazyMap = React.lazy(() => import("./LeafletMap"));
+const LazyRoute3D = React.lazy(() => import("./Route3D"));
 
 export default function MapSection() {
   const [points, setPoints] = React.useState([]);
@@ -54,7 +55,34 @@ export default function MapSection() {
 
   return (
     <div className="space-y-6">
-
+      <div className="h-64">
+        <React.Suspense
+          fallback={
+            <div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">
+              Loading map...
+            </div>
+          }
+        >
+          <LazyMap
+            points={points}
+            metricKey={metric}
+            showWeather={showWeather}
+            onHoverPoint={setHoverIdx}
+          />
+        </React.Suspense>
+      </div>
+      <div className="h-52">
+        <React.Suspense
+          fallback={
+            <div className="h-full flex items-center justify-center text-sm font-normal text-muted-foreground">
+              Loading 3D view...
+            </div>
+          }
+        >
+          <LazyRoute3D points={points} />
+        </React.Suspense>
+      </div>
+      <ElevationChart points={points} activeIndex={hoverIdx} />
     </div>
   );
 }
