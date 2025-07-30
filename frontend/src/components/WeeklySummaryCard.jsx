@@ -2,6 +2,7 @@ import React from "react";
 import { Card, CardHeader, CardContent } from "./ui/Card";
 import Skeleton from "./ui/Skeleton";
 import { fetchDailyTotals, fetchSteps, fetchSleep } from "../api";
+import { Input } from "@/components/ui/Input";
 import {
   LineChart,
   Line,
@@ -181,15 +182,13 @@ export default function WeeklySummaryCard({ children }) {
           </Select>
           {range === "custom" && (
             <>
-              <input
+              <Input
                 type="date"
-                className="rounded-md p-1 text-sm"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
               />
-              <input
+              <Input
                 type="date"
-                className="rounded-md p-1 text-sm"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
               />

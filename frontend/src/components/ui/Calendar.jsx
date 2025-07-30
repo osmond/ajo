@@ -1,10 +1,11 @@
 import React from "react";
+import { Input } from "./Input";
 
 export function Calendar({ className = "", ...props }) {
   return (
-    <input
+    <Input
       type="date"
-      className={"rounded-md border px-3 py-2 " + className}
+      className={className}
       {...props}
     />
   );
