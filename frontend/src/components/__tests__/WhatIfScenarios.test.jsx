@@ -67,3 +67,11 @@ test('runner avatar and trail are displayed', () => {
   expect(screen.getByTestId('runner')).toBeInTheDocument();
   expect(screen.getByTestId('trail')).toBeInTheDocument();
 });
+
+test('pace table shows predictions', () => {
+  render(<WhatIfScenarios />);
+  const table = screen.getByRole('table', { name: /pace table/i });
+  expect(table).toBeInTheDocument();
+  // check first row for day 1
+  expect(screen.getByText('1')).toBeInTheDocument();
+});
