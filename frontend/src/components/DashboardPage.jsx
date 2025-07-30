@@ -6,7 +6,6 @@ import WeatherChart from "./WeatherChart";
 import TemperatureChart from "./TemperatureChart";
 import StatesVisited from "./StatesVisited";
 import WeeklySummaryCard from "./WeeklySummaryCard";
-const MapSection = React.lazy(() => import("./MapSection"));
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
 
 export default function DashboardPage() {
@@ -37,15 +36,6 @@ export default function DashboardPage() {
           <div className="grid gap-6 sm:grid-cols-2">
             <StepsSparkline />
           </div>
-          <React.Suspense
-            fallback={
-              <div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">
-                Loading map...
-              </div>
-            }
-          >
-            <MapSection />
-          </React.Suspense>
           <KPIGrid />
         </CardContent>
       </Card>
