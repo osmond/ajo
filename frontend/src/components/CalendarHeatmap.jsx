@@ -1,6 +1,7 @@
 import React from "react";
 import { fetchDailyTotals } from "../api";
 import Skeleton from "./ui/Skeleton";
+import Tooltip from "./ui/tooltip";
 
 export default function CalendarHeatmap() {
   const [data, setData] = React.useState([]);
@@ -36,11 +37,12 @@ export default function CalendarHeatmap() {
         else if (intensity > 0.25) idx = 1;
         const title = `${d.date} - ${(d.distance / 1000).toFixed(1)} km, ${(d.duration / 60).toFixed(0)} min`;
         return (
-          <div
-            key={d.date}
-            className={`h-4 w-4 rounded transition-transform hover:scale-110 focus:scale-110 heatmap-scale-${idx}`}
-            title={title}
-          />
+          <Tooltip key={d.date} text={title}>
+            <div
+              className={`h-4 w-4 rounded transition-transform hover:scale-110 focus:scale-110 heatmap-scale-${idx}`}
+              title={title}
+            />
+          </Tooltip>
         );
       })}
     </div>

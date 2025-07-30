@@ -1,6 +1,7 @@
 import React from "react";
 import ChartCard from "./ChartCard";
 import Skeleton from "./ui/Skeleton";
+import TooltipWrapper from "./ui/tooltip";
 import {
   LineChart,
   Line,
@@ -51,13 +52,15 @@ export default function CumulativeTimeChart() {
   const Dot = (props) => {
     const { cx, cy, payload } = props;
     return (
-      <circle
-        cx={cx}
-        cy={cy}
-        r={3}
-        fill="hsl(var(--primary))"
-        title={`${payload.month}: ${payload.cumulative.toFixed(1)} h`}
-      />
+      <TooltipWrapper text={`${payload.month}: ${payload.cumulative.toFixed(1)} h`}>
+        <circle
+          cx={cx}
+          cy={cy}
+          r={3}
+          fill="hsl(var(--primary))"
+          title={`${payload.month}: ${payload.cumulative.toFixed(1)} h`}
+        />
+      </TooltipWrapper>
     );
   };
 

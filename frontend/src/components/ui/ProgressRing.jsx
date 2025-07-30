@@ -1,5 +1,6 @@
 import React from "react";
 import { RadialBarChart, RadialBar, ResponsiveContainer } from "recharts";
+import Tooltip from "./tooltip";
 
 export default function ProgressRing({
   value = 0,
@@ -13,7 +14,7 @@ export default function ProgressRing({
   const data = [{ name: "progress", value: percent }];
   const gradientId = React.useId();
 
-  return (
+  const ring = (
     <div
       className={"relative " + className}
       style={{ width: size, height: size }}
@@ -55,4 +56,6 @@ export default function ProgressRing({
       </div>
     </div>
   );
+
+  return title ? <Tooltip text={title}>{ring}</Tooltip> : ring;
 }
