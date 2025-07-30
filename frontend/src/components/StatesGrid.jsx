@@ -9,7 +9,7 @@ export default function StatesGrid({ onSelect, selected }) {
     <div className="grid grid-cols-12 grid-rows-7 gap-1">
       {states.map((s) => {
         const visitedClass = s.visited
-          ? "bg-foreground text-background"
+          ? "bg-primary text-primary-foreground"
           : "bg-muted text-muted-foreground";
         const selectedClass = selected === s.abbr ? "ring-2 ring-primary" : "";
         return (
