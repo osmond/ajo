@@ -58,10 +58,12 @@ The provided `frontend/.env.example` file sets this to
 
 ## Deploying to Vercel
 
-Create a new project in Vercel and set the **root directory** to `frontend`.
-Add the `VITE_BACKEND_URL` environment variable in the Vercel dashboard so the
-frontend knows where to reach your backend. Vercel will run `npm run build` and
-serve the generated static files from `frontend/dist`.
+Create a new project in Vercel and set the **root directory** to `./` so the
+`api` folder and `vercel.json` file are included in the deployment. Configure
+the **Build Command** as `cd frontend && npm install && npm run build`. Add the
+`VITE_BACKEND_URL` environment variable in the Vercel dashboard so the frontend
+knows where to reach your backend. Vercel will execute this command and serve
+the generated static files from `frontend/dist`.
 
 This repository now includes the FastAPI backend under `api/index.py`. Deploy
 it as a serverless function by adding a `vercel.json` file that rewrites
