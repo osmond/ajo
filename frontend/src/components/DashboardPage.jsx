@@ -8,9 +8,7 @@ import StatesVisited from "./StatesVisited";
 import WeeklySummaryCard from "./WeeklySummaryCard";
 import FitnessScoreDial from "./FitnessScoreDial";
 import StreakFlame from "./StreakFlame";
-import MileageRings from "./MileageRings";
 import TimeCapsule from "./TimeCapsule";
-const MapSection = React.lazy(() => import("./MapSection"));
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
 const VirtualPathMap = React.lazy(() => import("./VirtualPathMap"));
 
@@ -24,8 +22,6 @@ export default function DashboardPage() {
       <WeeklySummaryCard>
         <StreakFlame />
       </WeeklySummaryCard>
-
-      <MileageRings />
 
       <React.Suspense
         fallback={
@@ -44,15 +40,6 @@ export default function DashboardPage() {
       <StatesVisited />
       <Card className="animate-in fade-in">
         <CardContent className="space-y-6">
-          <React.Suspense
-            fallback={
-              <div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">
-                Loading map...
-              </div>
-            }
-          >
-            <MapSection />
-          </React.Suspense>
           <KPIGrid />
 
           <FitnessScoreDial />
