@@ -64,9 +64,9 @@ frontend knows where to reach your backend. Vercel will run `npm run build` and
 serve the generated static files from `frontend/dist`.
 
 The backend can be hosted separately on any platform that supports FastAPI. For
-one‑repo deployments you may also place a FastAPI app inside the `api/` folder
-and include a `vercel.json` file that rewrites paths such as `/steps` or
-`/activities` to that serverless function.
+monorepo deployments you may place a FastAPI app inside the `api/` folder and
+create a `vercel.json` file that rewrites `/api/*` requests to that serverless
+function.
 
 ## Frontend Features
 
