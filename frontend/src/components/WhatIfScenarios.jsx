@@ -19,8 +19,8 @@ export function makeData(sleep, temp, humidity = 50, elevation = 0) {
     6 -
     0.1 * (sleep - 7) +
     0.02 * (temp - 20) +
-    0.01 * (humidity - 50) / 10 +
-    0.002 * elevation / 100;
+    0.01 * (humidity - 50) +
+    0.002 * (elevation / 10);
   const data = [];
   for (let i = 1; i <= 7; i++) {
     const pace = +(base + (i - 4) * 0.01).toFixed(2);
