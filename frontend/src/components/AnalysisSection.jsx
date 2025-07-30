@@ -1,5 +1,6 @@
 import React from "react";
 import DemoCharts from "./DemoCharts/DemoCharts";
+import WeatherImpactBubbleChart from "./WeatherImpactBubbleChart";
 
 import DayNightSplitChart from "./DayNightSplitChart";
 
@@ -14,6 +15,9 @@ export default function AnalysisSection() {
     <div className="space-y-10">
       <DayNightSplitChart />
       <DemoCharts />
+
+      <WeatherImpactBubbleChart />
+
 
       <CorrelationMap />
 
