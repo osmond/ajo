@@ -1,35 +1,59 @@
 import React from "react";
+import DashboardPage from "@/components/DashboardPage";
+import AllChartsPage from "@/components/AllChartsPage";
+import AllMapsPage from "@/components/AllMapsPage";
+import AllComponentsPage from "@/components/AllComponentsPage";
+import ModeToggle from "@/components/ModeToggle";
 
-const modules = import.meta.glob("./**/*.{jsx,tsx}", { eager: true });
-
-export default function AllComponentsPage() {
-  const components = React.useMemo(
-    () =>
-      Object.entries(modules)
-        .filter(
-          ([path, mod]) =>
-            !path.includes("__tests__") && typeof mod.default === "function"
-        )
-        .sort((a, b) => a[0].localeCompare(b[0])),
-    []
-  );
+export default function App() {
+  const [page, setPage] = React.useState("dashboard");
 
   return (
-    <div className="p-6 space-y-6">
-      <h2 className="text-lg font-semibold">Component Files</h2>
-      <ul className="space-y-8">
-        {components.map(([path, mod]) => {
-          const Component = mod.default;
-          return (
-            <li key={path} className="space-y-2">
-              <div className="font-mono">{path.replace(/^\.\//, "")}</div>
-              <div className="border rounded p-4">
-                <Component />
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="p-4 flex justify-between">
+        {page === "dashboard" ? (
+          <div className="space-x-2">
+            <button
+              className="text-sm underline"
+              onClick={() => setPage("charts")}
+            >
+              View All Charts
+            </button>
+            <button
+              className="text-sm underline"
+              onClick={() => setPage("maps")}
+            >
+              View All Maps
+            </button>
+            <button
+              className="text-sm underline"
+              onClick={() => setPage("components")}
+            >
+              View Components
+            </button>
+          </div>
+        ) : (
+          <button
+            className="text-sm underline"
+            onClick={() => setPage("dashboard")}
+          >
+            Back to Dashboard
+          </button>
+        )}
+        <ModeToggle />
+      </div>
+      <main className="mx-auto max-w-[1200px]">
+        {page === "dashboard" ? (
+          <DashboardPage />
+        ) : page === "charts" ? (
+          <AllChartsPage />
+        ) : (
+        ) : page === "maps" ? (
+          <AllMapsPage />
+        ) : (
+          <AllComponentsPage />
+        )}
+      </main>
     </div>
   );
 }
