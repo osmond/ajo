@@ -7,15 +7,12 @@ import TemperatureChart from "./TemperatureChart";
 import StatesVisited from "./StatesVisited";
 import WeeklySummaryCard from "./WeeklySummaryCard";
 import FitnessScoreDial from "./FitnessScoreDial";
+import StreakFlame from "./StreakFlame";
+import MileageRings from "./MileageRings";
+import TimeCapsule from "./TimeCapsule";
 const MapSection = React.lazy(() => import("./MapSection"));
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
-
-
-  import StatesVisited from "./StatesVisited";
-  import WeeklySummaryCard from "./WeeklySummaryCard";
-  const MapSection = React.lazy(() => import("./MapSection"));
-  const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
-  const VirtualPathMap = React.lazy(() => import("./VirtualPathMap"));
+const VirtualPathMap = React.lazy(() => import("./VirtualPathMap"));
 
 
 export default function DashboardPage() {
