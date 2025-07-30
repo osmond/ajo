@@ -45,7 +45,8 @@ test('renders scatter bubbles based on analysis data and passes dates', async ()
     // color should not be the default primary color
     expect(symbols[0].getAttribute('fill')).not.toBe('hsl(var(--primary))');
   });
+  const base = import.meta.env.VITE_BACKEND_URL;
   expect(global.fetch).toHaveBeenCalledWith(
-    `/analysis?start=${start}&end=${end}`
+    `${base}/analysis?start=${start}&end=${end}`
   );
 });

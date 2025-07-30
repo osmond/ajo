@@ -23,5 +23,6 @@ it('fetches totals and shows marker', async () => {
   render(<VirtualPathMap />);
 
   await waitFor(() => expect(screen.getByTestId('progress-marker')).toBeInTheDocument());
-  expect(global.fetch).toHaveBeenCalledWith('/daily-totals');
+  const base = import.meta.env.VITE_BACKEND_URL;
+  expect(global.fetch).toHaveBeenCalledWith(`${base}/daily-totals`);
 });
