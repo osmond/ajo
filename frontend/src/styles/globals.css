@@ -96,16 +96,23 @@
 }
 
 @layer components {
-  .streak-active {
-    filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.8));
-    animation: flame-pulse 1.5s infinite;
+  .animate-flame {
+    animation: flamePulse 1.4s ease-in-out infinite;
   }
-  .streak-active:hover {
-    filter: drop-shadow(0 0 8px rgba(249, 115, 22, 1));
+
+  .animate-glow {
+    animation: softGlow 2s ease-in-out infinite;
   }
 }
 
-@keyframes flame-pulse {
-  0%, 100% { filter: drop-shadow(0 0 4px rgba(249, 115, 22, 0.8)); }
-  50% { filter: drop-shadow(0 0 8px rgba(249, 115, 22, 1)); }
+@keyframes flamePulse {
+  0% { transform: scale(1); color: #f97316; }
+  50% { transform: scale(1.08); color: #fdba74; }
+  100% { transform: scale(1); color: #f97316; }
+}
+
+@keyframes softGlow {
+  0% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(1.2); }
+  100% { opacity: 0.2; transform: scale(1); }
 }
