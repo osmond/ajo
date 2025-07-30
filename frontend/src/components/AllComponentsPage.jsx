@@ -1,19 +1,59 @@
 import React from "react";
+import DashboardPage from "@/components/DashboardPage";
+import AllChartsPage from "@/components/AllChartsPage";
+import AllMapsPage from "@/components/AllMapsPage";
+import AllComponentsPage from "@/components/AllComponentsPage";
+import ModeToggle from "@/components/ModeToggle";
 
-const componentPaths = Object.keys(
-  import.meta.glob("./**/*.{jsx,tsx}")
-).filter((p) => !p.includes("__tests__"));
+export default function App() {
+  const [page, setPage] = React.useState("dashboard");
 
-export default function AllComponentsPage() {
-  const names = React.useMemo(() => componentPaths.sort(), []);
   return (
-    <div className="p-6 space-y-4">
-      <h2 className="text-lg font-semibold">Component Files</h2>
-      <ul className="list-disc ml-6 space-y-1">
-        {names.map((name) => (
-          <li key={name}>{name.replace(/^\.\//, "")}</li>
-        ))}
-      </ul>
+    <div className="min-h-screen bg-background text-foreground">
+      <div className="p-4 flex justify-between">
+        {page === "dashboard" ? (
+          <div className="space-x-2">
+            <button
+              className="text-sm underline"
+              onClick={() => setPage("charts")}
+            >
+              View All Charts
+            </button>
+            <button
+              className="text-sm underline"
+              onClick={() => setPage("maps")}
+            >
+              View All Maps
+            </button>
+            <button
+              className="text-sm underline"
+              onClick={() => setPage("components")}
+            >
+              View Components
+            </button>
+          </div>
+        ) : (
+          <button
+            className="text-sm underline"
+            onClick={() => setPage("dashboard")}
+          >
+            Back to Dashboard
+          </button>
+        )}
+        <ModeToggle />
+      </div>
+      <main className="mx-auto max-w-[1200px]">
+        {page === "dashboard" ? (
+          <DashboardPage />
+        ) : page === "charts" ? (
+          <AllChartsPage />
+        ) : (
+        ) : page === "maps" ? (
+          <AllMapsPage />
+        ) : (
+          <AllComponentsPage />
+        )}
+      </main>
     </div>
   );
 }
