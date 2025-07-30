@@ -15,7 +15,11 @@ import {
 } from "../api";
 import ElevationChart from "./ElevationChart";
 const LazyMap = React.lazy(() => import("./LeafletMap"));
+
 const LazyRoute3D = React.lazy(() => import("./Route3D"));
+
+const RouteGallery = React.lazy(() => import("./RouteGallery"));
+
 
 export default function MapSection() {
   const [points, setPoints] = React.useState([]);
@@ -52,9 +56,9 @@ export default function MapSection() {
   }, [loadTrack]);
 
 
-
   return (
     <div className="space-y-6">
+
       <div className="h-64">
         <React.Suspense
           fallback={
@@ -83,6 +87,50 @@ export default function MapSection() {
         </React.Suspense>
       </div>
       <ElevationChart points={points} activeIndex={hoverIdx} />
+
+      <ChartCard title="Route Map">
+        <div className="h-64">
+          <React.Suspense fallback={<div className="h-full w-full bg-muted" />}> 
+            <LazyMap
+              points={points}
+              metricKey={metric}
+              showWeather={showWeather}
+              onHoverPoint={setHoverIdx}
+            />
+          </React.Suspense>
+        </div>
+        <div className="mt-2 flex items-center gap-2">
+          <Select value={metric} onValueChange={setMetric}>
+            <SelectTrigger className="w-32 text-xs">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="heartRate">Heart Rate</SelectItem>
+              <SelectItem value="speed">Speed</SelectItem>
+              <SelectItem value="elevation">Elevation</SelectItem>
+            </SelectContent>
+          </Select>
+          <label className="ml-auto flex items-center gap-1 text-xs">
+            <input
+              type="checkbox"
+              checked={showWeather}
+              onChange={(e) => setShowWeather(e.target.checked)}
+            />
+            Weather
+          </label>
+        </div>
+        <ElevationChart points={points} activeIndex={hoverIdx} />
+      </ChartCard>
+      <React.Suspense
+        fallback={
+          <div className="h-40 flex items-center justify-center text-sm font-normal text-muted-foreground">
+            Loading routes...
+          </div>
+        }
+      >
+        <RouteGallery />
+      </React.Suspense>
+
     </div>
   );
 }
