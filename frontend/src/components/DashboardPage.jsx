@@ -7,6 +7,7 @@ import StatesVisited from "./StatesVisited";
 import WeeklySummaryCard from "./WeeklySummaryCard";
 const MapSection = React.lazy(() => import("./MapSection"));
 const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
+import TimeCapsule from "./TimeCapsule";
 
 export default function DashboardPage() {
   return (
@@ -45,6 +46,7 @@ export default function DashboardPage() {
           <KPIGrid />
         </CardContent>
       </Card>
+      <TimeCapsule />
     </div>
   );
 }
