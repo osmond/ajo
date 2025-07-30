@@ -16,7 +16,7 @@ The generated activities are located around **Madison, Wisconsin** for use in th
    python3 -m venv .venv
    source .venv/bin/activate
    pip install --upgrade pip
-   pip install -r requirements.txt
+   pip install -r ../requirements.txt
    ```
 3. Run the server:
    ```bash
