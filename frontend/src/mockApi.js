@@ -9,17 +9,19 @@ function randInt(min, max) {
   return Math.floor(rand(min, max + 1));
 }
 
-export function generateDummyActivities(days = 100) {
+export function generateDummyActivities(days = 100, startFromToday = false) {
   const activities = [];
-  for (let i = 1; i <= days; i++) {
+  const startIdx = startFromToday ? 0 : 1;
+  for (let i = startIdx; i < startIdx + days; i++) {
     const actType = i % 2 ? 'RUN' : 'BIKE';
     const distKm = rand(3, 12);
     const duration = Math.round(distKm * rand(5.5, 7.0) * 60);
     const start = new Date();
     start.setDate(start.getDate() - i);
     start.setHours(randInt(0, 23), randInt(0, 59), randInt(0, 59), 0);
+    const id = startFromToday ? i + 1 : i;
     activities.push({
-      activityId: `act_${i}`,
+      activityId: `act_${id}`,
       activityType: { typeKey: actType },
       startTimeLocal: start.toISOString(),
       startLat: BASE_LAT + rand(-0.02, 0.02),
@@ -31,7 +33,8 @@ export function generateDummyActivities(days = 100) {
   return activities;
 }
 
-const dummyActivities = generateDummyActivities(365);
+// include today's activity so the streak icon is lit during demos
+const dummyActivities = generateDummyActivities(365, true);
 
 function metricPoints(count, start, deltaMs, low, high, floatVals = false) {
   const pts = [];
