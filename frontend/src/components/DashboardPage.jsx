@@ -4,6 +4,13 @@ import KPIGrid from "./KPIGrid";
 import WeatherChart from "./WeatherChart";
 import TemperatureChart from "./TemperatureChart";
 
+import StatesVisited from "./StatesVisited";
+import WeeklySummaryCard from "./WeeklySummaryCard";
+import FitnessScoreDial from "./FitnessScoreDial";
+const MapSection = React.lazy(() => import("./MapSection"));
+const AnalysisSection = React.lazy(() => import("./AnalysisSection"));
+
+
   import StatesVisited from "./StatesVisited";
   import WeeklySummaryCard from "./WeeklySummaryCard";
   const MapSection = React.lazy(() => import("./MapSection"));
@@ -50,6 +57,9 @@ export default function DashboardPage() {
             <MapSection />
           </React.Suspense>
           <KPIGrid />
+
+          <FitnessScoreDial />
+
           <React.Suspense
             fallback={
               <div className="h-64 flex items-center justify-center text-sm font-normal text-muted-foreground">
@@ -59,6 +69,7 @@ export default function DashboardPage() {
           >
             <VirtualPathMap />
           </React.Suspense>
+
         </CardContent>
       </Card>
       <TimeCapsule />
