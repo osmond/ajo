@@ -32,8 +32,8 @@ export default function WeatherChart() {
                 const Icon = entry ? entry.icon : null;
                 return (
                   <g transform={`translate(${x - 90},${y - 8})`}>
-                    {Icon && <Icon size={16} stroke="hsl(var(--primary))" />}
-                    <text x={24} y={12} fill="hsl(var(--primary))" fontSize={12}>
+                    {Icon && <Icon size={16} stroke="currentColor" />}
+                    <text x={24} y={12} fill="currentColor" fontSize={12}>
                       {payload.value}
                     </text>
                   </g>

@@ -39,10 +39,10 @@ export default function TemperatureChart() {
                     y={y + 4}
                     textAnchor="end"
                     fontSize={12}
-                    fill="hsl(var(--primary))"
+                    fill="currentColor"
                   >
                     {payload.value}
-                    <tspan fill="hsl(var(--primary))">  {range}</tspan>
+                    <tspan fill="currentColor">  {range}</tspan>
                   </text>
                 );
               }}
