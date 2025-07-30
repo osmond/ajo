@@ -265,29 +265,35 @@ async def daily_totals():
 @app.get("/analysis")
 async def analysis():
     """Return activity pace/HR vs temperature data."""
-    acts = garmin_client.get_activities() if garmin_client.has_credentials else dummy_activities
+    acts = (
+        garmin_client.get_activities() if garmin_client.has_credentials else dummy_activities
+    )
     results = []
     for act in acts:
-        # get track
         if garmin_client.has_credentials:
             try:
+                detail = garmin_client.get_activity(act["activityId"])
+                distance = detail.get("distance", 0)
                 track = garmin_client.get_track(act["activityId"])
             except KeyError:
                 continue
         else:
+            distance = act.get("distance", 0)
             start = datetime.datetime.fromisoformat(act["startTimeLocal"])
             lat = act.get("startLat", base_lat)
             lon = act.get("startLon", base_lon)
             track = []
             for i in range(20):
                 ts = (start + datetime.timedelta(minutes=i)).isoformat()
-                track.append({
-                    "timestamp": ts,
-                    "lat": lat + i * 0.001,
-                    "lon": lon + i * 0.001,
-                    "heartRate": random.randint(60, 170),
-                    "speed": round(random.uniform(2.5, 6.0), 2),
-                })
+                track.append(
+                    {
+                        "timestamp": ts,
+                        "lat": lat + i * 0.001,
+                        "lon": lon + i * 0.001,
+                        "heartRate": random.randint(60, 170),
+                        "speed": round(random.uniform(2.5, 6.0), 2),
+                    }
+                )
 
         if not track:
             continue
@@ -310,6 +316,7 @@ async def analysis():
                 "temperature": temp,
                 "avgPace": avg_pace,
                 "avgHeartRate": round(avg_hr, 1),
+                "distance": distance,
             }
         )
     return results

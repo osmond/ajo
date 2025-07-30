@@ -116,7 +116,10 @@ def test_analysis_endpoint():
     assert resp.status_code == 200
     data = resp.json()
     assert isinstance(data, list)
-    assert data and 'avgPace' in data[0] and 'temperature' in data[0]
+    assert data
+    first = data[0]
+    assert 'avgPace' in first and 'temperature' in first
+    assert 'distance' in first and 'avgHeartRate' in first
 
 
 def test_weather_cached(monkeypatch):

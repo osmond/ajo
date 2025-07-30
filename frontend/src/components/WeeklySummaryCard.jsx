@@ -168,7 +168,7 @@ export default function WeeklySummaryCard({ children }) {
 
   return (
     <Card className="mb-4 animate-in fade-in">
-      <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <CardHeader className="mb-2 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap items-center gap-2">
           <Select value={range} onValueChange={setRange}>
             <SelectTrigger className="text-sm">
