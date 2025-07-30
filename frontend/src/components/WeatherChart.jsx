@@ -10,7 +10,7 @@ import { weatherData } from "../data/weather";
 export default function WeatherChart() {
   return (
     <Card className="bg-background text-foreground">
-      <CardHeader>
+      <CardHeader className="mb-2">
         <CardTitle>Weather Conditions</CardTitle>
       </CardHeader>
       <CardContent className="h-80">

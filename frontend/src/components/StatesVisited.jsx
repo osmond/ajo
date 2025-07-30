@@ -8,7 +8,7 @@ export default function StatesVisited() {
   const visitedCount = states.filter((s) => s.visited).length;
   return (
     <Card className="animate-in fade-in">
-      <CardHeader className="text-center">
+      <CardHeader className="text-center mb-2">
         <CardTitle>US STATES VISITED</CardTitle>
         <p className="text-sm text-muted-foreground">
           {visitedCount} of 50 states visited

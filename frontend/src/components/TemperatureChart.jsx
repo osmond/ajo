@@ -13,7 +13,7 @@ import { temperatureData } from "../data/temperature";
 export default function TemperatureChart() {
   return (
     <Card className="bg-background text-foreground">
-      <CardHeader>
+      <CardHeader className="mb-2">
         <CardTitle>Temperature</CardTitle>
       </CardHeader>
       <CardContent className="h-80">
