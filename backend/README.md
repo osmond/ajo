@@ -48,5 +48,3 @@ The API exposes several dummy routes returning JSON data:
 - `GET /vo2max` – weekly VO2 max values
 - `GET /sleep` – nightly sleep duration in hours
 - `GET /map` – miscellaneous map metric points
-- `GET /routes` – aggregated coordinates from all activities
-  (use `activityType`, `startDate` and `endDate` query parameters to filter)
