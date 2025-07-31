@@ -14,7 +14,8 @@ import {
   fetchActivitiesByDate,
 } from "../api";
 import ElevationChart from "./ElevationChart";
-const LazyMap = React.lazy(() => import("./LeafletMap"));
+const LazyLeafletMap = React.lazy(() => import("./LeafletMap"));
+const LazyDeckGLMap = React.lazy(() => import("./DeckGLMap"));
 
 const LazyRoute3D = React.lazy(() => import("./Route3D"));
 const LazyRouteGlobe = React.lazy(() => import("./RouteGlobe"));
@@ -32,6 +33,7 @@ export default function MapSection() {
   const [showWeather, setShowWeather] = React.useState(false);
   const [hoverIdx, setHoverIdx] = React.useState(null);
   const [viewMode, setViewMode] = React.useState("3d");
+  const [mapMode, setMapMode] = React.useState("leaflet");
 
   const loadTrack = React.useCallback((act) => {
     setError(null);
@@ -71,12 +73,16 @@ export default function MapSection() {
             </div>
           }
         >
-          <LazyMap
-            points={points}
-            metricKey={metric}
-            showWeather={showWeather}
-            onHoverPoint={setHoverIdx}
-          />
+          {mapMode === "deck" ? (
+            <LazyDeckGLMap points={points} />
+          ) : (
+            <LazyLeafletMap
+              points={points}
+              metricKey={metric}
+              showWeather={showWeather}
+              onHoverPoint={setHoverIdx}
+            />
+          )}
         </React.Suspense>
       </div>
       <div className="h-52">
@@ -109,13 +115,17 @@ export default function MapSection() {
 
       <ChartCard title="Route Map">
         <div className="h-64">
-          <React.Suspense fallback={<div className="h-full w-full bg-muted" />}> 
-            <LazyMap
-              points={points}
-              metricKey={metric}
-              showWeather={showWeather}
-              onHoverPoint={setHoverIdx}
-            />
+          <React.Suspense fallback={<div className="h-full w-full bg-muted" />}>
+            {mapMode === "deck" ? (
+              <LazyDeckGLMap points={points} />
+            ) : (
+              <LazyLeafletMap
+                points={points}
+                metricKey={metric}
+                showWeather={showWeather}
+                onHoverPoint={setHoverIdx}
+              />
+            )}
           </React.Suspense>
         </div>
         <div className="mt-2 flex items-center gap-2">
@@ -127,6 +137,15 @@ export default function MapSection() {
               <SelectItem value="heartRate">Heart Rate</SelectItem>
               <SelectItem value="speed">Speed</SelectItem>
               <SelectItem value="elevation">Elevation</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select value={mapMode} onValueChange={setMapMode}>
+            <SelectTrigger className="w-28 text-xs">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="leaflet">Leaflet</SelectItem>
+              <SelectItem value="deck">Deck.gl</SelectItem>
             </SelectContent>
           </Select>
           <label className="ml-auto flex items-center gap-1 text-xs">
