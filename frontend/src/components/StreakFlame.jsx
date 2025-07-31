@@ -2,6 +2,7 @@ import React from 'react';
 import AnimatedFlame from './AnimatedFlame';
 import { fetchDailyTotals } from '../api';
 import Tooltip from './ui/tooltip';
+import { LineChart, Line, ResponsiveContainer } from 'recharts';
 
 export function computeStreak(totals = []) {
   const dates = new Set(totals.map((t) => t.date));
@@ -18,17 +19,35 @@ export function computeStreak(totals = []) {
 
 export default function StreakFlame({ count }) {
   const [days, setDays] = React.useState(count ?? 0);
+  const [miles, setMiles] = React.useState([]);
 
   React.useEffect(() => {
     if (count !== undefined) return;
     fetchDailyTotals()
-      .then((totals) => setDays(computeStreak(totals)))
-      .catch(() => setDays(0));
+      .then((totals) => {
+        const streak = computeStreak(totals);
+        setDays(streak);
+        const slice = totals.slice(-streak).map((t) => ({ value: t.distance / 1000 }));
+        setMiles(slice);
+      })
+      .catch(() => {
+        setDays(0);
+        setMiles([]);
+      });
   }, [count]);
 
   const flame = (
-    <div aria-label={`${days} day streak`}>
+    <div aria-label={`${days} day streak`} className="flex items-center gap-1">
       <AnimatedFlame streak={days} />
+      {miles.length > 0 && (
+        <div className="h-4 w-12">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={miles} margin={{ top: 2, bottom: 2 }}>
+              <Line type="monotone" dataKey="value" stroke="hsl(var(--primary))" fill="none" dot={false} />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      )}
     </div>
   );
   return <Tooltip text={`${days} day streak`}>{flame}</Tooltip>;
