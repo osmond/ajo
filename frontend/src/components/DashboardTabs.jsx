@@ -20,6 +20,7 @@ export default function DashboardTabs() {
         <TabsTrigger value="maps">Maps</TabsTrigger>
       </TabsList>
       <TabsContent value="overview" className="space-y-6">
+        <h2 className="text-base font-semibold">Activity Overview</h2>
         <WeeklySummaryCard>
           <StreakFlame />
         </WeeklySummaryCard>

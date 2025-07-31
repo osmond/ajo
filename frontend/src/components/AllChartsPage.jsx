@@ -11,6 +11,7 @@ import AnalysisSection from "./AnalysisSection";
 export default function AllChartsPage() {
   return (
     <div className="p-6 space-y-6">
+      <h1 className="text-lg font-semibold">All Charts</h1>
       <WeeklySummaryCard>
         <StreakFlame />
       </WeeklySummaryCard>

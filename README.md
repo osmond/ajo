@@ -61,6 +61,10 @@ viewer to switch between the traditional 3D track and a rotating earth view.
 All of the map-based views are grouped under a new **Maps** tab, bringing the
 route viewer, timeline and virtual path tracker together in one place.
 
+Navigation links for **Dashboard**, **Charts**, **Maps** and **Components** now
+appear in a persistent top bar with the site title on the left so you can switch
+pages at any time.
+
 ## Tailwind Theme Setup
 
 The `src/main.jsx` entry point imports `@/index.css` which includes `tailwindcss-shadcn-ui/style.css` so shadcn/ui component styles are loaded. The interface uses icons from the **Lucide** set via the `lucide-react` package.
